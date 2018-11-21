@@ -33,7 +33,7 @@ create or replace PACKAGE pk_solicitud_n1 IS
         tiposolicitud_id        VARCHAR2,
         producto_id             VARCHAR2
     );
-    FUNCTION pconsultar (
+    FUNCTION fconsultar (
        cod_solicitud VARCHAR2
     ) RETURN SOLICITUD%ROWTYPE;
 
@@ -119,7 +119,7 @@ create or replace PACKAGE BODY pk_solicitud_n1 IS
 
     END pmodificarsolictud;
 
-    FUNCTION pconsultar (
+    FUNCTION fconsultar (
         cod_solicitud VARCHAR2
     ) RETURN SOLICITUD%ROWTYPE IS
     fila SOLICITUD%ROWTYPE;
