@@ -1,0 +1,23 @@
+CREATE OR REPLACE PACKAGE pkatencionn3 AS
+    PROCEDURE patendersolicitud (
+        cedfun       funcionario.cedula%TYPE,
+        codsoli      solicitud.n_solicitud%TYPE,
+        comentario   solicitud.comentariofuncionario%TYPE,
+        estado       solicitud.estado_codigo%TYPE
+    );
+
+END pkatencionn3;
+/
+CREATE OR REPLACE PACKAGE BODY pkatencionn3 AS
+
+    PROCEDURE patendersolicitud (
+        cedfun       funcionario.cedula%TYPE,
+        codsoli      solicitud.n_solicitud%TYPE,
+        comentario   solicitud.comentariofuncionario%TYPE,
+        estado       solicitud.estado_codigo%TYPE
+    ) IS
+    BEGIN
+        pkatencionnivel2.patendersolicitud(cedfun,codsoli,comentario,estado);
+    END patendersolicitud;
+
+END pkatencionn3;

@@ -1,0 +1,111 @@
+create or replace PACKAGE pkclienteproducton1 IS
+    PROCEDURE pinsertar (
+        cliente_cc     clientexproducto.cliente_cedula%TYPE,
+        producto       clientexproducto.producto_id%TYPE,
+        fecha_inicio   clientexproducto.fechainicio%TYPE,
+        fecha_fin      clientexproducto.fechafin%TYPE
+    );
+
+    PROCEDURE pborrar (
+        cliente_cc   clientexproducto.cliente_cedula%TYPE,
+        producto     clientexproducto.producto_id%TYPE
+    );
+
+    PROCEDURE pmodificarfechainicio (
+        cliente_cc     clientexproducto.cliente_cedula%TYPE,
+        producto       clientexproducto.producto_id%TYPE,
+        fecha_inicio   clientexproducto.fechainicio%TYPE
+    );
+
+    PROCEDURE pmodificarfechafin (
+        cliente_cc   clientexproducto.cliente_cedula%TYPE,
+        producto     clientexproducto.producto_id%TYPE,
+        fecha_fin    clientexproducto.fechafin%TYPE
+    );
+
+    FUNCTION fconsultar (
+        cliente_cc   clientexproducto.cliente_cedula%TYPE,
+        producto     clientexproducto.producto_id%TYPE
+    ) RETURN clientexproducto%rowtype;
+
+END pkclienteproducton1;
+/
+create or replace PACKAGE BODY pkclienteproducton1 IS
+
+    PROCEDURE pinsertar (
+        cliente_cc     clientexproducto.cliente_cedula%TYPE,
+        producto       clientexproducto.producto_id%TYPE,
+        fecha_inicio   clientexproducto.fechainicio%TYPE,
+        fecha_fin      clientexproducto.fechafin%TYPE
+    ) IS
+    BEGIN
+        INSERT INTO clientexproducto VALUES (
+            cliente_cc,
+            producto,
+            fecha_inicio,
+            fecha_fin
+        );
+
+    END pinsertar;
+
+    PROCEDURE pborrar (
+        cliente_cc   clientexproducto.cliente_cedula%TYPE,
+        producto     clientexproducto.producto_id%TYPE
+    ) IS
+    BEGIN
+        DELETE FROM clientexproducto
+        WHERE
+            cliente_cedula = cliente_cc
+            AND producto_id = producto;
+
+    END pborrar;
+
+    PROCEDURE pmodificarfechainicio (
+        cliente_cc     clientexproducto.cliente_cedula%TYPE,
+        producto       clientexproducto.producto_id%TYPE,
+        fecha_inicio   clientexproducto.fechainicio%TYPE
+    ) IS
+    BEGIN
+        UPDATE clientexproducto
+        SET
+            fechainicio = fecha_inicio
+        WHERE
+            cliente_cedula = cliente_cc
+            AND producto_id = producto;
+
+    END pmodificarfechainicio;
+
+    PROCEDURE pmodificarfechafin (
+        cliente_cc   clientexproducto.cliente_cedula%TYPE,
+        producto     clientexproducto.producto_id%TYPE,
+        fecha_fin    clientexproducto.fechafin%TYPE
+    ) IS
+    BEGIN
+        UPDATE clientexproducto
+        SET
+            fechafin = fecha_fin
+        WHERE
+            cliente_cedula = cliente_cc
+            AND producto_id = producto;
+
+    END pmodificarfechafin;
+
+    FUNCTION fconsultar (
+        cliente_cc   clientexproducto.cliente_cedula%TYPE,
+        producto     clientexproducto.producto_id%TYPE
+    ) RETURN clientexproducto%rowtype IS
+        temp   clientexproducto%rowtype;
+    BEGIN
+        SELECT
+            *
+        INTO temp
+        FROM
+            clientexproducto
+        WHERE
+            cliente_cedula = cliente_cc
+            AND producto_id = producto;
+
+        RETURN temp;
+    END fconsultar;
+
+END pkclienteproducton1;
