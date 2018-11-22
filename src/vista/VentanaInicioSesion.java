@@ -106,10 +106,6 @@ public class VentanaInicioSesion {
 		panel.add(labelInformacion, gbc_labelInformacion);
 		
 		
-		
-		
-		
-		
 		/**
 		 * Acciones para el boton ingresar
 		 */
