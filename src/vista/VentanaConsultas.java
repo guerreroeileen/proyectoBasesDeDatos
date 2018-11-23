@@ -20,6 +20,11 @@ import javax.swing.DefaultComboBoxModel;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.GridLayout;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class VentanaConsultas extends JFrame {
 
@@ -56,6 +61,10 @@ public class VentanaConsultas extends JFrame {
 		setContentPane(contentPane);
 		
 		JPanel panel_superior = new JPanel();
+		/**
+		 * Aqui en esta parte agrego el borde superior y se configura los layouts
+		 */
+		panel_superior.setBorder(new TitledBorder(null, "Busquedas a realizar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.add(panel_superior, BorderLayout.NORTH);
 		GridBagLayout gbl_panel_superior = new GridBagLayout();
 		gbl_panel_superior.columnWidths = new int[] {141, 203, 86, 0};
@@ -63,6 +72,10 @@ public class VentanaConsultas extends JFrame {
 		gbl_panel_superior.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel_superior.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_superior.setLayout(gbl_panel_superior);
+		
+		/**
+		 * Se aqui en adelante se agregan los elementos del panel superior como labels y cuadros de texto para las busquedas
+		 */
 		
 		JLabel lblConsultaDeSolicitudes = new JLabel("Consulta de solicitudes asignadas por funcionario:");
 		GridBagConstraints gbc_lblConsultaDeSolicitudes = new GridBagConstraints();
@@ -82,6 +95,10 @@ public class VentanaConsultas extends JFrame {
 		textFieldConsulta_Funcionario.setColumns(10);
 		
 		JButton btnConsultar = new JButton("Consultar");
+		btnConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		GridBagConstraints gbc_btnConsultar = new GridBagConstraints();
 		gbc_btnConsultar.fill = GridBagConstraints.BOTH;
 		gbc_btnConsultar.insets = new Insets(0, 0, 5, 0);
@@ -107,6 +124,10 @@ public class VentanaConsultas extends JFrame {
 		panel_superior.add(comboBox_tipo_estado, gbc_comboBox_tipo_estado);
 		
 		JButton btnConsultar_1 = new JButton("Consultar");
+		btnConsultar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		GridBagConstraints gbc_btnConsultar_1 = new GridBagConstraints();
 		gbc_btnConsultar_1.fill = GridBagConstraints.BOTH;
 		gbc_btnConsultar_1.insets = new Insets(0, 0, 5, 0);
@@ -132,6 +153,10 @@ public class VentanaConsultas extends JFrame {
 		panel_superior.add(comboBox_Tipo_Solicitud, gbc_comboBox_Tipo_Solicitud);
 		
 		JButton btnConsultar_2 = new JButton("Consultar");
+		btnConsultar_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		GridBagConstraints gbc_btnConsultar_2 = new GridBagConstraints();
 		gbc_btnConsultar_2.fill = GridBagConstraints.BOTH;
 		gbc_btnConsultar_2.insets = new Insets(0, 0, 5, 0);
@@ -157,6 +182,10 @@ public class VentanaConsultas extends JFrame {
 		textField_consulta_cliente.setColumns(10);
 		
 		JButton btnConsultar_3 = new JButton("Consultar");
+		btnConsultar_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		GridBagConstraints gbc_btnConsultar_3 = new GridBagConstraints();
 		gbc_btnConsultar_3.fill = GridBagConstraints.BOTH;
 		gbc_btnConsultar_3.gridx = 2;
@@ -164,8 +193,14 @@ public class VentanaConsultas extends JFrame {
 		panel_superior.add(btnConsultar_3, gbc_btnConsultar_3);
 		
 		JPanel panel = new JPanel();
-		panel.setToolTipText("No hay nada");
+		panel.setForeground(Color.LIGHT_GRAY);
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		panel.setToolTipText("\r\n");
 		contentPane.add(panel, BorderLayout.CENTER);
+		
+		/**
+		 * En esta lista se agregan los resultados de las busquedas
+		 */
 		
 		JList list_Consultas = new JList();
 		panel.add(list_Consultas);
