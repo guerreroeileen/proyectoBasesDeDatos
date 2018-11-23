@@ -1,0 +1,12 @@
+create or replace PACKAGE pkRegistroNivel2 AS
+PROCEDURE pRegistrarFuncionario(ivNombre IN VARCHAR2, ivCedula IN VARCHAR2, ivFechaNacimiento IN DATE, ivDireccion IN VARCHAR2,  ivTelefono IN VARCHAR2);
+
+
+PROCEDURE pRegistrarFuncionario(ivNombre IN VARCHAR2, ivCedula IN VARCHAR2, ivFechaNacimiento IN DATE, ivDireccion IN VARCHAR2,  ivTelefono IN VARCHAR2)
+  IS
+  BEGIN 
+      PKFUNCIONARIO.PINSERTAR(ivNombre, ivCedula, ivFechaNacimiento, ivDireccion, ivTelefono);
+  EXCEPTION
+  WHEN OTHERS THEN
+  RAISE_APPLICATION_ERROR(-20000, 'Error al insertar en la tabla Funcionario'||SQLCODE);
+  END pRegistrarFuncionario;

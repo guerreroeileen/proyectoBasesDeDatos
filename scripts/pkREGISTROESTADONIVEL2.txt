@@ -1,0 +1,12 @@
+create or replace PACKAGE pkRegistroEstadoNivel2 AS
+PROCEDURE pRegistrarEstado(ivCodigo IN VARCHAR2, ivNombre IN VARCHAR2);
+
+
+PROCEDURE pRegistrarEstado(ivCodigo IN VARCHAR2, ivNombre IN VARCHAR2)
+  IS
+  BEGIN 
+      PKESTADO.PINSERTAR(ivCodigo, ivNombre);
+  EXCEPTION
+  WHEN OTHERS THEN
+  RAISE_APPLICATION_ERROR(-20000, 'Error al insertar en la tabla Funcionario'||SQLCODE);
+  END pRegistrarEstado;
