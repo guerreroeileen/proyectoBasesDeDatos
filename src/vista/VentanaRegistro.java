@@ -3,6 +3,8 @@ package vista;
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
 
 public class VentanaRegistro extends JInternalFrame {
 
@@ -28,6 +30,9 @@ public class VentanaRegistro extends JInternalFrame {
 	public VentanaRegistro() {
 		setTitle("Ventana de registro");
 		setBounds(100, 100, 450, 300);
+		
+		JPanel panel_Solicitud = new JPanel();
+		getContentPane().add(panel_Solicitud, BorderLayout.CENTER);
 
 	}
 
