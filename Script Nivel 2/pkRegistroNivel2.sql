@@ -7,8 +7,8 @@ PROCEDURE pRegistrarCliente(ivCedula VARCHAR2, ivNombre VARCHAR2, ivFechaNacimie
 PROCEDURE pRegistrarProducto(ivIdProducto IN VARCHAR2, ivNombre IN VARCHAR2, ivTipo_prod_id IN VARCHAR2);
 PROCEDURE pRSolicitud(idSolicitud VARCHAR2, cedula VARCHAR2,observacion VARCHAR2,tipoSolicitud VARCHAR2, idProducto VARCHAR2);
 
+END pkRegistroNivel2;
 /
-
 CREATE OR REPLACE PACKAGE BODY pkRegistroNivel2 AS
 
 PROCEDURE pRegistrarFuncionario(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivDireccion IN VARCHAR2,  ivTelefono IN VARCHAR2, ivFechaNacimiento IN DATE)
