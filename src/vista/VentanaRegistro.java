@@ -11,13 +11,15 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Font;
 import java.awt.Insets;
 
-public class VentanaRegistro extends JInternalFrame {
+public class VentanaRegistro extends JFrame {
+	
 	private JTextField textField_numero_solicitud;
 	private JTextField textField_observaciones;
 	private JTextField textField_causa;
