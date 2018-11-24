@@ -42,7 +42,7 @@ public class SistemaGestion {
 		try {
 			SistemaGestion s = new SistemaGestion();
 
-			s.atenderSolicitud("1061816906", "2", "Uis", "2");
+			s.atenderSolicitud("1061816906", "1", "Uis", "2");
 			System.out.println("Exito");
 
 		} catch (Exception e) {
