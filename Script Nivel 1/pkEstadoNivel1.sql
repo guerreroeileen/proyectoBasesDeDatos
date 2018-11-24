@@ -8,6 +8,8 @@ create or replace PACKAGE pkEstadoNivel1 IS
 
     FUNCTION fConsultar(ivCodigo IN VARCHAR2) RETURN ESTADO%rowtype;
 
+    FUNCTION fConsultarPorNombre(ivNombre IN VARCHAR2) RETURN ESTADO%rowtype;
+
 END pkEstadoNivel1;
 
 /
@@ -68,5 +70,20 @@ create or replace PACKAGE BODY pkEstadoNivel1 IS
             RAISE_APPLICATION_ERROR(-20001,'Error desconocido.'||SQLERRM||SQLCODE);
         
     END fConsultar;
+
+ FUNCTION fConsultarPorNombre(ivNombre IN VARCHAR2) RETURN ESTADO%rowtype
+    IS ovEstado ESTADO%rowtype;
+    BEGIN
+        SELECT * into ovEstado
+        FROM ESTADO
+        WHERE Nombre=ivNombre ;
+        
+        EXCEPTION
+            WHEN NO_DATA_FOUND THEN 
+            RAISE_APPLICATION_ERROR(-20001,'Error, no existe un estado con ese codigo.');
+            WHEN OTHERS THEN 
+            RAISE_APPLICATION_ERROR(-20001,'Error desconocido.'||SQLERRM||SQLCODE);
+        
+    END fConsultarPorNombre;
 
   END pkEstadoNivel1;
