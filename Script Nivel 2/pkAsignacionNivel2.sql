@@ -1,4 +1,10 @@
-CREATE OR REPLACE PACKAGE pkasigancionnivel2 IS END pkasigancionnivel2;
+CREATE OR REPLACE PACKAGE pkasigancionnivel2 IS 
+PROCEDURE pasignacionautomatica (
+        ividsolicitud IN VARCHAR2
+    );
+    PROCEDURE pAsignacionIndividual(ividsolicitud IN VARCHAR2, ivFuncioanrio in VARCHAR2);
+
+END pkasigancionnivel2;
 /
 CREATE OR REPLACE PACKAGE BODY pkregistronivel2 IS
 
