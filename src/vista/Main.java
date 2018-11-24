@@ -15,7 +15,7 @@ public class Main extends Application{
 			Parent root = (Parent)loader.load();
 //			VentanaPrincipalVisual vent = (VentanaPrincipalVisual)loader.getController();
 //			Controlador cont = new Controlador(vent);
-			Scene scene = new Scene(root,400,400);
+			Scene scene = new Scene(root,500,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
