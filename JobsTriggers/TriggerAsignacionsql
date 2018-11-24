@@ -1,0 +1,7 @@
+--Trigger que permite la asignacion automatica de las solicitudes al funcionario
+CREATE TRIGGER triggerasignacionautomatica AFTER
+    INSERT ON solicitud
+    FOR EACH ROW
+BEGIN
+    pkasignacionnivel3.fasignacionautomatica(:NEW.id);
+END triggerasignacionautomatica;
