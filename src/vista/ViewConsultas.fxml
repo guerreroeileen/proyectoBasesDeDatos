@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="331.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <ScrollPane fx:id="scrollConsultas" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <AnchorPane prefHeight="328.0" prefWidth="494.0">
+               <children>
+                  <Label fx:id="labCsltaSolicXFunc" layoutX="8.0" layoutY="23.0" prefHeight="17.0" prefWidth="250.0" text="Consultar solicitudes asignadas a funcionarios:" />
+                  <Button fx:id="butCsltaSolicXFunc" layoutX="421.0" layoutY="19.0" mnemonicParsing="false" text="Consultar" />
+                  <TextField fx:id="txtCedulaFuncionario" layoutX="258.0" layoutY="19.0" promptText="Cédula funcionario" />
+                  <Label fx:id="labCsltaSolicXEstado" layoutX="7.0" layoutY="57.0" text="Consultar solicitudes por estado:" />
+                  <Label fx:id="labCsltaSolicXTipo" layoutX="7.0" layoutY="92.0" text="Consultar solicitudes por tipo:" />
+                  <TextField fx:id="txtCedulaCliente" layoutX="258.0" layoutY="126.0" promptText="Cédula cliente" />
+                  <Button fx:id="butCsltaSolicXEstado" layoutX="421.0" layoutY="53.0" mnemonicParsing="false" text="Consultar" />
+                  <Button fx:id="butCsltaSolicXTipo" layoutX="421.0" layoutY="88.0" mnemonicParsing="false" text="Consultar" />
+                  <Button fx:id="butCsltaSolicXCliente" layoutX="421.0" layoutY="126.0" mnemonicParsing="false" text="Consultar" />
+                  <Label fx:id="labCsltaProdXCliente" layoutX="8.0" layoutY="130.0" text="Consultar productos de cliente:" />
+                  <ChoiceBox fx:id="cmbBoxEstadoSol" layoutX="258.0" layoutY="53.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="cmbBoxTipoSol" layoutX="258.0" layoutY="88.0" prefWidth="150.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>
