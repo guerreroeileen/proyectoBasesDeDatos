@@ -6,8 +6,7 @@ PROCEDURE pRegistrarAnomalia(ivNombre IN VARCHAR2, ivId IN VARCHAR2);
 PROCEDURE pRegistrarCliente(ivCedula VARCHAR2, ivNombre VARCHAR2, ivFechaNacimiento VARCHAR2, ivDireccion VARCHAR, ivTelefono VARCHAR2);
 PROCEDURE pRegistrarProducto(ivIdProducto IN VARCHAR2, ivNombre IN VARCHAR2, ivTipo_prod_id IN VARCHAR2);
 PROCEDURE pRSolicitud(idSolicitud VARCHAR2, cedula VARCHAR2,observacion VARCHAR2,tipoSolicitud VARCHAR2, idProducto VARCHAR2);
-PROCEDURE pModificarSolicitud(ivIDSolicitud VARCHAR2, ivTipoProducto VARCHAR2, ivCodProducto VARCHAR2 );
-END pkRegistroNivel2;
+
 
 CREATE OR REPLACE PACKAGE BODY pkRegistroNivel2 AS
 
@@ -79,68 +78,67 @@ PROCEDURE pRegistrarCliente(ivCedula VARCHAR2, ivNombre VARCHAR2, ivFechaNacimie
     
     END pRegistrarCliente;
     
-PROCEDURE pRSolicitud(tipoProducto VARCHAR2, cedula VARCHAR2,observacion VARCHAR2,tipoSolicitud VARCHAR2, idProducto VARCHAR2
-, ivCausa VARCHAR2, nombreAnomalia VARCHAR2) IS
+PROCEDURE prsolicitud (
+        tipoproducto     VARCHAR2,
+        cedula           VARCHAR2,
+        observacion      VARCHAR2,
+        tiposolicitud    VARCHAR2,
+        idproducto       VARCHAR2,
+        ivcausa          VARCHAR2,
+        nombreanomalia   VARCHAR2
+    ) IS
 
-fechaAsignacion DATE;
-fechaAtencion DATE;
-estadoCodigo VARCHAR2;
-funcionarioCedula VARCHAR2;
-comentarioFuncionario VARCHAR2;
-Cliente Cliente%rowType;
-numeroSolicitud Solicitud.N_solicitud%type;
-tipoSolici VARCHAR2;
-
-BEGIN
+        fechaasignacion         DATE;
+        fechaatencion           DATE;
+        estadocodigo            VARCHAR2;
+        funcionariocedula       VARCHAR2;
+        comentariofuncionario   VARCHAR2;
+        cliente                 cliente%rowtype;
+        numerosolicitud         solicitud.n_solicitud%TYPE;
+        tiposolici              VARCHAR2;
+    BEGIN
 -- tienen que ver donde va ese metodo creado por jaiver y kevin
-numeroSolicitud := sequence_id_solicitud.nextval;
-fechaAsignacion := sysdate;
-estadoCodigo := 'En_espera';
-fechaAtencion := null;
-funcionarioCedula := null;
-anomaliaID := nombreAnomalia;
-comentarioFuncionario := null;
+        numerosolicitud := sequence_id_solicitud.nextval;
+        fechaasignacion := SYSDATE;
+        estadocodigo := 'En_espera';
+        fechaatencion := NULL;
+        funcionariocedula := NULL;
+        anomaliaid := nombreanomalia;
+        comentariofuncionario := NULL;
+        cliente := pkclientenivel1.fconsultar(cedula);
+        tiposolici := pktiposolicitudn1.fconsultar(tiposolicitud);
+        CASE tiposolici.nombre
+            WHEN 'nuevoproducto' THEN
+                causa := NULL;
+                anomaliaid := NULL;
+                pk_solicitud_n1.pinsertar(numerosolicitud,observacion,fechaasignacion,fechatencion,causa,comentariofuncionario,cedula
+               ,estadocodigo,funcionariocedula,anomaliaid,tiposolici,idproducto);
 
-cliente:= pkClienteNivel1.fConsultar(cedula);
-tipoSolici := pktiposolicitudn1.fconsultar(tipoSolicitud);
+            WHEN 'retiro' THEN
+                anomaliaid := NULL;
+                observacion := NULL;
+                pk_solicitud_n1.pinsertar(numerosolicitud,observacion,fechaasignacion,fechatencion,causa,comentariofuncionario,cedula
+               ,estadocodigo,funcionariocedula,anomaliaid,tiposolici,idproducto);
 
+            WHEN 'danos' THEN
+                causa := NULL;
+                pk_solicitud_n1.pinsertar(numerosolicitud,observacion,fechaasignacion,fechatencion,causa,comentariofuncionario,cedula
+               ,estadocodigo,funcionariocedula,anomaliaid,tiposolici,idproducto);
 
-CASE tipoSolici.nombre
-WHEN 'nuevoproducto' THEN
-causa := null;
-anomaliaID := null;
-pk_solicitud_n1.pinsertar(numeroSolicitud,observacion,fechaAsignacion,fechAtencion,causa,comentarioFuncionario,cedula,estadoCodigo,funcionarioCedula,anomaliaID,tipoSolici,idProducto);
-WHEN 'retiro' THEN
-anomaliaID := null;
-observacion := null;
-pk_solicitud_n1.pinsertar(numeroSolicitud,observacion,fechaAsignacion,fechAtencion,causa,comentarioFuncionario,cedula,estadoCodigo,funcionarioCedula,anomaliaID,tipoSolici,idProducto);
-WHEN 'danos' THEN 
-causa := null;
-pk_solicitud_n1.pinsertar(numeroSolicitud,observacion,fechaAsignacion,fechAtencion,causa,comentarioFuncionario,cedula,estadoCodigo,funcionarioCedula,anomaliaID,tipoSolici,idProducto);
-WHEN 'reclamos' THEN 
-causa := null;
-anomaliaID := null;
-pk_solicitud_n1.pinsertar(numeroSolicitud,observacion,fechaAsignacion,fechAtencion,causa,comentarioFuncionario,cedula,estadoCodigo,funcionarioCedula,anomaliaID,tipoSolici,idProducto);
+            WHEN 'reclamos' THEN
+                causa := NULL;
+                anomaliaid := NULL;
+                pk_solicitud_n1.pinsertar(numerosolicitud,observacion,fechaasignacion,fechatencion,causa,comentariofuncionario,cedula
+               ,estadocodigo,funcionariocedula,anomaliaid,tiposolici,idproducto);
 
-END CASE;
+            WHEN 'modificacion' THEN
+                pk_solicitud_n1.pinsertar(numerosolicitud,observacion,fechaasignacion,fechatencion,causa,comentariofuncionario,cedula
+               ,estadocodigo,funcionariocedula,anomaliaid,tiposolici,idproducto);
+        END CASE;
 
-Exception When other then
-
-raise_application_error(-20201,' no esta registrado');
-
-END pRSolicitud;
-
-
-
-PROCEDURE pModificarSolicitud(ivIDSolicitud VARCHAR2, ivTipoProducto VARCHAR2, ivCodProducto VARCHAR2 )
-IS 
-BEGIN
-pk_solicitud_n1.pmodificarproducto(ivIDSolicitud,ivTipoProducto);
-
-EXCEPTION
-WHEN OTHERS THEN
-        RAISE_APPLICATION_ERROR(-20001,'La solicitud que se quiere modificar no existe.');
-
-END pModificarSolicitud;
+    EXCEPTION
+        WHEN other THEN
+            raise_application_error(-20201,' no esta registrado');
+    END prsolicitud;
   
   END pkRegistroNivel2;
