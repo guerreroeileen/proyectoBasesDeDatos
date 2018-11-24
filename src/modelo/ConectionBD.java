@@ -3,8 +3,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class ConectionBD {
-	private static Connection connection;
-	public static Connection getConection() throws Exception {
+	private  Connection connection;
+	public  Connection getConection() throws Exception {
 		if(connection==null) {
 			connection=conectarYConsultarBD();
 		}
