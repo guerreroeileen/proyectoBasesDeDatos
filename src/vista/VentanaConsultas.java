@@ -200,5 +200,4 @@ public class VentanaConsultas extends JFrame {
 		JList list_Consultas = new JList();
 		panel.add(list_Consultas);
 	}
-
 }
