@@ -1,9 +1,5 @@
 create or replace PACKAGE pkRegistroNivel2 AS
 
---procesos definidos
-
---kjk
-
 PROCEDURE pRegistrarEstado (ivCodigo IN VARCHAR2, ivNombre IN VARCHAR2); 
 PROCEDURE pRegistrarFuncionario(ivNombre IN VARCHAR2, ivCedula IN VARCHAR2, ivFechaNacimiento IN DATE, ivDireccion IN VARCHAR2,  ivTelefono IN VARCHAR2);
 PROCEDURE pRegistrarAnomalia(ivNombre IN VARCHAR2, ivId IN VARCHAR2);
