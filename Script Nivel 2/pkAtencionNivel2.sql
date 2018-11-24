@@ -28,6 +28,7 @@ create or replace PACKAGE pkatencionnivel2 AS
         comentario VARCHAR2
     );
 
+
 END pkatencionnivel2;
 /
 create or replace PACKAGE BODY pkatencionnivel2 AS
@@ -40,7 +41,7 @@ create or replace PACKAGE BODY pkatencionnivel2 AS
     ) IS
         soli    solicitud%rowtype;
         tsoli   tiposolicitud%rowtype;
-        tip     solicitud.tiposolicitud_id%TYPE;
+        tip     solicitud.tiposolicitud_id%TYPE; 
     BEGIN
         soli := pksolicitudn1.fconsultar(codsoli);
         IF soli.funcionario_cedula = cedfun THEN
@@ -61,6 +62,9 @@ create or replace PACKAGE BODY pkatencionnivel2 AS
             raise_application_error(-20001, 'el funcionario no tiene permiso');
         END IF;
 
+    EXCEPTION
+        WHEN OTHERS THEN
+            raise_application_error(-20001, 'Verifique los datos');
     END patendersolicitud;
 
     PROCEDURE psolicitudnuevoproducto (
@@ -79,7 +83,7 @@ create or replace PACKAGE BODY pkatencionnivel2 AS
         pksolicitudn1.pmodificarsolicitudcomentario(solici.n_solicitud, comentario);
     EXCEPTION
         WHEN OTHERS THEN
-            raise;
+            RAISE;
             ROLLBACK;
     END psolicitudnuevoproducto;
 
@@ -117,12 +121,21 @@ create or replace PACKAGE BODY pkatencionnivel2 AS
         pksolicitudn1.pmodificarsolicitudatencion(solici.n_solicitud, SYSDATE);
     END psolicituddanoreclamo;
 
-    PROCEDURE pevaluarsolicitudes (
-        comentario VARCHAR2
-    ) IS
+    PROCEDURE pevaluarsolicitudes IS
         cod_solicitud   solicitud.n_solicitud%TYPE;
+        comentario solicitud.comentariofuncionario%TYPE;
     BEGIN
-       INSERT INTO tiposolicitud VALUES('Prueba', '01', 'Tipo prueba');
+    comentario := 'Generado automaticamente por el sistema';
+        WHILE cod_solicitud != '-1' LOOP
+            cod_solicitud := pksolicitudn1.fsolicitudvencida('1');
+            pkatencionnivel2.psolicituddanoreclamo(cod_solicitud, comentario, '2');
+        END LOOP;
+
+        WHILE cod_solicitud != '-1' LOOP
+            cod_solicitud := pksolicitudn1.fsolicitudvencida('3');
+            pkatencionnivel2.psolicituddanoreclamo(cod_solicitud, comentario, '2');
+        END LOOP;
+
     END pevaluarsolicitudes;
 
 END pkatencionnivel2;

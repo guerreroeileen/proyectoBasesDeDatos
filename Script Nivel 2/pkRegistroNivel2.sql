@@ -3,9 +3,9 @@ create or replace PACKAGE pkRegistroNivel2 AS
 PROCEDURE pRegistrarEstado (ivCodigo IN VARCHAR2, ivNombre IN VARCHAR2); 
 PROCEDURE pRegistrarFuncionario(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivDireccion IN VARCHAR2,  ivTelefono IN VARCHAR2, ivFechaNacimiento IN DATE);
 PROCEDURE pRegistrarAnomalia(ivNombre IN VARCHAR2, ivId IN VARCHAR2);
-PROCEDURE pRegistrarCliente(ivCedula VARCHAR2, ivNombre VARCHAR2, ivFechaNacimiento VARCHAR2, ivDireccion VARCHAR, ivTelefono VARCHAR2);
+PROCEDURE pRegistrarCliente(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivFechaNacimiento IN VARCHAR2, ivDireccion IN VARCHAR, ivTelefono IN VARCHAR2);
 PROCEDURE pRegistrarProducto(ivIdProducto IN VARCHAR2, ivNombre IN VARCHAR2, ivTipo_prod_id IN VARCHAR2);
-PROCEDURE pRSolicitud(idSolicitud VARCHAR2, cedula VARCHAR2,observacion VARCHAR2,tipoSolicitud VARCHAR2, idProducto VARCHAR2);
+PROCEDURE pRSolicitud(idSolicitud IN VARCHAR2, cedula IN VARCHAR2,observacion IN VARCHAR2,tipoSolicitud IN VARCHAR2, idProducto IN VARCHAR2);
 
 END pkRegistroNivel2;
 /
@@ -59,7 +59,7 @@ EXCEPTION
 
 END pRegistrarAnomalia;
 
-PROCEDURE pRegistrarCliente(ivCedula VARCHAR2, ivNombre VARCHAR2, ivFechaNacimiento VARCHAR2, ivDireccion VARCHAR, ivTelefono VARCHAR2)
+PROCEDURE pRegistrarCliente(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivFechaNacimiento IN VARCHAR2, ivDireccion IN VARCHAR, ivTelefono IN VARCHAR2)
     
     IS
     

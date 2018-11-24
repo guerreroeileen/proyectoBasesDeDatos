@@ -1,0 +1,29 @@
+create or replace PACKAGE pkatencionn3 AS
+    FUNCTION fatendersolicitud (
+        cedfun       funcionario.cedula%TYPE,
+        codsoli      solicitud.n_solicitud%TYPE,
+        comentario   solicitud.comentariofuncionario%TYPE,
+        estado       solicitud.estado_codigo%TYPE
+    )RETURN VARCHAR2;
+    
+END pkatencionn3;
+/
+create or replace PACKAGE BODY pkatencionn3 AS
+
+    FUNCTION fatendersolicitud (
+        cedfun       funcionario.cedula%TYPE,
+        codsoli      solicitud.n_solicitud%TYPE,
+        comentario   solicitud.comentariofuncionario%TYPE,
+        estado       solicitud.estado_codigo%TYPE
+    ) RETURN VARCHAR2 IS
+        exce   VARCHAR2(50);
+    BEGIN
+        exce := '0';
+        pkatencionnivel2.patendersolicitud(cedfun,codsoli,comentario,estado);
+        RETURN exce;
+    EXCEPTION
+        WHEN OTHERS THEN
+            RETURN sqlerrm;
+    END fatendersolicitud;
+
+END pkatencionn3;
