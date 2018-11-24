@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE pkClienteNivel3 IS
+CREATE OR REPLACE PACKAGE pkRegistroNivel3 IS
 
 FUNCTION pRegistrarFuncionario(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivDireccion IN VARCHAR2,  ivTelefono IN VARCHAR2, ivFechaNacimiento IN DATE) RETURN VARCHAR2;
 FUNCTION pRegistrarEstado (ivCodigo IN VARCHAR2, ivNombre IN VARCHAR2) RETURN VARCHAR2; 
@@ -6,10 +6,31 @@ FUNCTION pRegistrarCliente(ivCedula VARCHAR2, ivNombre VARCHAR2, ivFechaNacimien
 FUNCTION pRegistrarAnomalia(ivNombre IN VARCHAR2, ivId IN VARCHAR2) RETURN VARCHAR2;
 FUNCTION pRegistrarProducto(ivIdProducto IN VARCHAR2, ivNombre IN VARCHAR2, ivTipo_prod_id IN VARCHAR2)RETURN VARCHAR2;
 end pkClienteNivel3;
+PROCEDURE pRSolicitud(ividSolicitud IN VARCHAR2, ivcedula IN VARCHAR2,ivobservacion IN VARCHAR2,ivtipoSolicitud IN VARCHAR2, ividProducto IN VARCHAR2, );
 
 /
 
-CREATE OR REPLACE PACKAGE BODY pkClienteNivel3 IS
+CREATE OR REPLACE PACKAGE BODY pkRegistroNivel3 IS
+
+PROCEDURE pRSolicitud(ividSolicitud IN VARCHAR2, ivcedula IN VARCHAR2,ivobservacion IN VARCHAR2,ivtipoSolicitud IN VARCHAR2, ividProducto IN VARCHAR2)
+RETURN VARCHAR2
+IS
+
+BEGIN
+
+pkRegistroNivel2.pRSolicitud(ividSolicitud, ivcedula ,ivobservacion,ivtipoSolicitud, ividProducto);
+RETURN 'No_Exception';
+
+EXCEPTION
+
+WHEN OTHERS THEN
+   RETURN SQLERRM;
+
+END pRegistrarFuncionario;
+
+
+END pRSolicitud;
+
 
 FUNCTION pRegistrarFuncionario(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivDireccion IN VARCHAR2, ivTelefono IN VARCHAR2, ivFechaNacimiento IN DATE)
 RETURN VARCHAR2
