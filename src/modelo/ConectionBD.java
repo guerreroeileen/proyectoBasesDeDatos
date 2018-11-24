@@ -3,15 +3,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class ConectionBD {
-	private  Connection connection;
-	public  Connection getConection() throws Exception {
+	private static  Connection connection;
+	public static Connection getConection() throws Exception {
 		if(connection==null) {
 			connection=conectarYConsultarBD();
 		}
 		return connection;
 	}
 	private static Connection conectarYConsultarBD() throws Exception {
-		String ip="200.3.193.244";
+		String ip="200.3.193.24";
 		String puerto="1522";
 		String insta="ESTUD";
 		String user="P09551_1_10";
