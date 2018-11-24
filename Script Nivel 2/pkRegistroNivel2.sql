@@ -1,7 +1,7 @@
 create or replace PACKAGE pkRegistroNivel2 AS
 
 PROCEDURE pRegistrarEstado (ivCodigo IN VARCHAR2, ivNombre IN VARCHAR2); 
-PROCEDURE pRegistrarFuncionario(ivNombre IN VARCHAR2, ivCedula IN VARCHAR2, ivFechaNacimiento IN DATE, ivDireccion IN VARCHAR2,  ivTelefono IN VARCHAR2);
+PROCEDURE pRegistrarFuncionario(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivDireccion IN VARCHAR2,  ivTelefono IN VARCHAR2, ivFechaNacimiento IN DATE);
 PROCEDURE pRegistrarAnomalia(ivNombre IN VARCHAR2, ivId IN VARCHAR2);
 PROCEDURE pRegistrarCliente(ivCedula VARCHAR2, ivNombre VARCHAR2, ivFechaNacimiento VARCHAR2, ivDireccion VARCHAR, ivTelefono VARCHAR2);
 PROCEDURE pRegistrarProducto(ivIdProducto IN VARCHAR2, ivNombre IN VARCHAR2, ivTipo_prod_id IN VARCHAR2);
@@ -11,22 +11,22 @@ END pkRegistroNivel2;
 
 CREATE OR REPLACE PACKAGE BODY pkRegistroNivel2 AS
 
-PROCEDURE pRegistrarFuncionario(ivNombre IN VARCHAR2, ivCedula IN VARCHAR2, ivFechaNacimiento IN DATE, ivDireccion IN VARCHAR2,  ivTelefono IN VARCHAR2)
+PROCEDURE pRegistrarFuncionario(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivDireccion IN VARCHAR2,  ivTelefono IN VARCHAR2, ivFechaNacimiento IN DATE)
   IS
   BEGIN 
-      PKFUNCIONARIO.PINSERTAR(ivNombre, ivCedula, ivFechaNacimiento, ivDireccion, ivTelefono);
+      pkFuncionarioNivel1.PINSERTAR(ivCedula, ivNombre, ivDireccion, ivTelefono , ivFechaNacimiento);
   EXCEPTION
   WHEN OTHERS THEN
-  RAISE_APPLICATION_ERROR(-20000, 'Error al insertar en la tabla Funcionario'||SQLCODE);
+  RAISE_APPLICATION_ERROR(-20001, 'Error al insertar en la tabla Funcionario'||SQLCODE);
   END pRegistrarFuncionario;
   
   PROCEDURE pRegistrarEstado(ivCodigo IN VARCHAR2, ivNombre IN VARCHAR2)
   IS
   BEGIN 
-      PKESTADO.PINSERTAR(ivCodigo, ivNombre);
+      pkEstadoNivel1.PINSERTAR(ivCodigo, ivNombre);
   EXCEPTION
   WHEN OTHERS THEN
-  RAISE_APPLICATION_ERROR(-20000, 'Error al insertar en la tabla Funcionario'||SQLCODE);
+  RAISE_APPLICATION_ERROR(-20001, 'Error al insertar en la tabla Funcionario'||SQLCODE);
   END pRegistrarEstado;
   
   PROCEDURE pRegistrarProducto(ivIdProducto IN VARCHAR2, ivNombre IN VARCHAR2, ivTipo_prod_id IN VARCHAR2)is
