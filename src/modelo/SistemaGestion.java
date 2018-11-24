@@ -15,18 +15,21 @@ public class SistemaGestion {
 
 	public boolean atenderSolicitud(String cedFun, String codSol, String comentario, String estado) throws Exception {
 		try {
-			String proceso = "ret:=pkatencionn3.fatendersolicitud";
-			Statement statement = connection.createStatement();
-			String decl="DECLARE ret VARCHAR2(200); ";
-			String query = decl+"Begin " + proceso + "('" + cedFun + "','" + codSol + "','" + comentario + "','" + estado + "');"
-					+ " End;";
-			ResultSet resp = statement.executeQuery(query);
-			String re = resp.getString(0);
-			if (re.equals("0")) {
-				return true;
-			} else {
-				throw new Exception(re);
+			String proceso = "{? = call pkatencionn3.fatendersolicitud(?,?,?,?)}";			
+			CallableStatement c = connection.prepareCall(proceso);
+			c.registerOutParameter(1, Types.VARCHAR);
+			c.setString(2, cedFun);
+			c.setString(3, codSol);
+			c.setString(4, comentario);
+			c.setString(5, estado);
+
+			c.execute();
+			
+			String p=c.getString(1);
+			if(!p.equals("0")) {
+				throw new Exception(p);
 			}
+			return true;
 		} catch (SQLException e) {
 			throw new Exception("Error al efectuar la operacion");
 
