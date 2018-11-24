@@ -6,6 +6,7 @@ FUNCTION  fConsultar (ivIdProducto IN VARCHAR2) RETURN oPRODUCTO%rowtype;
 PROCEDURE  pModificar (vIdProducto IN VARCHAR2, vNombre IN VARCHAR2, vTipo_prod_id IN VARCHAR2);
 END pkProdutoNivel1;
 
+/
 CREATE OR REPLACE PROCEDURE  pInsertar (ivIdProducto IN VARCHAR2, ivNombre IN VARCHAR2, ivTipo_prod_id IN VARCHAR2) IS
 BEGIN
     INSERT INTO PRODUCTO VALUES(ivIdProducto,ivNombre,ivTipo_prod_id);
@@ -18,7 +19,7 @@ BEGIN
     
 END pInsertar;
 
-
+/
 CREATE OR REPLACE PROCEDURE  pEliminar (ivIdProducto IN VARCHAR2) IS
 BEGIN
     DELETE FROM PRODUCTO vProducto
@@ -46,6 +47,7 @@ BEGIN
     
 END fConsultar;
 
+/
 CREATE OR REPLACE PROCEDURE  pModificar (vIdProducto IN VARCHAR2, vNombre IN VARCHAR2, vTipo_prod_id IN VARCHAR2) IS
 BEGIN
     UPDATE PRODUCTO P
