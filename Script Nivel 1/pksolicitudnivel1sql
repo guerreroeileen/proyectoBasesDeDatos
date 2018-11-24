@@ -1,0 +1,287 @@
+CREATE OR REPLACE PACKAGE pksolicitudn1 IS
+--[declaración de objetos públicos]
+    PROCEDURE pinsertarsolictud (
+        n_solicitud             VARCHAR2,
+        observaciones           VARCHAR2,
+        fechaasignacion         DATE,
+        fechaatencion           DATE,
+        causa                   VARCHAR2,
+        comentariofuncionario   VARCHAR2,
+        cliente_cedula          VARCHAR2,
+        estado_codigo           VARCHAR2,
+        funcionario_cedula      VARCHAR2,
+        anomalia_id             VARCHAR2,
+        tiposolicitud_id        VARCHAR2,
+        producto_id             VARCHAR2
+    );
+
+    FUNCTION darsolicitudes (
+        cedf solicitud.funcionario_cedula%TYPE
+    ) RETURN NUMBER;
+
+    PROCEDURE pmodificarproducto (
+        cods VARCHAR2,
+        prod VARCHAR2
+    );
+
+    FUNCTION fsolicitudvencida (
+        tipo solicitud.tiposolicitud_id%TYPE
+    ) RETURN solicitud.n_solicitud%TYPE;
+
+    PROCEDURE pmodificarsolicitudcomentario (
+        cods VARCHAR2,
+        come VARCHAR2
+    );
+
+    PROCEDURE pmodificarsolicitudatencion (
+        cods VARCHAR2,
+        fecha DATE
+    );
+
+    PROCEDURE pmodificarsolicitudasignacion (
+        cods   solicitud.n_solicitud%TYPE,
+        codf   solicitud.funcionario_cedula%TYPE
+    );
+
+    PROCEDURE pmodificarfuncionario (
+        cods   solicitud.n_solicitud%TYPE,
+        cedf   solicitud.funcionario_cedula%TYPE
+    );
+
+    PROCEDURE pmodificarsolicitudestado (
+        cods VARCHAR2,
+        estado VARCHAR2
+    );
+
+    PROCEDURE pborrarsolictud (
+        n_solicitudt VARCHAR2
+    );
+
+    PROCEDURE pmodificarsolictud (
+        n_solicitudt             VARCHAR2,
+        observacionest           VARCHAR2,
+        fechaasignaciont         DATE,
+        fechaatenciont           DATE,
+        causat                   VARCHAR2,
+        comentariofuncionariot   VARCHAR2,
+        cliente_cedulat          VARCHAR2,
+        estado_codigot           VARCHAR2,
+        funcionario_cedulat      VARCHAR2,
+        anomalia_idt             VARCHAR2,
+        tiposolicitud_idt        VARCHAR2,
+        producto_idt             VARCHAR2
+    );
+
+    FUNCTION fconsultar (
+        cod_solicitud VARCHAR2
+    ) RETURN solicitud%rowtype;
+
+--[declaración de subprogramas]
+
+END pksolicitudn1;
+/
+CREATE OR REPLACE PACKAGE BODY pksolicitudn1 IS 
+
+--[declaración de objetos privados]
+
+    PROCEDURE pinsertarsolictud (
+        n_solicitud             VARCHAR2,
+        observaciones           VARCHAR2,
+        fechaasignacion         DATE,
+        fechaatencion           DATE,
+        causa                   VARCHAR2,
+        comentariofuncionario   VARCHAR2,
+        cliente_cedula          VARCHAR2,
+        estado_codigo           VARCHAR2,
+        funcionario_cedula      VARCHAR2,
+        anomalia_id             VARCHAR2,
+        tiposolicitud_id        VARCHAR2,
+        producto_id             VARCHAR2
+    ) IS
+    BEGIN
+        INSERT INTO solicitud VALUES (
+            n_solicitud,
+            observaciones,
+            fechaasignacion,
+            fechaatencion,
+            causa,
+            comentariofuncionario,
+            cliente_cedula,
+            estado_codigo,
+            funcionario_cedula,
+            anomalia_id,
+            tiposolicitud_id,
+            producto_id
+        );
+
+    END pinsertarsolictud;
+
+    FUNCTION fsolicitudvencida (
+        tipo solicitud.tiposolicitud_id%TYPE
+    ) RETURN solicitud.n_solicitud%TYPE IS
+        cod       solicitud.n_solicitud%TYPE;
+        flimite   NUMBER;
+    BEGIN
+    cod:='-1';
+        SELECT
+            s.n_solicitud
+        INTO cod
+        FROM
+            solicitud s
+        WHERE
+            SYSDATE - s.fechaasignacion > flimite
+            AND s.tiposolicitud_id = tipo
+            AND s.estado_codigo = '1' AND cod <> '-1';
+
+    END fsolicitudvencida;
+
+    PROCEDURE pmodificarproducto (
+        cods VARCHAR2,
+        prod VARCHAR2
+    ) IS
+    BEGIN
+        UPDATE solicitud s
+        SET
+            s.producto_id = prod
+        WHERE
+            s.n_solicitud = cods;
+
+    END pmodificarproducto;
+
+    PROCEDURE pmodificarsolicitudcomentario (
+        cods VARCHAR2,
+        come VARCHAR2
+    ) IS
+    BEGIN
+        UPDATE solicitud s
+        SET
+            s.comentariofuncionario = come
+        WHERE
+            s.n_solicitud = cods;
+
+    END pmodificarsolicitudcomentario;
+
+    PROCEDURE pmodificarsolicitudatencion (
+        cods VARCHAR2,
+        fecha DATE
+    ) IS
+    BEGIN
+        UPDATE solicitud s
+        SET
+            s.fechaatencion = fecha
+        WHERE
+            s.n_solicitud = cods;
+
+    END pmodificarsolicitudatencion;
+
+    PROCEDURE pmodificarsolicitudestado (
+        cods VARCHAR2,
+        estado VARCHAR2
+    ) IS
+    BEGIN
+        UPDATE solicitud s
+        SET
+            s.estado_codigo = estado
+        WHERE
+            s.n_solicitud = cods;
+
+    END pmodificarsolicitudestado;
+
+    PROCEDURE pborrarsolictud (
+        n_solicitudt VARCHAR2
+    ) IS
+    BEGIN
+        DELETE FROM solicitud
+        WHERE
+            solicitud.n_solicitud = n_solicitudt;
+
+    END pborrarsolictud;
+
+    PROCEDURE pmodificarsolictud (
+        n_solicitudt             VARCHAR2,
+        observacionest           VARCHAR2,
+        fechaasignaciont         DATE,
+        fechaatenciont           DATE,
+        causat                   VARCHAR2,
+        comentariofuncionariot   VARCHAR2,
+        cliente_cedulat          VARCHAR2,
+        estado_codigot           VARCHAR2,
+        funcionario_cedulat      VARCHAR2,
+        anomalia_idt             VARCHAR2,
+        tiposolicitud_idt        VARCHAR2,
+        producto_idt             VARCHAR2
+    ) IS
+    BEGIN
+        UPDATE solicitud s
+        SET
+            s.observaciones = observacionest,
+            s.fechaasignacion = fechaasignaciont,
+            s.fechaatencion = fechaatenciont,
+            s.causa = causat,
+            s.comentariofuncionario = comentariofuncionariot,
+            s.cliente_cedula = cliente_cedulat,
+            s.estado_codigo = estado_codigot,
+            s.funcionario_cedula = funcionario_cedulat,
+            s.anomalia_id = anomalia_idt,
+            s.tiposolicitud_id = tiposolicitud_idt,
+            s.producto_id = producto_idt
+        WHERE
+            s.n_solicitud = n_solicitudt;
+
+    END pmodificarsolictud;
+
+    FUNCTION fconsultar (
+        cod_solicitud VARCHAR2
+    ) RETURN solicitud%rowtype IS
+        fila   solicitud%rowtype;
+    BEGIN
+        SELECT
+            *
+        INTO fila
+        FROM
+            solicitud s
+        WHERE
+            s.n_solicitud = cod_solicitud;
+
+        RETURN fila;
+    END fconsultar;
+
+    PROCEDURE pmodificarsolicitudasignacion (
+        cods   solicitud.n_solicitud%TYPE,
+        codf   solicitud.funcionario_cedula%TYPE
+    ) IS
+    BEGIN
+        pmodificarsolicitudestado(cods,'1');
+        pmodificarfuncionario(cods,codf);
+    END pmodificarsolicitudasignacion;
+
+    PROCEDURE pmodificarfuncionario (
+        cods   solicitud.n_solicitud%TYPE,
+        cedf   solicitud.funcionario_cedula%TYPE
+    ) IS
+    BEGIN
+        UPDATE solicitud s
+        SET
+            s.funcionario_cedula = cedf
+        WHERE
+            s.n_solicitud = cods;
+
+    END pmodificarfuncionario;
+
+    FUNCTION darsolicitudes (
+        cedf solicitud.funcionario_cedula%TYPE
+    ) RETURN NUMBER IS
+        ret   NUMBER;
+    BEGIN
+        SELECT
+            COUNT(*)
+        INTO ret
+        FROM
+            solicitud s
+        WHERE
+            s.funcionario_cedula = cedf;
+
+    END darsolicitudes;
+--[definición de subprogramas]
+
+END pksolicitudn1;
