@@ -307,10 +307,10 @@ public class Controladora extends Application {
 
 	private void iniciarEventosRegistrarSolicitud() {
 		ChoiceBox<Eleccion> ch = viewRegistrarSolicitud.obtenerChoiceBox();
-		viewRegistrarSolicitud.agregarEleccion("Creación", "Creacion");
-		viewRegistrarSolicitud.agregarEleccion("Modifiación", "Modificacion");
-		viewRegistrarSolicitud.agregarEleccion("Cancelación", "Cancelacion");
-		viewRegistrarSolicitud.agregarEleccion("Daño", "Dano");
+		viewRegistrarSolicitud.agregarEleccion("Creacion", "Creacion");
+		viewRegistrarSolicitud.agregarEleccion("Modifiacion", "Modificacion");
+		viewRegistrarSolicitud.agregarEleccion("Cancelacion", "Cancelacion");
+		viewRegistrarSolicitud.agregarEleccion("Dano", "Dano");
 		viewRegistrarSolicitud.agregarEleccion("Reclamo", "Reclamo");
 
 		EventHandler<ActionEvent> handler = getActionHandlerRegistrarSolicitud();
