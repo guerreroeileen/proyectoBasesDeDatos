@@ -18,7 +18,7 @@ public class ViewRegistrarSolicitud {
 	private VBox vBoxPanel;
 
 	@FXML
-	private ChoiceBox<?> chbTipoSolicitud;
+	private ChoiceBox<String> chbTipoSolicitud;
 
 	@FXML
 	private ImageView imgBanner;
@@ -46,6 +46,10 @@ public class ViewRegistrarSolicitud {
 
 	public Button obtenerBotonRegistrar() {
 		return bRegistrar;
+	}
+	
+	public ChoiceBox<?> obtenerChoiceBox(){
+		return chbTipoSolicitud;
 	}
 
 	public void modificarBanner(String rutaImagen) {
