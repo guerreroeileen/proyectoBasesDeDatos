@@ -7,15 +7,19 @@ import java.util.HashMap;
 
 import javafx.fxml.*;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class ViewRegistrarSolicitud {
 
 	private Pane paneContenido;
+	
+	private Stage stage;
 
 	@FXML
 	private VBox vbPanel;
@@ -40,8 +44,12 @@ public class ViewRegistrarSolicitud {
 	 * @param paneContenido panel root de la vista
 	 */
 
-	public void inicializar(Pane paneContenido) {
+	public void inicializar(String name,Pane paneContenido) {
+		
 		this.paneContenido = paneContenido;
+		stage=new Stage();
+		stage.setScene(new Scene(paneContenido));
+		stage.setTitle(name);
 		nodos=new HashMap<>();
 		modificarBanner("views/imagenes/banner.jpg");
 	}
@@ -96,6 +104,10 @@ public class ViewRegistrarSolicitud {
 	public Collection<Node> obtenerNodos() {
 		return nodos.values();
 		
+	}
+
+	public Stage getStage() {
+		return stage;
 	}
 
 }
