@@ -15,14 +15,13 @@ public class Controladora extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader f = new FXMLLoader();
-		FileInputStream file = new FileInputStream(new File("views/fxml/ViewConsultas.fxml"));
+		FileInputStream file = new FileInputStream(new File("views/fxml/ViewPrincipal.fxml"));
 		Pane pane = f.load(file);
-		Scene scene = new Scene(pane,520,400);
+		Scene scene = new Scene(pane, 285, 200);
 //		scene.getStylesheets().add(new FileInputStream(new File("views/css/application.css")));
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		//INICIALIZAR PRINCIPAL
-		
 	}
 	
 	public static void main(String[] args) {
