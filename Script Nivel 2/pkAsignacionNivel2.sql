@@ -1,4 +1,5 @@
 CREATE OR REPLACE PACKAGE pkasigancionnivel2 IS 
+
 PROCEDURE pasignacionautomatica (
         ividsolicitud IN VARCHAR2
     );
@@ -7,6 +8,7 @@ PROCEDURE pasignacionautomatica (
 END pkasigancionnivel2;
 /
 CREATE OR REPLACE PACKAGE BODY pkregistronivel2 IS
+
 
     PROCEDURE pasignacionautomatica (
         ividsolicitud IN VARCHAR2
@@ -46,7 +48,7 @@ CREATE OR REPLACE PACKAGE BODY pkregistronivel2 IS
                     COUNT(*)
                 INTO datosnumero
                 FROM
-                    funcionario;
+                    tabla
 
             END IF;
 
@@ -55,8 +57,7 @@ CREATE OR REPLACE PACKAGE BODY pkregistronivel2 IS
     END pasignacionautomatica;
     
     PROCEDURE pAsignacionIndividual(ividsolicitud IN VARCHAR2, ivFuncioanrio in VARCHAR2) is
-    begin
-     pksolicitudnivel1.pmodificarsolicitudasignacion(ividsolicitud,ivFuncioanrio);
+    begin pksolicitudnivel1.pmodificarsolicitudasignacion(ividsolicitud,ivFuncioanrio);
      EXCEPTION
      WHEN NO_DATA_FOUND THEN
       RAISE_APPLICATION_ERROR(-20000, 'Error'||SQLCODE);
