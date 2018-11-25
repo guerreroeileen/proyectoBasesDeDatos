@@ -13,62 +13,22 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import vista.ViewInicioSesion;
 
 public class Controladora extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		// Inicializar ventana inicio sesion
-
-		inicializarInicioSesion(primaryStage);
-
-		// INICIALIZAR PRINCIPAL
-
+		FXMLLoader f = new FXMLLoader();
+		FileInputStream file = new FileInputStream(new File("views/fxml/ViewPrincipal.fxml"));
+		Pane pane = f.load(file);
+		Scene scene = new Scene(pane, 285, 200);
+//		scene.getStylesheets().add(new FileInputStream(new File("views/css/application.css")));
+		primaryStage.setScene(scene);
+		primaryStage.show();
 	}
-
-	private void inicializarInicioSesion(Stage primaryStage) {
-		FXMLLoader loader = null;
-		File fxmlView = new File("./views/fxml/ViewInicioSesion.fxml");
-		try {
-			FileInputStream inputFxml = new FileInputStream(fxmlView);
-			loader = new FXMLLoader();
-			Pane contentPane = loader.load(inputFxml);
-			ViewInicioSesion viewSesion = loader.getController();
-			viewSesion.modificarPanelContenido(contentPane);
-			primaryStage.setScene(new Scene(contentPane));
-			esperarSesion(viewSesion);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	private void esperarSesion(ViewInicioSesion viewSesion) {
-		Button[] botones = viewSesion.obtenerBotones();
-		EventHandler<MouseEvent> gestorDeEventos = obtenerViewSesionListener();
-
-		botones[0].setOnMouseClicked(gestorDeEventos);
-	}
-
-	private EventHandler<MouseEvent> obtenerViewSesionListener() {
-		EventHandler<MouseEvent> gestorDeEventos = new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				Button boton =(Button)event.getSource();
-				String botonStr = boton.getText();
-				
-				if(botonStr.equalsIgnoreCase("ingresar")) {
-					
-				}else if(botonStr.equalsIgnoreCase("salir")) {
-					
-				}
-				
-			}
-		};
-		return gestorDeEventos;
+	
+	public static void main(String[] args) {
+		launch(args);
 	}
 
 }

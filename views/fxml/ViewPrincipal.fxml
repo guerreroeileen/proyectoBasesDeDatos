@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="197.0" prefWidth="289.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.ViewPrincipal">
+   <children>
+      <ImageView fx:id="imgBanner" fitHeight="175.0" fitWidth="280.0" layoutX="3.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
+      <TextField fx:id="txtCedula" layoutX="22.0" layoutY="164.0" prefHeight="25.0" prefWidth="113.0" promptText="Cédula" />
+      <Button fx:id="butIngresar" layoutX="181.0" layoutY="164.0" mnemonicParsing="false" text="Ingresar" />
+   </children>
+</AnchorPane>
