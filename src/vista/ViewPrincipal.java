@@ -28,5 +28,9 @@ public class ViewPrincipal {
 			e.printStackTrace();
 		}
 	}
+    
+    public Button getButIngresar() {
+    	return butIngresar;
+    }
 	
 }

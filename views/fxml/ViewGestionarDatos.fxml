@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="328.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.ViewGestionarDatos">
+  <tabs>
+    <Tab text="Crear">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TabPane prefHeight="236.0" prefWidth="328.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Cliente">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="labNombClientCrear" layoutX="14.0" layoutY="14.0" text="Nombre:" />
+                                    <Label fx:id="labCedulaClientCrear" layoutX="14.0" layoutY="41.0" text="Cédula:" />
+                                    <Label fx:id="labFechaNaciClientCrear" layoutX="14.0" layoutY="69.0" text="Fecha de nacimiento:" />
+                                    <Label fx:id="labDirClientCrear" layoutX="14.0" layoutY="96.0" text="Dirección:" />
+                                    <Label fx:id="labTelClientCrear" layoutX="13.0" layoutY="123.0" text="Teléfono:" />
+                                    <TextField fx:id="txtNombClientCrear" layoutX="151.0" layoutY="10.0" />
+                                    <TextField fx:id="txtCedulaClientCrear" layoutX="151.0" layoutY="37.0" />
+                                    <TextField fx:id="txtFechaNaciClientCrear" layoutX="151.0" layoutY="65.0" />
+                                    <TextField fx:id="txtDirClientCrear" layoutX="151.0" layoutY="92.0" />
+                                    <TextField fx:id="txtTelClientCrear" layoutX="151.0" layoutY="119.0" />
+                                    <Button fx:id="butAgregarClient" layoutX="241.0" layoutY="159.0" mnemonicParsing="false" text="Agregar" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Tipo producto">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="labCodTiProductoCrear" layoutX="14.0" layoutY="14.0" text="Código:" />
+                                    <TextField fx:id="txtCodTiProductoCrear" layoutX="151.0" layoutY="10.0" />
+                                    <Button fx:id="butAgregarTiProducto" layoutX="241.0" layoutY="82.0" mnemonicParsing="false" text="Agregar" />
+                                    <Label fx:id="labDescTiProductoCrear" layoutX="14.0" layoutY="47.0" text="Descripción:" />
+                                    <TextField fx:id="txtDescTiProductoCrear" layoutX="151.0" layoutY="43.0" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="Funcionario">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="labNombFuncCrear" layoutX="14.0" layoutY="14.0" text="Nombre:" />
+                                    <Label fx:id="labCedulaFuncCrear" layoutX="14.0" layoutY="41.0" text="Cédula:" />
+                                    <Label fx:id="labFechaNaciFuncCrear" layoutX="14.0" layoutY="69.0" text="Fecha de nacimiento:" />
+                                    <Label fx:id="labDirFuncCrear" layoutX="14.0" layoutY="96.0" text="Dirección:" />
+                                    <Label fx:id="labTelFuncCrear" layoutX="13.0" layoutY="123.0" text="Teléfono:" />
+                                    <TextField fx:id="txtNombFuncCrear" layoutX="151.0" layoutY="10.0" />
+                                    <TextField fx:id="txtCedulaFuncCrear" layoutX="151.0" layoutY="37.0" />
+                                    <TextField fx:id="txtFechaNaciFuncCrear" layoutX="151.0" layoutY="65.0" />
+                                    <TextField fx:id="txtDirFuncCrear" layoutX="151.0" layoutY="92.0" />
+                                    <TextField fx:id="txtTelFuncCrear" layoutX="151.0" layoutY="119.0" />
+                                    <Button fx:id="butAgregarFunc" layoutX="241.0" layoutY="159.0" mnemonicParsing="false" text="Agregar" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Tipo solicitud">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="labCodTiSolicitudCrear" layoutX="14.0" layoutY="14.0" text="Código:" />
+                                    <TextField fx:id="txtCodTiSolicitudCrear" layoutX="151.0" layoutY="10.0" />
+                                    <Button fx:id="butAgregarTiSolicitud" layoutX="241.0" layoutY="82.0" mnemonicParsing="false" text="Agregar" />
+                                    <Label fx:id="labDecTiSolicitudCrear" layoutX="14.0" layoutY="47.0" text="Descripción:" />
+                                    <TextField fx:id="txtDecTiSolicitudCrear" layoutX="151.0" layoutY="43.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Actualizar">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TabPane prefHeight="236.0" prefWidth="328.0" tabClosingPolicy="UNAVAILABLE">
+                     <tabs>
+                        <Tab text="Cliente">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="labNombClientMod" layoutX="14.0" layoutY="14.0" text="Nombre:" />
+                                    <Label fx:id="labCedulaClientMod" layoutX="14.0" layoutY="41.0" text="Cédula:" />
+                                    <Label fx:id="labFechaNaciClientMod" layoutX="14.0" layoutY="69.0" text="Fecha de nacimiento:" />
+                                    <Label fx:id="labDirClientMod" layoutX="14.0" layoutY="96.0" text="Dirección:" />
+                                    <Label fx:id="labTelClientMod" layoutX="13.0" layoutY="123.0" text="Teléfono:" />
+                                    <TextField fx:id="txtNombClientMod" layoutX="151.0" layoutY="10.0" />
+                                    <TextField fx:id="txtCedulaClientMod" layoutX="151.0" layoutY="37.0" />
+                                    <TextField fx:id="txtFechaNaciClientMod" layoutX="151.0" layoutY="65.0" />
+                                    <TextField fx:id="txtDirClientMod" layoutX="151.0" layoutY="92.0" />
+                                    <TextField fx:id="txtTelClientMod" layoutX="151.0" layoutY="119.0" />
+                                    <Button fx:id="butModClient" layoutX="233.0" layoutY="158.0" mnemonicParsing="false" text="Modificar" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Tipo producto">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="labCodTiProductoMod" layoutX="14.0" layoutY="14.0" text="Código:" />
+                                    <TextField fx:id="txtCodTiProductoMod" layoutX="151.0" layoutY="10.0" />
+                                    <Button fx:id="butModTiProducto" layoutX="233.0" layoutY="79.0" mnemonicParsing="false" text="Modificar" />
+                                    <Label fx:id="labDescTiProductoMod" layoutX="14.0" layoutY="47.0" text="Descripción:" />
+                                    <TextField fx:id="txtDescTiProductoMod" layoutX="151.0" layoutY="43.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Funcionario">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="labNombFuncMod" layoutX="14.0" layoutY="14.0" text="Nombre:" />
+                                    <Label fx:id="labCedulaFuncMod" layoutX="14.0" layoutY="41.0" text="Cédula:" />
+                                    <Label fx:id="labFechaNaciFuncMod" layoutX="14.0" layoutY="69.0" text="Fecha de nacimiento:" />
+                                    <Label fx:id="labDirFuncMod" layoutX="14.0" layoutY="96.0" text="Dirección:" />
+                                    <Label fx:id="labTelFuncMod" layoutX="13.0" layoutY="123.0" text="Teléfono:" />
+                                    <TextField fx:id="txtNombFuncMod" layoutX="151.0" layoutY="10.0" />
+                                    <TextField fx:id="txtCedulaFuncMod" layoutX="151.0" layoutY="37.0" />
+                                    <TextField fx:id="txtFechaNaciFuncMod" layoutX="151.0" layoutY="65.0" />
+                                    <TextField fx:id="txtDirFuncMod" layoutX="151.0" layoutY="92.0" />
+                                    <TextField fx:id="txtTelFuncMod" layoutX="151.0" layoutY="119.0" />
+                                    <Button fx:id="butModFunc" layoutX="233.0" layoutY="159.0" mnemonicParsing="false" text="Modificar" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Tipo solicitud">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="labCodTiSolicitudMod" layoutX="14.0" layoutY="14.0" text="Código:" />
+                                    <TextField fx:id="txtCodTiSolicitudMod" layoutX="151.0" layoutY="10.0" />
+                                    <Button fx:id="butModTiSolicitud" layoutX="233.0" layoutY="79.0" mnemonicParsing="false" text="Modificar" />
+                                    <Label fx:id="labDecTiSolicitudMod" layoutX="14.0" layoutY="47.0" text="Descripción:" />
+                                    <TextField fx:id="txtDecTiSolicitudMod" layoutX="151.0" layoutY="43.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </TabPane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Eliminar">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TabPane prefHeight="236.0" prefWidth="328.0" tabClosingPolicy="UNAVAILABLE">
+                     <tabs>
+                        <Tab text="Cliente">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="labNombClientBorrar" layoutX="14.0" layoutY="14.0" text="Nombre:" />
+                                    <Label fx:id="labCedulaClientBorrar" layoutX="14.0" layoutY="41.0" text="Cédula:" />
+                                    <Label fx:id="labFechaNaciClientBorrar" layoutX="14.0" layoutY="69.0" text="Fecha de nacimiento:" />
+                                    <Label fx:id="labDirClientBorrar" layoutX="14.0" layoutY="96.0" text="Dirección:" />
+                                    <Label fx:id="labTelClientBorrar" layoutX="13.0" layoutY="123.0" text="Teléfono:" />
+                                    <TextField fx:id="txtNombClientBorrar" layoutX="151.0" layoutY="10.0" />
+                                    <TextField fx:id="txtCedulaClientBorrar" layoutX="151.0" layoutY="37.0" />
+                                    <TextField fx:id="txtFechaNaciClientBorrar" layoutX="151.0" layoutY="65.0" />
+                                    <TextField fx:id="txtDirClientBorrar" layoutX="151.0" layoutY="92.0" />
+                                    <TextField fx:id="txtTelClientBorrar" layoutX="151.0" layoutY="119.0" />
+                                    <Button fx:id="butBorrarClient" layoutX="251.0" layoutY="159.0" mnemonicParsing="false" text="Borrar" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Tipo producto">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="labCodTiProductoBorrar" layoutX="14.0" layoutY="14.0" text="Código:" />
+                                    <TextField fx:id="txtCodTiProductoBorrar" layoutX="151.0" layoutY="10.0" />
+                                    <Button fx:id="butBorrarTiProducto" layoutX="251.0" layoutY="79.0" mnemonicParsing="false" text="Borrar" />
+                                    <Label fx:id="labDescTiProductoBorrar" layoutX="14.0" layoutY="47.0" text="Descripción:" />
+                                    <TextField fx:id="txtDescTiProductoBorrar" layoutX="151.0" layoutY="43.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Funcionario">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="labNombFuncBorrar" layoutX="14.0" layoutY="14.0" text="Nombre:" />
+                                    <Label fx:id="labCedulaFuncBorrar" layoutX="14.0" layoutY="41.0" text="Cédula:" />
+                                    <Label fx:id="labFechaNaciFuncBorrar" layoutX="14.0" layoutY="69.0" text="Fecha de nacimiento:" />
+                                    <Label fx:id="labDirFuncBorrar" layoutX="14.0" layoutY="96.0" text="Dirección:" />
+                                    <Label fx:id="labTelFuncBorrar" layoutX="13.0" layoutY="123.0" text="Teléfono:" />
+                                    <TextField fx:id="txtNombFuncBorrar" layoutX="151.0" layoutY="10.0" />
+                                    <TextField fx:id="txtCedulaFuncBorrar" layoutX="151.0" layoutY="37.0" />
+                                    <TextField fx:id="txtFechaNaciFuncBorrar" layoutX="151.0" layoutY="65.0" />
+                                    <TextField fx:id="txtDirFuncBorrar" layoutX="151.0" layoutY="92.0" />
+                                    <TextField fx:id="txtTelFuncBorrar" layoutX="151.0" layoutY="119.0" />
+                                    <Button fx:id="butBorrarFunc" layoutX="251.0" layoutY="159.0" mnemonicParsing="false" text="Borrar" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Tipo solicitud">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="labCodTiSolicitudBorrar" layoutX="14.0" layoutY="14.0" text="Código:" />
+                                    <TextField fx:id="txtCodTiSolicitudBorrar" layoutX="151.0" layoutY="10.0" />
+                                    <Button fx:id="butBorrarTiSolicitud" layoutX="251.0" layoutY="79.0" mnemonicParsing="false" text="Borrar" />
+                                    <Label fx:id="labDecTiSolicitudBorrar" layoutX="14.0" layoutY="47.0" text="Descripción:" />
+                                    <TextField fx:id="txtDecTiSolicitudBorrar" layoutX="151.0" layoutY="43.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+  </tabs>
+</TabPane>
