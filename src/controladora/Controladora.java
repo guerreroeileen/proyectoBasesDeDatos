@@ -276,14 +276,15 @@ public class Controladora extends Application {
 				viewRegistrarSolicitud = loader.getController();
 
 				viewRegistrarSolicitud.inicializar("Panel cliente", pane);
-				viewRegistrarSolicitud.getStage().show();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
-			viewRegistrarSolicitud.getStage().show();
 
 			iniciarEventosRegistrarSolicitud();
+			
+			viewRegistrarSolicitud.getStage().show();
+
 		} else if (true/* usuario es cliente */) {
 			Stage stage = new Stage();
 			FXMLLoader f = new FXMLLoader();
@@ -308,7 +309,7 @@ public class Controladora extends Application {
 		viewRegistrarSolicitud.agregarEleccion("Creación","Creacion");
 		viewRegistrarSolicitud.agregarEleccion("Modifiación","Modificacion");
 		viewRegistrarSolicitud.agregarEleccion("Cancelación","Cancelacion");
-		viewRegistrarSolicitud.agregarEleccion("Daño","Danio");
+		viewRegistrarSolicitud.agregarEleccion("Daño","Dano");
 		viewRegistrarSolicitud.agregarEleccion("Reclamo","Reclamo");
 		
 
@@ -327,12 +328,9 @@ public class Controladora extends Application {
 				String id = node.getId();
 				switch (id) {
 				case "chbTipoSolicitud": {
-					ChoiceBox<?> ch = (ChoiceBox<?>) node;
-
-					int selected = ch.getSelectionModel().getSelectedIndex();
-					String str = (String) ch.getItems().get(selected);
+					
 					try {
-						cargarVistaSolicitud(str);
+						cargarVistaSolicitud();
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -413,7 +411,13 @@ public class Controladora extends Application {
 		nodo.setDisable(!nodo.isDisable());
 	}
 
-	public void cargarVistaSolicitud(String str) throws Exception {
+	public void cargarVistaSolicitud() throws Exception {
+		
+		ChoiceBox<Eleccion> ch = viewRegistrarSolicitud.obtenerChoiceBox();
+		int selected = ch.getSelectionModel().getSelectedIndex();
+		
+		String str = ((Eleccion)ch.getItems().get(selected)).obtenerComando();
+		
 		Pane pane = null;
 		FXMLLoader loader = new FXMLLoader();
 		FileInputStream is = null;
