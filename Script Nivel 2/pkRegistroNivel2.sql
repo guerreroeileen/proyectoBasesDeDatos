@@ -1,85 +1,122 @@
-create or replace PACKAGE pkRegistroNivel2 AS
+CREATE OR REPLACE PACKAGE pkregistronivel2 AS
+    PROCEDURE pregistrarestado (
+        ivcodigo   IN VARCHAR2,
+        ivnombre   IN VARCHAR2
+    );
 
-PROCEDURE pRegistrarEstado (ivCodigo IN VARCHAR2, ivNombre IN VARCHAR2); 
-PROCEDURE pRegistrarFuncionario(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivDireccion IN VARCHAR2,  ivTelefono IN VARCHAR2, ivFechaNacimiento IN DATE);
-PROCEDURE pRegistrarAnomalia(ivNombre IN VARCHAR2, ivId IN VARCHAR2);
-PROCEDURE pRegistrarCliente(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivFechaNacimiento IN VARCHAR2, ivDireccion IN VARCHAR, ivTelefono IN VARCHAR2);
-PROCEDURE pRegistrarProducto(ivIdProducto IN VARCHAR2, ivNombre IN VARCHAR2, ivTipo_prod_id IN VARCHAR2);
-PROCEDURE pRSolicitud(idSolicitud IN VARCHAR2, cedula IN VARCHAR2,observacion IN VARCHAR2,tipoSolicitud IN VARCHAR2, idProducto IN VARCHAR2);
+    PROCEDURE pregistrarfuncionario (
+        ivcedula            IN VARCHAR2,
+        ivnombre            IN VARCHAR2,
+        ivdireccion         IN VARCHAR2,
+        ivtelefono          IN VARCHAR2,
+        ivfechanacimiento   IN DATE
+    );
 
-END pkRegistroNivel2;
+    PROCEDURE pregistraranomalia (
+        ivnombre   IN VARCHAR2,
+        ivid       IN VARCHAR2
+    );
+
+    PROCEDURE pregistrarcliente (
+        ivcedula            IN VARCHAR2,
+        ivnombre            IN VARCHAR2,
+        ivfechanacimiento   IN VARCHAR2,
+        ivdireccion         IN VARCHAR,
+        ivtelefono          IN VARCHAR2
+    );
+
+    PROCEDURE pregistrarproducto (
+        ividproducto     IN VARCHAR2,
+        ivnombre         IN VARCHAR2,
+        ivtipo_prod_id   IN VARCHAR2
+    );
+
+    PROCEDURE prsolicitud (
+        idsolicitud     IN VARCHAR2,
+        cedula          IN VARCHAR2,
+        observacion     IN VARCHAR2,
+        tiposolicitud   IN VARCHAR2,
+        idproducto      IN VARCHAR2
+    );
+
+END pkregistronivel2;
 /
-CREATE OR REPLACE PACKAGE BODY pkRegistroNivel2 AS
 
-PROCEDURE pRegistrarFuncionario(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivDireccion IN VARCHAR2,  ivTelefono IN VARCHAR2, ivFechaNacimiento IN DATE)
-  IS
-  BEGIN 
-      pkFuncionarioNivel1.PINSERTAR(ivCedula, ivNombre, ivDireccion, ivTelefono , ivFechaNacimiento);
-  EXCEPTION
-  WHEN OTHERS THEN
-  RAISE_APPLICATION_ERROR(-20001, 'Error al insertar en la tabla Funcionario'||SQLCODE);
-  END pRegistrarFuncionario;
-  
-  PROCEDURE pRegistrarEstado(ivCodigo IN VARCHAR2, ivNombre IN VARCHAR2)
-  IS
-  BEGIN 
-      pkEstadoNivel1.PINSERTAR(ivCodigo, ivNombre);
-  EXCEPTION
-  WHEN OTHERS THEN
-  RAISE_APPLICATION_ERROR(-20001, 'Error al insertar en la tabla Funcionario'||SQLCODE);
-  END pRegistrarEstado;
-  
-  PROCEDURE pRegistrarProducto(ivIdProducto IN VARCHAR2, ivNombre IN VARCHAR2, ivTipo_prod_id IN VARCHAR2)is
-  begin
-  pkProductoNivel1.pInsertar (ivIdProducto, ivNombre, ivTipo_prod_id);
-  
-EXCEPTION
-  WHEN OTHERS THEN
-  RAISE_APPLICATION_ERROR(-20000, 'Error al insertar en la tabla Producto'||SQLCODE);
-  END pRegistrarEstado;
-  
-  PROCEDURE pRegistrarAnomalia(ivNombre IN VARCHAR2, ivId IN VARCHAR2)
+CREATE OR REPLACE PACKAGE BODY pkregistronivel2 AS
 
-    IS
+    PROCEDURE pregistrarfuncionario (
+        ivcedula            IN VARCHAR2,
+        ivnombre            IN VARCHAR2,
+        ivdireccion         IN VARCHAR2,
+        ivtelefono          IN VARCHAR2,
+        ivfechanacimiento   IN DATE
+    ) IS
+    BEGIN
+        pkfuncionarionivel1.pinsertar(ivcedula,ivnombre,ivdireccion,ivtelefono,ivfechanacimiento);
+    EXCEPTION
+        WHEN OTHERS THEN
+            raise_application_error(-20001,'Error al insertar en la tabla Funcionario' || sqlcode);
+    END pregistrarfuncionario;
 
+    PROCEDURE pregistrarestado (
+        ivcodigo   IN VARCHAR2,
+        ivnombre   IN VARCHAR2
+    ) IS
+    BEGIN
+        pkestadonivel1.pinsertar(ivcodigo,ivnombre);
+    EXCEPTION
+        WHEN OTHERS THEN
+            raise_application_error(-20001,'Error al insertar en la tabla Funcionario' || sqlcode);
+    END pregistrarestado;
+
+    PROCEDURE pregistrarproducto (
+        ividproducto     IN VARCHAR2,
+        ivnombre         IN VARCHAR2,
+        ivtipo_prod_id   IN VARCHAR2
+    ) IS
+    BEGIN
+        pkproductonivel1.pinsertar(ividproducto,ivnombre,ivtipo_prod_id);
+    EXCEPTION
+        WHEN OTHERS THEN
+            raise_application_error(-20000,'Error al insertar en la tabla Producto' || sqlcode);
+    END pregistrarproducto;
+
+    PROCEDURE pregistraranomalia (
+        ivnombre   IN VARCHAR2,
+        ivid       IN VARCHAR2
+    ) IS
     BEGIN
     -- Utiliza el metodo de insertar del nivel 1 correspondiente a anomalia para insertarla
-    pkAnomaliaNivel1.pInsertar(ivNombre , ivId );
-    
+        pkanomalianivel1.pinsertar(ivnombre,ivid);
     EXCEPTION
-    
-	WHEN DUP_VAL_ON_INDEX THEN
-    
-        RAISE_APPLICATION_ERROR(-20001,'El id esta duplicado.');
-        
-	WHEN OTHERS THEN
-    
-        RAISE_APPLICATION_ERROR(-20001,'Error'||SQLERRM||SQLCODE);
-    
+        WHEN dup_val_on_index THEN
+            raise_application_error(-20001,'El id esta duplicado.');
+        WHEN OTHERS THEN
+            raise_application_error(-20001,'Error'
+                                            || sqlerrm
+                                            || sqlcode);
+    END pregistraranomalia;
 
-END pRegistrarAnomalia;
-
-PROCEDURE pRegistrarCliente(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivFechaNacimiento IN VARCHAR2, ivDireccion IN VARCHAR, ivTelefono IN VARCHAR2)
-    
-    IS
-    
+    PROCEDURE pregistrarcliente (
+        ivcedula            IN VARCHAR2,
+        ivnombre            IN VARCHAR2,
+        ivfechanacimiento   IN VARCHAR2,
+        ivdireccion         IN VARCHAR,
+        ivtelefono          IN VARCHAR2
+    ) IS
     BEGIN
-    
-    pkClienteNivel1.pInsertar(ivCedula , ivNombre , ivFechaNacimiento , ivDireccion , ivTelefono );
-    
+        pkclientenivel1.pinsertar(ivcedula,ivnombre,ivfechanacimiento,ivdireccion,ivtelefono);
     EXCEPTION
     -- copie las mismas excepciones de la capa 1
-	WHEN DUP_VAL_ON_INDEX THEN
-    
-        RAISE_APPLICATION_ERROR(-20001,'El id esta duplicado.');
-    
-	WHEN OTHERS THEN
-    
-        RAISE_APPLICATION_ERROR(-20001,'Unknown Error'||SQLERRM||SQLCODE);
-    
-    END pRegistrarCliente;
-    
-PROCEDURE prsolicitud (
+        WHEN dup_val_on_index THEN
+            raise_application_error(-20001,'El id esta duplicado.');
+        WHEN OTHERS THEN
+            raise_application_error(-20001,'Unknown Error'
+                                            || sqlerrm
+                                            || sqlcode);
+    END pregistrarcliente;
+
+    PROCEDURE prsolicitud (
         tipoproducto     VARCHAR2,
         cedula           VARCHAR2,
         observacion      VARCHAR2,
@@ -141,5 +178,5 @@ PROCEDURE prsolicitud (
         WHEN other THEN
             raise_application_error(-20201,' no esta registrado');
     END prsolicitud;
-  
-  END pkRegistroNivel2;
+
+END pkregistronivel2;
