@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import vista.ViewConsultas;
 import vista.ViewGestionarDatos;
 import vista.ViewOpcionesFuncionario;
 import vista.ViewPrincipal;
@@ -22,6 +23,7 @@ public class Controladora extends Application{
 	private ViewGestionarDatos viewGestionarDatos;
 	private ViewPrincipal viewPrincipal;
 	private ViewOpcionesFuncionario viewOpcionesFuncionario;
+	private ViewConsultas viewConsultas;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -43,7 +45,8 @@ public class Controladora extends Application{
 	
 	@SuppressWarnings("unchecked")
 	private void registrarEventosViewOpcionesFuncionario() {
-		viewPrincipal.getButIngresar().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventoPrincipal());
+		
+		
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -75,11 +78,12 @@ public class Controladora extends Application{
 					try {
 						FileInputStream file = new FileInputStream(new File("views/fxml/ViewConsultas.fxml"));
 						Pane pane = f.load(file);
-						Scene scene = new Scene(pane,200,150);
+						Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight());
 						stage.setScene(scene);
 					}catch (Exception e) {
 						e.printStackTrace();
 					}
+					viewConsultas = (ViewConsultas) f.getController();
 					stage.show();
 					break;
 				case "Atender solicitudes":
@@ -92,11 +96,12 @@ public class Controladora extends Application{
 					try {
 						FileInputStream file = new FileInputStream(new File("views/fxml/ViewGestionarDatos.fxml"));
 						Pane pane = f.load(file);
-						Scene scene = new Scene(pane,200,150);
+						Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight());
 						stage.setScene(scene);
 					}catch (Exception e) {
 						e.printStackTrace();
 					}
+					viewGestionarDatos = (ViewGestionarDatos) f.getControllerFactory();
 					stage.show();
 					break;	
 				}
