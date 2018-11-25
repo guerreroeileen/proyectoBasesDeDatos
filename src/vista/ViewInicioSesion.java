@@ -32,4 +32,11 @@ public class ViewInicioSesion {
 	public void modificarPanelContenido(Pane contenido) {
 		this.contenido=contenido;
 	}
+
+	public Button[] obtenerBotones() {
+		Button[] botones = new Button[2];
+		botones[0]=bIngresar;
+		botones[1]=bSalir;
+		return botones;
+	}
 }
