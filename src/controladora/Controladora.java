@@ -365,25 +365,25 @@ public class Controladora extends Application {
 		}
 
 		switch (str) {
-		case "Creación": {
+		case "Creacion": {
 
 			// TODO Registrar solicitud de Creacion
 			break;
 		}
 
-		case "Modificación": {
+		case "Modificacion": {
 			// TODO Registrar solicitud de Modificacion
 
 			break;
 		}
 
-		case "Daño": {
+		case "Dano": {
 			// TODO Registrar solicitud de Danio
 
 			break;
 		}
 
-		case "Cancelación": {
+		case "Cancelacion": {
 			// TODO Registrar solicitud de Cancelacion
 
 			break;
