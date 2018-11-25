@@ -3,8 +3,11 @@ package controladora;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -15,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -266,23 +270,20 @@ public class Controladora extends Application {
 	}
 
 	public void verificarUsuario() {
+		// Metodo para verificar usuario, TODO
 		if (verificarUsuario(viewPrincipal.geTextFieldCedula().getText())) {
 			// TODO - completar
 			FXMLLoader loader = new FXMLLoader();
 			try {
 				FileInputStream xmlStream = new FileInputStream("./views/fxml/ViewRegistrarSolicitud.fxml");
 				Pane pane = (Pane) loader.load(xmlStream);
-
 				viewRegistrarSolicitud = loader.getController();
-
 				viewRegistrarSolicitud.inicializar("Panel cliente", pane);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
-
 			iniciarEventosRegistrarSolicitud();
-			
+
 			viewRegistrarSolicitud.getStage().show();
 
 		} else if (true/* usuario es cliente */) {
@@ -306,15 +307,13 @@ public class Controladora extends Application {
 
 	private void iniciarEventosRegistrarSolicitud() {
 		ChoiceBox<Eleccion> ch = viewRegistrarSolicitud.obtenerChoiceBox();
-		viewRegistrarSolicitud.agregarEleccion("Creación","Creacion");
-		viewRegistrarSolicitud.agregarEleccion("Modifiación","Modificacion");
-		viewRegistrarSolicitud.agregarEleccion("Cancelación","Cancelacion");
-		viewRegistrarSolicitud.agregarEleccion("Daño","Dano");
-		viewRegistrarSolicitud.agregarEleccion("Reclamo","Reclamo");
-		
+		viewRegistrarSolicitud.agregarEleccion("Creación", "Creacion");
+		viewRegistrarSolicitud.agregarEleccion("Modifiación", "Modificacion");
+		viewRegistrarSolicitud.agregarEleccion("Cancelación", "Cancelacion");
+		viewRegistrarSolicitud.agregarEleccion("Daño", "Dano");
+		viewRegistrarSolicitud.agregarEleccion("Reclamo", "Reclamo");
 
 		EventHandler<ActionEvent> handler = getActionHandlerRegistrarSolicitud();
-
 		ch.setOnAction(handler);
 		viewRegistrarSolicitud.obtenerBotonRegistrar().setOnAction(handler);
 	}
@@ -328,7 +327,7 @@ public class Controladora extends Application {
 				String id = node.getId();
 				switch (id) {
 				case "chbTipoSolicitud": {
-					
+
 					try {
 						cargarVistaSolicitud();
 					} catch (Exception e) {
@@ -362,7 +361,7 @@ public class Controladora extends Application {
 		int selected = ch.getSelectionModel().getSelectedIndex();
 		String str = "";
 		if (selected >= 0) {
-			str = ( (Eleccion) ch.getItems().get(selected)).obtenerComando();
+			str = ((Eleccion) ch.getItems().get(selected)).obtenerComando();
 		}
 
 		switch (str) {
@@ -405,39 +404,44 @@ public class Controladora extends Application {
 
 	public void mostrarTextAreaObservaciones() {
 		Node nodo = viewRegistrarSolicitud.obtenerNodo("taObservaciones");
+		if (nodo != null) {
+			nodo.setVisible(!nodo.isVisible());
 
-		nodo.setVisible(!nodo.isVisible());
+			nodo.setDisable(!nodo.isDisable());
 
-		nodo.setDisable(!nodo.isDisable());
+			((TextArea) nodo).setText("");
+		}
 	}
 
 	public void cargarVistaSolicitud() throws Exception {
-		
+
 		ChoiceBox<Eleccion> ch = viewRegistrarSolicitud.obtenerChoiceBox();
 		int selected = ch.getSelectionModel().getSelectedIndex();
-		
-		String str = ((Eleccion)ch.getItems().get(selected)).obtenerComando();
-		
+
+		String str = ((Eleccion) ch.getItems().get(selected)).obtenerComando();
+
 		Pane pane = null;
 		FXMLLoader loader = new FXMLLoader();
 		FileInputStream is = null;
 
-		if (str.equalsIgnoreCase("Creación")) {
+		if (str.equalsIgnoreCase("Creacion")) {
 
 			is = new FileInputStream("./views/fxml/ViewSolicitudCreacion.fxml");
 
-		} else if (str.equalsIgnoreCase("Modificación")) {
+		} else if (str.equalsIgnoreCase("Modificacion")) {
 
 			is = new FileInputStream("./views/fxml/ViewSolicitudModificar.fxml");
 
-		} else if (str.equalsIgnoreCase("Cancelación")) {
+		} else if (str.equalsIgnoreCase("Cancelacion")) {
 
 			is = new FileInputStream("./views/fxml/ViewSolicitudCancelacion.fxml");
 
-		} else if (str.equalsIgnoreCase("Daño")) {
+		} else if (str.equalsIgnoreCase("Dano")) {
+
 			is = new FileInputStream("./views/fxml/ViewSolicitudDano.fxml");
 
 		} else if (str.equalsIgnoreCase("Reclamo")) {
+
 			is = new FileInputStream("./views/fxml/ViewSolicitudReclamo.fxml");
 
 		}
@@ -446,6 +450,64 @@ public class Controladora extends Application {
 		viewRegistrarSolicitud.agregarEnVBox(pane);
 		((Hyperlink) viewRegistrarSolicitud.obtenerNodo("hlObservaciones"))
 				.setOnAction(getActionHandlerRegistrarSolicitud());
+
+		@SuppressWarnings("unchecked")
+		ChoiceBox<String> anomalias = (ChoiceBox<String>) viewRegistrarSolicitud.obtenerNodo("chbAnomalia");
+		if (anomalias != null) {
+			cargarAnomaliasSolicitud(anomalias);
+		}
+
+		@SuppressWarnings("unchecked")
+		ChoiceBox<String> productos = (ChoiceBox<String>) viewRegistrarSolicitud.obtenerNodo("chbProducto");
+
+		if (productos != null) {
+			cargarProductosSolicitud(productos);
+		}
+
+	}
+
+	private void cargarProductosSolicitud(ChoiceBox<String> productos) {
+		List<String> productosBD = new ArrayList<>();
+		// TODO Cargar productos desde BD y asignarlos a productosBD
+		updateGUI(new Runnable() {
+
+			@Override
+			public void run() {
+				productos.getItems().clear();
+				for (String producto : productosBD) {
+					productos.getItems().add(producto);
+				}
+
+			}
+		});
+
+	}
+
+	/**
+	 * Metodo para actualizar GUI ya sea desde el hilo main o hilos fuera del hilo de 
+	 * la vista principal javaFx
+	 * @param runnable Runnable que modifica elementos de la vista
+	 */
+	private void updateGUI(Runnable runnable) {
+		Platform.runLater(runnable);
+	}
+
+	private void cargarAnomaliasSolicitud(ChoiceBox<String> anomalias) {
+		List<String> anomaliasBD = new ArrayList<>();
+		// TODO cargar anomalias en el choiceBox, conectar al modelo para pedir las
+		// anomalias y asignarlas a anomaliasBD
+
+		updateGUI(new Runnable() {
+
+			@Override
+			public void run() {
+				anomalias.getItems().clear();
+				for (String anomalia : anomaliasBD) {
+					anomalias.getItems().add(anomalia);
+				}
+
+			}
+		});
 
 	}
 
