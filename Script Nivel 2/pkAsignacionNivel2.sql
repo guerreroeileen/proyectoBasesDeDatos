@@ -20,45 +20,31 @@ CREATE OR REPLACE PACKAGE BODY pkasigancionnivel2 IS
         cantidad            NUMBER;
         datosnumero         NUMBER;
         parametro           NUMBER;
-        tabla               TABLE;
+        vrecorrido          NUMBER;
     BEGIN
-        INSERT INTO tabla ( cedula )
+        vrecorrido := 0;
+        SELECT
+            COUNT(cedula)
+       INTO datosnumero
+        FROM
+            funcionario;
+
+        WHILE vrecorrido < datosnumero LOOP
             SELECT
                 cedula
-            FROM
-                funcionario;
-
-        SELECT
-            COUNT(*)
-        INTO datosnumero
-        FROM
-            tabla;
-
-        WHILE datosnumero > 0 LOOP
-            SELECT
-                top(1) cedula
             INTO cedulafuncionario
             FROM
-                tabla
-            ORDER BY
-                cedula;
+                funcionario
+            WHERE
+                ROWNUM = vrecorrido;
 
             cantidad := pksolicitudn1.darsolicitudes(cedulafuncionario);
-            parametro := pkparametrizacion.fconsultar(1);
+            parametro := pkparametrizacion.fconsultar(1).NUMEROSOLICITUDESFUNCIONARIO;
             IF cantidad < parametro THEN
                 pksolicitudn1.pmodificarsolicitudasignacion(ividsolicitud,cedulafuncionario);
                 datosnumero := 0;
             ELSE
-                DELETE tabla
-                WHERE
-                    cedula = cedulafuncionario;
-
-                SELECT
-                    COUNT(*)
-                INTO datosnumero
-                FROM
-                    tabla;
-
+                vrecorrido := vrecorrido + 1;
             END IF;
 
         END LOOP;
