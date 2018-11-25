@@ -21,7 +21,6 @@ public class Controladora extends Application{
 //		scene.getStylesheets().add(new FileInputStream(new File("views/css/application.css")));
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		//INICIALIZAR PRINCIPAL
 	}
 	
 	public static void main(String[] args) {
