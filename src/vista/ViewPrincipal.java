@@ -22,7 +22,7 @@ public class ViewPrincipal {
 	
     @FXML
 	public void initialize() {
-		try {
+		try {		
 			imgBanner.setImage(new Image(new FileInputStream("views/imagenes/banner.jpg")));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
