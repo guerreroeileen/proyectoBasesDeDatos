@@ -276,6 +276,7 @@ public class Controladora extends Application {
 				viewRegistrarSolicitud = loader.getController();
 
 				viewRegistrarSolicitud.inicializar("Panel cliente", pane);
+				viewRegistrarSolicitud.getStage().show();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
