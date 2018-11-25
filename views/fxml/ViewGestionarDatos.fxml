@@ -105,6 +105,7 @@
                                     <TextField fx:id="txtDirClientMod" layoutX="151.0" layoutY="92.0" />
                                     <TextField fx:id="txtTelClientMod" layoutX="151.0" layoutY="119.0" />
                                     <Button fx:id="butModClient" layoutX="233.0" layoutY="158.0" mnemonicParsing="false" text="Modificar" />
+                                    <Button layoutX="164.0" layoutY="158.0" mnemonicParsing="false" text="Buscar" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -118,6 +119,7 @@
                                     <Button fx:id="butModTiProducto" layoutX="233.0" layoutY="79.0" mnemonicParsing="false" text="Modificar" />
                                     <Label fx:id="labDescTiProductoMod" layoutX="14.0" layoutY="47.0" text="Descripción:" />
                                     <TextField fx:id="txtDescTiProductoMod" layoutX="151.0" layoutY="43.0" />
+                                    <Button layoutX="164.0" layoutY="79.0" mnemonicParsing="false" text="Buscar" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -137,6 +139,7 @@
                                     <TextField fx:id="txtDirFuncMod" layoutX="151.0" layoutY="92.0" />
                                     <TextField fx:id="txtTelFuncMod" layoutX="151.0" layoutY="119.0" />
                                     <Button fx:id="butModFunc" layoutX="233.0" layoutY="159.0" mnemonicParsing="false" text="Modificar" />
+                                    <Button layoutX="164.0" layoutY="159.0" mnemonicParsing="false" text="Buscar" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -150,6 +153,7 @@
                                     <Button fx:id="butModTiSolicitud" layoutX="233.0" layoutY="79.0" mnemonicParsing="false" text="Modificar" />
                                     <Label fx:id="labDecTiSolicitudMod" layoutX="14.0" layoutY="47.0" text="Descripción:" />
                                     <TextField fx:id="txtDecTiSolicitudMod" layoutX="151.0" layoutY="43.0" />
+                                    <Button layoutX="164.0" layoutY="79.0" mnemonicParsing="false" text="Buscar" />
                                  </children>
                               </AnchorPane>
                            </content>
