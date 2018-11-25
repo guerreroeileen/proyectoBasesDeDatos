@@ -7,10 +7,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="199.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="45.0" layoutY="17.0" text="Tipo de producto" />
+      <Label layoutX="75.0" layoutY="17.0" text="Producto" />
       <ChoiceBox layoutX="180.0" layoutY="12.0" prefWidth="150.0" />
       <Label layoutX="81.0" layoutY="61.0" text="Cedula" />
       <TextField layoutX="169.0" layoutY="56.0" promptText="Ingrese su cedula" />
