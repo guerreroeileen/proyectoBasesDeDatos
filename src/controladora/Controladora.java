@@ -23,6 +23,7 @@ import vista.ViewGestionarDatos;
 import vista.ViewOpcionesFuncionario;
 import vista.ViewPrincipal;
 import vista.ViewRegistrarSolicitud;
+import vista.ViewRegistrarSolicitud.Eleccion;
 
 public class Controladora extends Application {
 
@@ -302,12 +303,13 @@ public class Controladora extends Application {
 	}
 
 	private void iniciarEventosRegistrarSolicitud() {
-		ChoiceBox<String> ch = viewRegistrarSolicitud.obtenerChoiceBox();
-		ch.getItems().add("Creación");
-		ch.getItems().add("Modificación");
-		ch.getItems().add("Cancelación");
-		ch.getItems().add("Daño");
-		ch.getItems().add("Reclamo");
+		ChoiceBox<Eleccion> ch = viewRegistrarSolicitud.obtenerChoiceBox();
+		viewRegistrarSolicitud.agregarEleccion("Creación","Creacion");
+		viewRegistrarSolicitud.agregarEleccion("Modifiación","Modificacion");
+		viewRegistrarSolicitud.agregarEleccion("Cancelación","Cancelacion");
+		viewRegistrarSolicitud.agregarEleccion("Daño","Danio");
+		viewRegistrarSolicitud.agregarEleccion("Reclamo","Reclamo");
+		
 
 		EventHandler<ActionEvent> handler = getActionHandlerRegistrarSolicitud();
 
@@ -356,12 +358,12 @@ public class Controladora extends Application {
 	}
 
 	public void registrarSolicitud() {
-		ChoiceBox<String> ch = viewRegistrarSolicitud.obtenerChoiceBox();
+		ChoiceBox<Eleccion> ch = viewRegistrarSolicitud.obtenerChoiceBox();
 
 		int selected = ch.getSelectionModel().getSelectedIndex();
 		String str = "";
 		if (selected >= 0) {
-			str = (String) ch.getItems().get(selected);
+			str = ( (Eleccion) ch.getItems().get(selected)).obtenerComando();
 		}
 
 		switch (str) {
