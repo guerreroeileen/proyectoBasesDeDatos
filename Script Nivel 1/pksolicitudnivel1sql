@@ -1,6 +1,6 @@
 CREATE OR REPLACE PACKAGE pksolicitudn1 IS
 --[declaración de objetos públicos]
-    PROCEDURE pinsertarsolictud (
+    PROCEDURE pinsertarsolicitud (
         n_solicitud             VARCHAR2,
         observaciones           VARCHAR2,
         fechaasignacion         DATE,
@@ -84,7 +84,7 @@ CREATE OR REPLACE PACKAGE BODY pksolicitudn1 IS
 
 --[declaración de objetos privados]
 
-    PROCEDURE pinsertarsolictud (
+    PROCEDURE pinsertarsolicitud (
         n_solicitud             VARCHAR2,
         observaciones           VARCHAR2,
         fechaasignacion         DATE,
@@ -114,7 +114,7 @@ CREATE OR REPLACE PACKAGE BODY pksolicitudn1 IS
             producto_id
         );
 
-    END pinsertarsolictud;
+    END pinsertarsolicitud;
 
     FUNCTION fsolicitudvencida (
         tipo solicitud.tiposolicitud_id%TYPE
