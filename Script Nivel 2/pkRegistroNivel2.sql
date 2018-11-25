@@ -31,7 +31,7 @@ CREATE OR REPLACE PACKAGE pkregistronivel2 AS
         ivtipo_prod_id   IN VARCHAR2
     );
 
-    PROCEDURE prsolicitud (
+    PROCEDURE pregistrarsolicitud (
         tipoproducto     VARCHAR2,
         cedula           VARCHAR2,
         observacion      VARCHAR2,
@@ -46,6 +46,17 @@ END pkregistronivel2;
 
 CREATE OR REPLACE PACKAGE BODY pkregistronivel2 AS
 
+    PROCEDURE pregistrarestado (
+        ivcodigo   IN VARCHAR2,
+        ivnombre   IN VARCHAR2
+    ) IS
+    BEGIN
+        pkestadonivel1.pinsertar(ivcodigo,ivnombre);
+    EXCEPTION
+        WHEN OTHERS THEN
+            raise_application_error(-20001,'Error al insertar en la tabla Funcionario' || sqlcode);
+    END pregistrarestado;
+
     PROCEDURE pregistrarfuncionario (
         ivcedula            IN VARCHAR2,
         ivnombre            IN VARCHAR2,
@@ -59,17 +70,6 @@ CREATE OR REPLACE PACKAGE BODY pkregistronivel2 AS
         WHEN OTHERS THEN
             raise_application_error(-20001,'Error al insertar en la tabla Funcionario' || sqlcode);
     END pregistrarfuncionario;
-
-    PROCEDURE pregistrarestado (
-        ivcodigo   IN VARCHAR2,
-        ivnombre   IN VARCHAR2
-    ) IS
-    BEGIN
-        pkestadonivel1.pinsertar(ivcodigo,ivnombre);
-    EXCEPTION
-        WHEN OTHERS THEN
-            raise_application_error(-20001,'Error al insertar en la tabla Funcionario' || sqlcode);
-    END pregistrarestado;
 
     PROCEDURE pregistrarproducto (
         ividproducto     IN VARCHAR2,
@@ -88,7 +88,6 @@ CREATE OR REPLACE PACKAGE BODY pkregistronivel2 AS
         ivid       IN VARCHAR2
     ) IS
     BEGIN
-    -- Utiliza el metodo de insertar del nivel 1 correspondiente a anomalia para insertarla
         pkanomalianivel1.pinsertar(ivnombre,ivid);
     EXCEPTION
         WHEN dup_val_on_index THEN
@@ -109,7 +108,6 @@ CREATE OR REPLACE PACKAGE BODY pkregistronivel2 AS
     BEGIN
         pkclientenivel1.pinsertar(ivcedula,ivnombre,ivfechanacimiento,ivdireccion,ivtelefono);
     EXCEPTION
-    -- copie las mismas excepciones de la capa 1
         WHEN dup_val_on_index THEN
             raise_application_error(-20001,'El id esta duplicado.');
         WHEN OTHERS THEN
@@ -118,7 +116,7 @@ CREATE OR REPLACE PACKAGE BODY pkregistronivel2 AS
                                             || sqlcode);
     END pregistrarcliente;
 
-    PROCEDURE prsolicitud (
+    PROCEDURE pregistrarsolicitud (
         tipoproducto     VARCHAR2,
         cedula           VARCHAR2,
         observacion      VARCHAR2,
@@ -128,57 +126,54 @@ CREATE OR REPLACE PACKAGE BODY pkregistronivel2 AS
         nombreanomalia   VARCHAR2
     ) IS
 
+        anomaliaid              VARCHAR2(50);
         fechaasignacion         DATE;
         fechaatencion           DATE;
         estadocodigo            VARCHAR2(50);
         funcionariocedula       VARCHAR2(50);
         comentariofuncionario   VARCHAR2(50);
-        cliente                 cliente%rowtype;
         numerosolicitud         solicitud.n_solicitud%TYPE;
-        tiposolici              tiposolicitud%rowtype;
+        causa                   VARCHAR2(50);
     BEGIN
--- tienen que ver donde va ese metodo creado por jaiver y kevin
-        numerosolicitud := sequence_id_solicitud.nextval;
+        numerosolicitud := TO_CHAR(sequence_id_solicitud.nextval);
+        causa := ivcausa;
         fechaasignacion := SYSDATE;
         estadocodigo := '3';
         fechaatencion := NULL;
         funcionariocedula := NULL;
         anomaliaid := nombreanomalia;
         comentariofuncionario := NULL;
-        cliente := pkclientenivel1.fconsultar(cedula);
-        tiposolici := pktiposolicitudn1.fconsultar(tiposolicitud);
-        CASE tiposolici.nombre
-            WHEN 'nuevoproducto' THEN
+        CASE tiposolicitud
+            WHEN '1' THEN
                 causa := NULL;
                 anomaliaid := NULL;
-                pk_solicitud_n1.pinsertar(numerosolicitud,observacion,fechaasignacion,fechatencion,causa,comentariofuncionario,cedula
-               ,estadocodigo,funcionariocedula,anomaliaid,tiposolici,idproducto);
+                pksolicitudn1.pinsertarsolicitud(numerosolicitud,observacion,fechaasignacion,fechaatencion,causa,comentariofuncionario
+               ,cedula,estadocodigo,funcionariocedula,anomaliaid,tiposolicitud,idproducto);
 
-            WHEN 'retiro' THEN
+            WHEN '2' THEN
                 anomaliaid := NULL;
-                observacion := NULL;
-                pk_solicitud_n1.pinsertar(numerosolicitud,observacion,fechaasignacion,fechatencion,causa,comentariofuncionario,cedula
-               ,estadocodigo,funcionariocedula,anomaliaid,tiposolici,idproducto);
+                pksolicitudn1.pinsertarsolicitud(numerosolicitud,observacion,fechaasignacion,fechaatencion,causa,comentariofuncionario
+               ,cedula,estadocodigo,funcionariocedula,anomaliaid,tiposolicitud,idproducto);
 
-            WHEN 'danos' THEN
+            WHEN '3' THEN
                 causa := NULL;
-                pk_solicitud_n1.pinsertar(numerosolicitud,observacion,fechaasignacion,fechatencion,causa,comentariofuncionario,cedula
-               ,estadocodigo,funcionariocedula,anomaliaid,tiposolici,idproducto);
+                pksolicitudn1.pinsertarsolicitud(numerosolicitud,observacion,fechaasignacion,fechaatencion,causa,comentariofuncionario
+               ,cedula,estadocodigo,funcionariocedula,anomaliaid,tiposolicitud,idproducto);
 
-            WHEN 'reclamos' THEN
+            WHEN '5' THEN
                 causa := NULL;
                 anomaliaid := NULL;
-                pk_solicitud_n1.pinsertar(numerosolicitud,observacion,fechaasignacion,fechatencion,causa,comentariofuncionario,cedula
-               ,estadocodigo,funcionariocedula,anomaliaid,tiposolici,idproducto);
+                pksolicitudn1.pinsertarsolicitud(numerosolicitud,observacion,fechaasignacion,fechaatencion,causa,comentariofuncionario
+               ,cedula,estadocodigo,funcionariocedula,anomaliaid,tiposolicitud,idproducto);
 
-            WHEN 'modificacion' THEN
-                pk_solicitud_n1.pinsertar(numerosolicitud,observacion,fechaasignacion,fechatencion,causa,comentariofuncionario,cedula
-               ,estadocodigo,funcionariocedula,anomaliaid,tiposolici,idproducto);
+            WHEN '4' THEN
+                pksolicitudn1.pinsertarsolicitud(numerosolicitud,observacion,fechaasignacion,fechaatencion,causa,comentariofuncionario
+               ,cedula,estadocodigo,funcionariocedula,anomaliaid,tiposolicitud,idproducto);
         END CASE;
 
     EXCEPTION
-        WHEN others THEN
+        WHEN OTHERS THEN
             raise_application_error(-20201,' no esta registrado');
-    END prsolicitud;
+    END pregistrarsolicitud;
 
 END pkregistronivel2;

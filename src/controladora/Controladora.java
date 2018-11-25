@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -45,7 +46,46 @@ public class Controladora extends Application{
 	
 	@SuppressWarnings("unchecked")
 	private void registrarEventosViewOpcionesFuncionario() {
-		
+		viewOpcionesFuncionario.getButConsultas().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventosOpcionesFuncionario());
+		viewOpcionesFuncionario.getButAsignarSolic().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventosOpcionesFuncionario());
+		viewOpcionesFuncionario.getButAtenderSolic().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventosOpcionesFuncionario());
+		viewOpcionesFuncionario.getButGestorDatos().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventosOpcionesFuncionario());
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void registrarEventosConsultas() {
+		viewConsultas.getButCsltaSolicXTipo().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventosConsultas());
+		viewConsultas.getButCsltaSolicXCliente().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventosConsultas());
+		viewConsultas.getButCsltaSolicXEstado().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventosConsultas());
+		viewConsultas.getButCsltaSolicXFunc().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventosConsultas());
+	}
+	
+	private EventHandler controlarEventosConsultas() {
+		return new EventHandler() {
+			@Override
+			public void handle(Event evento) {
+				String comando = ((Button)evento.getSource()).getText();
+				switch(comando) {
+				case "Consultar x funcionario":
+					System.out.println("algo");
+					break;
+				case "Consultar x estado":
+					System.out.println("algo");
+					break;
+				case "Consultar x tipo":
+					System.out.println("algo");
+					break;
+				case "Consultar x cliente":
+					System.out.println("algo");
+					break;
+				}
+			}
+			
+		};
+	}
+
+	@SuppressWarnings("unchecked")
+	private void registrarEventosGestionarDatos() {
 		
 	}
 	
@@ -78,12 +118,15 @@ public class Controladora extends Application{
 					try {
 						FileInputStream file = new FileInputStream(new File("views/fxml/ViewConsultas.fxml"));
 						Pane pane = f.load(file);
-						Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight());
+						Scene scene = new Scene(pane, 586, 354);
 						stage.setScene(scene);
+						viewConsultas = (ViewConsultas)f.getController();
+						registrarEventosConsultas();
+						inicializarTipoSolicitudesEnConsultas();
+						inicializarEstadosEnConsultas();
 					}catch (Exception e) {
 						e.printStackTrace();
 					}
-					viewConsultas = (ViewConsultas) f.getController();
 					stage.show();
 					break;
 				case "Atender solicitudes":
@@ -95,19 +138,30 @@ public class Controladora extends Application{
 				case "Gestor de datos":
 					try {
 						FileInputStream file = new FileInputStream(new File("views/fxml/ViewGestionarDatos.fxml"));
-						Pane pane = f.load(file);
-						Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight());
+						Parent pane = f.load(file);
+						Scene scene = new Scene(pane, 328, 255);
 						stage.setScene(scene);
+						viewGestionarDatos = (ViewGestionarDatos)f.getController();
+						registrarEventosGestionarDatos();
 					}catch (Exception e) {
 						e.printStackTrace();
 					}
-					viewGestionarDatos = (ViewGestionarDatos) f.getControllerFactory();
 					stage.show();
 					break;	
 				}
 			}
 			
 		};
+	}
+	
+	private void inicializarEstadosEnConsultas() {
+		// TODO setear el combo box del view consultas para mostrar los estados que existen.
+		
+	}
+
+	private void inicializarTipoSolicitudesEnConsultas() {
+		// TODO setear el combo box del view consultas para mostrar los tipos que existen.
+		
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -197,7 +251,7 @@ public class Controladora extends Application{
 	
 	public void verificarUsuario() {
 		if(false/*usuario es cliente*/) {
-			
+			//TODO - completar
 		}else if(true/*usuario es cliente*/) {
 			Stage stage = new Stage();
 			FXMLLoader f = new FXMLLoader();
@@ -206,12 +260,14 @@ public class Controladora extends Application{
 				Pane pane = f.load(file);
 				Scene scene = new Scene(pane,200,150);
 				stage.setScene(scene);
+				viewOpcionesFuncionario = (ViewOpcionesFuncionario) f.getController();
+				registrarEventosViewOpcionesFuncionario();
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
 			stage.show();
 		}else {
-			//usuario no existe
+			//TODO - usuario no existe
 		}
 	}
 
