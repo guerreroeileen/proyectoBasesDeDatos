@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="58.0" layoutY="18.0" text="Producto" />
+      <Label layoutX="58.0" layoutY="63.0" prefHeight="16.0" prefWidth="58.0" text="Cédula" />
+      <TextField layoutX="157.0" layoutY="58.0" promptText="Ingrese su cédula" />
+      <Hyperlink layoutX="29.0" layoutY="152.0" text="+Observaciones" />
+      <Label layoutX="58.0" layoutY="110.0" text="Causa" />
+      <TextArea layoutX="157.0" layoutY="152.0" prefHeight="53.0" prefWidth="171.0" />
+      <ChoiceBox layoutX="157.0" layoutY="13.0" prefHeight="26.0" prefWidth="171.0" />
+      <TextArea layoutX="157.0" layoutY="99.0" prefHeight="0.0" prefWidth="171.0" promptText="Ingrese la(s) causa(s)" />
+   </children>
+</AnchorPane>

@@ -59,5 +59,6 @@ public class ViewRegistrarSolicitud {
 			e.printStackTrace();
 		}
 	}
+	
 
 }

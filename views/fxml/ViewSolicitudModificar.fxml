@@ -7,16 +7,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="247.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="212.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="131.0" layoutY="22.0" text="Servicio actual" />
-      <TextField layoutX="94.0" layoutY="45.0" />
-      <Label layoutX="60.0" layoutY="139.0" text="Cedula" />
-      <Label layoutX="54.0" layoutY="94.0" text="Producto" />
-      <ChoiceBox layoutX="168.0" layoutY="89.0" prefWidth="150.0" />
-      <TextField layoutX="168.0" layoutY="134.0" promptText="Digite su cedula" />
-      <Hyperlink layoutX="25.0" layoutY="178.0" text="+Observaciones" />
-      <TextArea layoutX="153.0" layoutY="178.0" prefHeight="65.0" prefWidth="200.0" />
+      <Label layoutX="67.0" layoutY="100.0" text="Cédula" />
+      <Label layoutX="61.0" layoutY="61.0" text="Producto" />
+      <ChoiceBox layoutX="168.0" layoutY="18.0" prefHeight="26.0" prefWidth="171.0" />
+      <TextField layoutX="169.0" layoutY="95.0" prefHeight="26.0" prefWidth="171.0" promptText="Digite su cédula" />
+      <Hyperlink layoutX="32.0" layoutY="140.0" text="+Observaciones" />
+      <TextArea layoutX="158.0" layoutY="140.0" prefHeight="65.0" prefWidth="192.0" />
+      <Label layoutX="39.0" layoutY="23.0" text="Nuevo producto" />
+      <ChoiceBox layoutX="168.0" layoutY="56.0" prefHeight="26.0" prefWidth="171.0" />
    </children>
 </AnchorPane>
