@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 public class ViewRegistrarSolicitud {
 
 	private Pane paneContenido;
-	
+
 	private Stage stage;
 
 	@FXML
@@ -28,7 +28,7 @@ public class ViewRegistrarSolicitud {
 	private Pane vbSolicitudPanel;
 
 	@FXML
-	private ChoiceBox<String> chbTipoSolicitud;
+	private ChoiceBox<Eleccion> chbTipoSolicitud;
 
 	@FXML
 	private ImageView imgBanner;
@@ -39,18 +39,20 @@ public class ViewRegistrarSolicitud {
 	private HashMap<String, Node> nodos;
 
 	/**
-	 * Tambien inicializa el banner en con la imagen views/imagenes/banner.jpg
-	 * y una Hash ID-Nodo para guardar los componentes de la vista de solicitud actual
+	 * Tambien inicializa el banner en con la imagen views/imagenes/banner.jpg y una
+	 * Hash ID-Nodo para guardar los componentes de la vista de solicitud actual
+	 * 
 	 * @param paneContenido panel root de la vista
 	 */
 
-	public void inicializar(String name,Pane paneContenido) {
-		
+	public void inicializar(String name, Pane paneContenido) {
+
 		this.paneContenido = paneContenido;
-		stage=new Stage();
+		stage = new Stage();
 		stage.setScene(new Scene(paneContenido));
 		stage.setTitle(name);
-		nodos=new HashMap<>();
+		stage.setResizable(false);
+		nodos = new HashMap<>();
 		modificarBanner("views/imagenes/banner.jpg");
 	}
 
@@ -66,8 +68,13 @@ public class ViewRegistrarSolicitud {
 		return bRegistrar;
 	}
 
-	public ChoiceBox<String> obtenerChoiceBox() {
+	public ChoiceBox<Eleccion> obtenerChoiceBox() {
 		return chbTipoSolicitud;
+	}
+	
+	public void agregarEleccion(String nombre, String comando) {
+		Eleccion eleccion = new Eleccion(nombre, comando);
+		chbTipoSolicitud.getItems().add(eleccion);
 	}
 
 	public void modificarBanner(String rutaImagen) {
@@ -88,7 +95,7 @@ public class ViewRegistrarSolicitud {
 		this.vbSolicitudPanel = pane;
 
 		if (vbSolicitudPanel != null) {
-			this.nodos=new HashMap<>();
+			this.nodos = new HashMap<>();
 			for (Node node : vbSolicitudPanel.getChildren()) {
 				this.nodos.put(node.getId(), node);
 			}
@@ -97,17 +104,54 @@ public class ViewRegistrarSolicitud {
 
 	}
 
+	/**
+	 * Retorna un nodo de la vista que posea el id correspondiente.
+	 * 
+	 * @param id El id del nodo, se refiere a los ids asignados en el archivo .fxml
+	 * @return nodo, Nodo de la vista, generalmente de tipo button, hyperlink o
+	 *         choicebox
+	 */
 	public Node obtenerNodo(String id) {
 		return nodos.get(id);
 	}
 
 	public Collection<Node> obtenerNodos() {
 		return nodos.values();
-		
+
 	}
 
 	public Stage getStage() {
 		return stage;
+	}
+
+	/**
+	 * Clase usadar para ChoiceBox cuenta como una elección que tiene un nombre, con
+	 * el que se muestra en la vista y un comando, que reprenta la eleccion
+	 * 
+	 * @author mgltorsa
+	 *
+	 */
+	public class Eleccion {
+		private String nombre;
+		private String comando;
+
+		public Eleccion(String nombre, String comando) {
+			this.nombre = nombre;
+			this.comando = comando;
+		}
+
+		public String obtenerComando() {
+			return comando;
+		}
+
+		public String obtenerNombre() {
+			return nombre;
+		}
+
+		@Override
+		public String toString() {
+			return nombre;
+		}
 	}
 
 }
