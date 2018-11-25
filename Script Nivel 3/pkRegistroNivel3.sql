@@ -1,116 +1,134 @@
-CREATE OR REPLACE PACKAGE pkRegistroNivel3 IS
+CREATE OR REPLACE PACKAGE pkregistronivel3 IS
+    FUNCTION pregistrarfuncionario (
+        ivcedula            IN VARCHAR2,
+        ivnombre            IN VARCHAR2,
+        ivdireccion         IN VARCHAR2,
+        ivtelefono          IN VARCHAR2,
+        ivfechanacimiento   IN DATE
+    ) RETURN VARCHAR2;
 
-FUNCTION pRegistrarFuncionario(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivDireccion IN VARCHAR2,  ivTelefono IN VARCHAR2, ivFechaNacimiento IN DATE) RETURN VARCHAR2;
-FUNCTION pRegistrarEstado (ivCodigo IN VARCHAR2, ivNombre IN VARCHAR2) RETURN VARCHAR2; 
-FUNCTION pRegistrarCliente(ivCedula VARCHAR2, ivNombre VARCHAR2, ivFechaNacimiento VARCHAR2, ivDireccion VARCHAR, ivTelefono VARCHAR2)RETURN VARCHAR2;
-FUNCTION pRegistrarAnomalia(ivNombre IN VARCHAR2, ivId IN VARCHAR2) RETURN VARCHAR2;
-FUNCTION pRegistrarProducto(ivIdProducto IN VARCHAR2, ivNombre IN VARCHAR2, ivTipo_prod_id IN VARCHAR2)RETURN VARCHAR2;
-end pkClienteNivel3;
-PROCEDURE pRSolicitud(ividSolicitud IN VARCHAR2, ivcedula IN VARCHAR2,ivobservacion IN VARCHAR2,ivtipoSolicitud IN VARCHAR2, ividProducto IN VARCHAR2, );
+    FUNCTION pregistrarestado (
+        ivcodigo   IN VARCHAR2,
+        ivnombre   IN VARCHAR2
+    ) RETURN VARCHAR2;
 
+    FUNCTION pregistrarcliente (
+        ivcedula            VARCHAR2,
+        ivnombre            VARCHAR2,
+        ivfechanacimiento   VARCHAR2,
+        ivdireccion         VARCHAR,
+        ivtelefono          VARCHAR2
+    ) RETURN VARCHAR2;
+
+    FUNCTION pregistraranomalia (
+        ivnombre   IN VARCHAR2,
+        ivid       IN VARCHAR2
+    ) RETURN VARCHAR2;
+
+    FUNCTION pregistrarproducto (
+        ividproducto     IN VARCHAR2,
+        ivnombre         IN VARCHAR2,
+        ivtipo_prod_id   IN VARCHAR2
+    ) RETURN VARCHAR2;
+
+    FUNCTION pregistrarsolicitud (
+         tipoproducto     VARCHAR2,
+        cedula           VARCHAR2,
+        observacion      VARCHAR2,
+        tiposolicitud    VARCHAR2,
+        idproducto       VARCHAR2,
+        ivcausa          VARCHAR2,
+        nombreanomalia   VARCHAR2
+    ) RETURN VARCHAR2;
+
+END pkregistronivel3;
 /
 
-CREATE OR REPLACE PACKAGE BODY pkRegistroNivel3 IS
+CREATE OR REPLACE PACKAGE BODY pkregistronivel3 IS
 
-PROCEDURE pRSolicitud(ividSolicitud IN VARCHAR2, ivcedula IN VARCHAR2,ivobservacion IN VARCHAR2,ivtipoSolicitud IN VARCHAR2, ividProducto IN VARCHAR2)
-RETURN VARCHAR2
-IS
+    FUNCTION pregistrarsolicitud (
+        tipoproducto     VARCHAR2,
+        cedula           VARCHAR2,
+        observacion      VARCHAR2,
+        tiposolicitud    VARCHAR2,
+        idproducto       VARCHAR2,
+        ivcausa          VARCHAR2,
+        nombreanomalia   VARCHAR2
+    ) RETURN VARCHAR2 IS
+        BEGIN
+            pkregistronivel2.pregistrarsolicitud(tipoproducto,cedula,observacion,tiposolicitud,idproducto,ivcausa,nombreanomalia);
+            RETURN 'No_Exception';
+        EXCEPTION
+            WHEN OTHERS THEN
+                RETURN sqlerrm;
+        END pregistrarsolicitud;
 
-BEGIN
+    FUNCTION pregistrarfuncionario (
+        ivcedula            IN VARCHAR2,
+        ivnombre            IN VARCHAR2,
+        ivdireccion         IN VARCHAR2,
+        ivtelefono          IN VARCHAR2,
+        ivfechanacimiento   IN DATE
+    ) RETURN VARCHAR2 IS
+    BEGIN
+        pkregistronivel2.pregistrarfuncionario(ivcedula,ivnombre,ivdireccion,ivtelefono,ivfechanacimiento);
+        RETURN 'No_Exception';
+    EXCEPTION
+        WHEN OTHERS THEN
+            RETURN sqlerrm;
+    END pregistrarfuncionario;
 
-pkRegistroNivel2.pRSolicitud(ividSolicitud, ivcedula ,ivobservacion,ivtipoSolicitud, ividProducto);
-RETURN 'No_Exception';
+    FUNCTION pregistrarestado (
+        ivcodigo   IN VARCHAR2,
+        ivnombre   IN VARCHAR2
+    ) RETURN VARCHAR2 IS
+    BEGIN
+        pkregistronivel2.pregistrarestado(ivcodigo,ivnombre);
+        RETURN 'No_Exception';
+    EXCEPTION
+        WHEN OTHERS
+            then
+                return sqlerrm;
+        end    pregistrarestado;
 
-EXCEPTION
+    FUNCTION pregistrarcliente (
+        ivcedula            VARCHAR2,
+        ivnombre            VARCHAR2,
+        ivfechanacimiento   VARCHAR2,
+        ivdireccion         VARCHAR,
+        ivtelefono          VARCHAR2
+    ) RETURN VARCHAR2 IS
+    BEGIN
+        pkregistronivel2.pregistrarcliente(ivcedula,ivnombre,ivfechanacimiento,ivdireccion,ivtelefono);
+        RETURN 'No_Exception';
+    EXCEPTION
+        WHEN OTHERS THEN
+            RETURN sqlerrm;
+    END pregistrarcliente;
 
-WHEN OTHERS THEN
-   RETURN SQLERRM;
+    FUNCTION pregistraranomalia (
+        ivnombre   IN VARCHAR2,
+        ivid       IN VARCHAR2
+    ) RETURN VARCHAR2 IS
+    BEGIN
+        pkregistronivel2.pregistraranomalia(ivnombre,ivid);
+        RETURN 'No_Exception';
+    EXCEPTION
+        WHEN OTHERS THEN
+            RETURN sqlerrm;
+    END pregistraranomalia;
 
-END pRegistrarFuncionario;
+    FUNCTION pregistrarproducto (
+        ividproducto     IN VARCHAR2,
+        ivnombre         IN VARCHAR2,
+        ivtipo_prod_id   IN VARCHAR2
+    ) RETURN VARCHAR2 IS
+    BEGIN
+        pkregistronivel2.pregistrarproducto(ividproducto,ivnombre,ivtipo_prod_id);
+        RETURN 'No_Exception';
+    EXCEPTION
+        WHEN OTHERS THEN
+            RETURN sqlerrm;
+    END pregistrarproducto;
 
-
-END pRSolicitud;
-
-
-FUNCTION pRegistrarFuncionario(ivCedula IN VARCHAR2, ivNombre IN VARCHAR2, ivDireccion IN VARCHAR2, ivTelefono IN VARCHAR2, ivFechaNacimiento IN DATE)
-RETURN VARCHAR2
-IS
-
-BEGIN
-
-pkRegistroNivel2.pRegistrarFuncionario(ivCedula , ivNombre , ivDireccion , ivTelefono , ivFechaNacimiento);
-RETURN 'No_Exception';
-
-EXCEPTION
-
-WHEN OTHERS THEN
-   RETURN SQLERRM;
-
-END pRegistrarFuncionario;
-
-
-
-FUNCTION pRegistrarEstado (ivCodigo IN VARCHAR2, ivNombre IN VARCHAR2) 
-RETURN VARCHAR2
-IS
-
-BEGIN
-
-pkRegistroNivel2.pRegistrarEstado(ivCodigo , ivNombre);
-RETURN 'No_Exception';
-
-EXCEPTION
-
-WHEN OTHERS THEN
-   RETURN SQLERRM;
-
-END pRegistrarEstado;
-
-
-
-FUNCTION pRegistrarCliente(ivCedula VARCHAR2, ivNombre VARCHAR2, ivFechaNacimiento VARCHAR2, ivDireccion VARCHAR, ivTelefono VARCHAR2)
-RETURN VARCHAR2
-IS
-
-BEGIN
-
-pkRegistroNivel2.pRegistrarCliente(ivCedula , ivNombre , ivFechaNacimiento , ivDireccion , ivTelefono);
-RETURN 'No_Exception';
-
-EXCEPTION
-
-WHEN OTHERS THEN
-   RETURN SQLERRM;
-
-END pRegistrarCliente;
-
-FUNCTION pRegistrarAnomalia(ivNombre IN VARCHAR2, ivId IN VARCHAR2)
-RETURN VARCHAR2
-IS
-
-BEGIN
-
-pkRegistroNivel2.pResgistrarAnomalia(vNombre , ivId);
-RETURN'No_Exception';
-
-EXCEPTION
-
-WHEN OTHERS THEN
-RETURN SQLERRM;
-
-END pRegistrarAnomalia;
-
-FUNCTION pRegistrarProducto(ivIdProducto IN VARCHAR2, ivNombre IN VARCHAR2, ivTipo_prod_id IN VARCHAR2)
-return varchar2
-is
-begin
-pkRegistroNivel2.pRegistrarProducti(ivIdProducto , ivNombre , ivTipo_prod_id );
-RETURN'No_Exception';
-
-EXCEPTION
-
-WHEN OTHERS THEN
-RETURN SQLERRM;
-
-end pRegistrarProducto;
-end pkClienteNivel3;
+END pkregistronivel3;
