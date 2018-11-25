@@ -58,7 +58,7 @@ public class ViewRegistrarSolicitud {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
-	
 
 }
