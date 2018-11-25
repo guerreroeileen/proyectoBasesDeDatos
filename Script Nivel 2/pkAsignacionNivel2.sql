@@ -10,58 +10,65 @@ CREATE OR REPLACE PACKAGE pkasigancionnivel2 IS
 
 END pkasigancionnivel2;
 /
+CREATE OR REPLACE PACKAGE BODY pkasigancionnivel2 IS
 
-CREATE OR REPLACE PACKAGE BODY pkregistronivel2 IS PROCEDURE pasignacionautomatica (
-    ividsolicitud IN VARCHAR2
-) IS
-    declare       cedulafuncionario VARCHAR;
-    cantidad      NUMBER;
-    datosnumero   NUMBER;
-        
+    PROCEDURE pasignacionautomatica (
+        ividsolicitud IN VARCHAR2
+    ) IS
+        cedulafuncionario VARCHAR(50);
+        cantidad      NUMBER;
+        datosnumero   NUMBER;
+        parametro NUMBER;
     BEGIN
-    INSERT INTO tabla ( id )
+        INSERT INTO tabla ( id )
+            SELECT
+                id
+            FROM
+                funcionario;
+
         SELECT
-            id
+            COUNT(*)
+        INTO datosnumero
         FROM
-            funcionario;
+            tabla;
 
-    SELECT
-        COUNT(*)
-    INTO datosnumero
-    FROM
-        tabla;
+        WHILE datosnumero > 0 LOOP
+            SELECT
+                top(1) id
+            INTO cedulafuncionario
+            FROM
+                tabla
+            ORDER BY
+                id;
 
-WHILE datosnumero > 0 LOOP
-    SELECT
-        top(1) id
-    INTO cedulafuncionario
-    FROM
-        tabla
-    ORDER BY
-        id;
+            cantidad := pksolicitudn1.darsolicitudes(cedulafuncionario);
+            parametro := pkparametrizacion.fconsultar(1).NUMEROSOLICITUDESFUNCIONARIO;
+            IF cantidad < parametro THEN
+                pksolicitudn1.pmodificarsolicitudasignacion(ividsolicitud,cedulafuncionario);
+                datosnumero := 0;
+            ELSE
+                DELETE tabla
+                WHERE
+                    id = cedulafuncionario;
 
-    cantidad := pksolicitudnivel1.darsolicitudes(cedulafuncionario);
-    parametro := pkparametrizacionnivel1.fconsultarnumerosolicitud(1);
-IF cantidad < parametro THEN
-    pksolicitudnivel1.pmodificarsolicitudasignacion(ividsolicitud,cedulafuncionario);
-    datosnumero := 0;
-            ELSE DELETE tabla
-WHERE
-    id = cedulafuncionario; SELECT
-      COUNT(*)
-  INTO datosnumero
-  FROM
-          tabla   end
-    if;
-    end     loop;
-    end     pasignacionautomatica;
+                SELECT
+                    COUNT(*)
+                INTO datosnumero
+                FROM
+                    tabla;
+
+            END IF;
+
+        END LOOP;
+
+    END pasignacionautomatica;
 
     PROCEDURE pasignacionindividual (
         ividsolicitud   IN VARCHAR2,
         ivfuncioanrio   IN VARCHAR2
     ) IS
     BEGIN
-        pksolicitudnivel1.pmodificarsolicitudasignacion(ividsolicitud,ivfuncioanrio);
+        pksolicitudn1.pmodificarsolicitudasignacion(ividsolicitud,ivfuncioanrio);
     EXCEPTION
         WHEN no_data_found THEN
             raise_application_error(-20000,'Error' || sqlcode);
@@ -69,4 +76,4 @@ WHERE
             raise_application_error(-20000,'Error' || sqlcode);
     END pasignacionindividual;
 
-END pkregistronivel2;
+END pkasigancionnivel2;
