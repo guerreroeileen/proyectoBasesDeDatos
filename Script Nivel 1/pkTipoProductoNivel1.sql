@@ -1,72 +1,110 @@
-CREATE OR REPLACE PACKAGE pkTipoProducto IS
+CREATE OR REPLACE PACKAGE pktipoproducto IS
+    PROCEDURE pinsertar (
+        vidtipoprod       IN VARCHAR2,
+        vnombretipoprod   IN VARCHAR2,
+        vdescripcion      IN VARCHAR2
+    );
 
-PROCEDURE pInsertar(vIdTipoProd in VARCHAR, vNombreTipoProd in VARCHAR, vDescripcion IN VARCHAR);
-PROCEDURE pEliminar(vIdTipoProducto IN VARCHAR);
-PROCEDURE pModificar(vIdTipoProd in VARCHAR, vNombreTipoProd in VARCHAR, vDescripcion IN VARCHAR);
-FUNCTION pConsultar(vIdTipoProd in VARCHAR) RETURN TIPOPRODUCTO%rowtype;
+    PROCEDURE peliminar (
+        vidtipoproducto IN VARCHAR2
+    );
 
+    PROCEDURE pmodificar (
+        vidtipoprod       IN VARCHAR2,
+        vnombretipoprod   IN VARCHAR2,
+        vdescripcion      IN VARCHAR2
+    );
 
-END pkTipoProducto;
+    FUNCTION fconsultar (
+        vidtipoprod IN VARCHAR2
+    ) RETURN tipoproducto%rowtype;
 
+END pktipoproducto;
 /
-CREATE OR REPLACE PROCEDURE pInsertar
-(vIdTipoProd in VARCHAR, vNombreTipoProd in VARCHAR, vDescripcion IN VARCHAR)IS
-BEGIN
-    INSERT INTO TIPOPRODUCTO VALUES(vIdTipoProd,vNombreTipoProd,vDescripcion);
 
-    EXCEPTION 
-    WHEN DUP_VAL_ON_INDEX THEN
-    RAISE_APPLICATION_ERROR(-20001,'El id esta duplicado');
-    WHEN OTHERS THEN
-    RAISE_APPLICATION_ERROR(-20001,'Error'||SQLERRM||SQLCODE);
-END pInsertar;
+CREATE OR REPLACE PACKAGE BODY pktipoproducto IS
 
-/
-CREATE OR REPLACE PROCEDURE pEliminar
-(vIdTipoProducto IN VARCHAR) IS
-BEGIN
-DELETE FROM TIPOPRODUCTO TP
-WHERE TP.ID=vIdTipoProducto;
+    PROCEDURE pinsertar (
+        vidtipoprod       IN VARCHAR2,
+        vnombretipoprod   IN VARCHAR2,
+        vdescripcion      IN VARCHAR2
+    ) IS
+    BEGIN
+        INSERT INTO tipoproducto VALUES (
+            vidtipoprod,
+            vnombretipoprod,
+            vdescripcion
+        );
 
-EXCEPTION
-WHEN NO_DATA_FOUND THEN
-RAISE_APPLICATION_ERROR(-20001,'El ID que se quiere eliminar no existe');
-WHEN OTHERS THEN
-RAISE_APPLICATION_ERROR(-20001,'Error'||SQLERRM||SQLCODE);
-END pEliminar;
+    EXCEPTION
+        WHEN dup_val_on_index THEN
+            raise_application_error(-20001,'El id esta duplicado');
+        WHEN OTHERS THEN
+            raise_application_error(-20001,'Error'
+                                            || sqlerrm
+                                            || sqlcode);
+    END pinsertar;
 
-/
-CREATE OR REPLACE PROCEDURE pModificar
-(vIdTipoProd in VARCHAR, vNombreTipoProd in VARCHAR, vDescripcion IN VARCHAR) IS
-BEGIN
-UPDATE TIPOPRODUCTO TP
-SET
-TP.ID=vIdTipoProd,
-TP.NOMBRE=vNombreTipoProd,
-TP.DESCRIPCION=vDescripcion
-WHERE TP.ID=vIdTipoProd;
+    PROCEDURE peliminar (
+        vidtipoproducto IN VARCHAR2
+    ) IS
+    BEGIN
+        DELETE FROM tipoproducto tp
+        WHERE
+            tp.id = vidtipoproducto;
 
-EXCEPTION
-WHEN NO_DATA_FOUND THEN
-RAISE_APPLICATION_ERROR(-20001,'El ID que se quiere modificar no existe');
-WHEN OTHERS THEN
-RAISE_APPLICATION_ERROR(-20001,'Error'||SQLERRM||SQLCODE);
-END pModificar;
+    EXCEPTION
+        WHEN no_data_found THEN
+            raise_application_error(-20001,'El ID que se quiere eliminar no existe');
+        WHEN OTHERS THEN
+            raise_application_error(-20001,'Error'
+                                            || sqlerrm
+                                            || sqlcode);
+    END peliminar;
 
-/
-CREATE OR REPLACE FUNCTION  fConsultar
-(vIdTipoProducto in VARCHAR)
-RETURN TIPOPRODUCTO%rowtype IS 
-rowTP TIPOPRODUCTO%rowtype;
-BEGIN 
-SELECT*INTO rowTP
-FROM TIPOPRODUCTO TP
-WHERE TP.ID=vIdTipoProducto;
+    PROCEDURE pmodificar (
+        vidtipoprod       IN VARCHAR2,
+        vnombretipoprod   IN VARCHAR2,
+        vdescripcion      IN VARCHAR2
+    ) IS
+    BEGIN
+        UPDATE tipoproducto tp
+        SET
+            tp.nombre = vnombretipoprod,
+            tp.descripcion = vdescripcion
+        WHERE
+            tp.id = vidtipoprod;
 
-EXCEPTION
-WHEN NO_DATA_FOUND THEN
-RAISE_APPLICATION_ERROR(-20001,'El ID que se quiere consultar no existe');
-WHEN OTHERS THEN
-RAISE_APPLICATION_ERROR(-20001,'Error'||SQLERRM||SQLCODE);
-END fConsultar;
+    EXCEPTION
+        WHEN no_data_found THEN
+            raise_application_error(-20001,'El ID que se quiere modificar no existe');
+        WHEN OTHERS THEN
+            raise_application_error(-20001,'Error'
+                                            || sqlerrm
+                                            || sqlcode);
+    END pmodificar;
 
+    FUNCTION fconsultar (
+        vidtipoprod IN VARCHAR2
+    ) RETURN tipoproducto%rowtype IS
+        rowtp   tipoproducto%rowtype;
+    BEGIN
+        SELECT
+            *
+        INTO rowtp
+        FROM
+            tipoproducto tp
+        WHERE
+            tp.id = vidtipoprod;
+
+        RETURN rowtp;
+    EXCEPTION
+        WHEN no_data_found THEN
+            raise_application_error(-20001,'El ID que se quiere consultar no existe');
+        WHEN OTHERS THEN
+            raise_application_error(-20001,'Error'
+                                            || sqlerrm
+                                            || sqlcode);
+    END fconsultar;
+
+END pktipoproducto;

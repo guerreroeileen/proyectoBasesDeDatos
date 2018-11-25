@@ -1,64 +1,110 @@
-CREATE OR REPLACE PACKAGE pkProductoNivel1 IS
+CREATE OR REPLACE PACKAGE pkproductonivel1 IS
+    PROCEDURE pinsertar (
+        ividproducto     IN VARCHAR2,
+        ivnombre         IN VARCHAR2,
+        ivtipo_prod_id   IN VARCHAR2
+    );
 
-PROCEDURE  pInsertar (ivIdProducto IN VARCHAR2, ivNombre IN VARCHAR2, ivTipo_prod_id IN VARCHAR2);
-PROCEDURE  pEliminar (ivIdProducto IN VARCHAR2);
-FUNCTION  fConsultar (ivIdProducto IN VARCHAR2) RETURN oPRODUCTO%rowtype;
-PROCEDURE  pModificar (vIdProducto IN VARCHAR2, vNombre IN VARCHAR2, vTipo_prod_id IN VARCHAR2);
-END pkProdutoNivel1;
+    PROCEDURE peliminar (
+        ividproducto IN VARCHAR2
+    );
 
+    FUNCTION fconsultar (
+        ividproducto IN VARCHAR2
+    ) RETURN producto%rowtype;
+
+    PROCEDURE pmodificar (
+        vidproducto     IN VARCHAR2,
+        vnombre         IN VARCHAR2,
+        vtipo_prod_id   IN VARCHAR2
+    );
+
+END pkproductonivel1;
 /
-CREATE OR REPLACE PROCEDURE  pInsertar (ivIdProducto IN VARCHAR2, ivNombre IN VARCHAR2, ivTipo_prod_id IN VARCHAR2) IS
-BEGIN
-    INSERT INTO PRODUCTO VALUES(ivIdProducto,ivNombre,ivTipo_prod_id);
-    
-    EXCEPTION
-    WHEN DUP_VAL_ON_INDEX THEN
-    RAISE_APPLICATION_ERROR(-20001,'El id esta duplicado.');
-    WHEN OTHERS THEN 
-    RAISE_APPLICATION_ERROR(-20001,'ERROR'||SQLERRM||SQLCODE);
-    
-END pInsertar;
 
-/
-CREATE OR REPLACE PROCEDURE  pEliminar (ivIdProducto IN VARCHAR2) IS
-BEGIN
-    DELETE FROM PRODUCTO vProducto
-    WHERE vProducto.ID=ivIdProducto;
-    
-    EXCEPTION 
-    WHEN NO_DATA_FOUND THEN
-    RAISE_APPLICATION_ERROR(-20001,'El id a eliminar no existe.');
-    WHEN OTHERS THEN 
-    RAISE_APPLICATION_ERROR(-20001,'ERROR'||SQLERRM||SQLCODE);
-    
-END pEliminar;
+CREATE OR REPLACE PACKAGE BODY pkproductonivel1 IS
 
-FUNCTION  fConsultar (ivIdProducto IN VARCHAR2) RETURN oPRODUCTO%rowtype IS rowProducto PRODUCTO%rowtype;
-BEGIN
-    SELECT * INTO rowProducto
-    FROM PRODUCTO vProducto
-    WHERE vProducto.ID=ivIdProducto;
-    
-    EXCEPTION
-    WHEN NO_DATA_FOUND THEN 
-    RAISE_APPLICATION_ERROR(-20001,'El id a consultar no existe.');
-    WHEN OTHERS THEN 
-    RAISE_APPLICATION_ERROR(-20001,'ERROR'||SQLERRM||SQLCODE);
-    
-END fConsultar;
+    PROCEDURE pinsertar (
+        ividproducto     IN VARCHAR2,
+        ivnombre         IN VARCHAR2,
+        ivtipo_prod_id   IN VARCHAR2
+    ) IS
+    BEGIN
+        INSERT INTO producto VALUES (
+            ividproducto,
+            ivnombre,
+            ivtipo_prod_id
+        );
 
-/
-CREATE OR REPLACE PROCEDURE  pModificar (vIdProducto IN VARCHAR2, vNombre IN VARCHAR2, vTipo_prod_id IN VARCHAR2) IS
-BEGIN
-    UPDATE PRODUCTO P
-    SET
-    P.NOMBRE=vNombre, P.TIPOPRODUCTO_ID=vTipo_prod_id
-    WHERE P.ID=vIdProducto;
-    
     EXCEPTION
-    WHEN NO_DATA_FOUND THEN 
-    RAISE_APPLICATION_ERROR(-20001,'El producto a consultar no existe.');
-    WHEN OTHERS THEN 
-    RAISE_APPLICATION_ERROR(-20001,'ERROR'||SQLERRM||SQLCODE);
-    
-END pModificar;
+        WHEN dup_val_on_index THEN
+            raise_application_error(-20001,'El id esta duplicado.');
+        WHEN OTHERS THEN
+            raise_application_error(-20001,'ERROR'
+                                            || sqlerrm
+                                            || sqlcode);
+    END pinsertar;
+
+    PROCEDURE peliminar (
+        ividproducto IN VARCHAR2
+    ) IS
+    BEGIN
+        DELETE FROM producto vproducto
+        WHERE
+            vproducto.id = ividproducto;
+
+    EXCEPTION
+        WHEN no_data_found THEN
+            raise_application_error(-20001,'El id a eliminar no existe.');
+        WHEN OTHERS THEN
+            raise_application_error(-20001,'ERROR'
+                                            || sqlerrm
+                                            || sqlcode);
+    END peliminar;
+
+    FUNCTION fconsultar (
+        ividproducto IN VARCHAR2
+    ) RETURN producto%rowtype IS
+        rowproducto   producto%rowtype;
+    BEGIN
+        SELECT
+            *
+        INTO rowproducto
+        FROM
+            producto vproducto
+        WHERE
+            vproducto.id = ividproducto;
+
+        RETURN rowproducto;
+    EXCEPTION
+        WHEN no_data_found THEN
+            raise_application_error(-20001,'El id a consultar no existe.');
+        WHEN OTHERS THEN
+            raise_application_error(-20001,'ERROR'
+                                            || sqlerrm
+                                            || sqlcode);
+    END fconsultar;
+
+    PROCEDURE pmodificar (
+        vidproducto     IN VARCHAR2,
+        vnombre         IN VARCHAR2,
+        vtipo_prod_id   IN VARCHAR2
+    ) IS
+    BEGIN
+        UPDATE producto p
+        SET
+            p.nombre = vnombre,
+            p.tipoproducto_id = vtipo_prod_id
+        WHERE
+            p.id = vidproducto;
+
+    EXCEPTION
+        WHEN no_data_found THEN
+            raise_application_error(-20001,'El producto a consultar no existe.');
+        WHEN OTHERS THEN
+            raise_application_error(-20001,'ERROR'
+                                            || sqlerrm
+                                            || sqlcode);
+    END pmodificar;
+
+END pkproductonivel1;
