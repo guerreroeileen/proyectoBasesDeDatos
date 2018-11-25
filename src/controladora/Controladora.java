@@ -214,5 +214,4 @@ public class Controladora extends Application{
 		launch(args);
 	}
 
-	
 }

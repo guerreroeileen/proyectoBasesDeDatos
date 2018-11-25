@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="56.0" layoutY="27.0" text="Producto" />
+      <ChoiceBox layoutX="154.0" layoutY="22.0" prefHeight="26.0" prefWidth="171.0" />
+      <Label layoutX="56.0" layoutY="71.0" text="Cédula" />
+      <TextField layoutX="154.0" layoutY="66.0" promptText="Ingrese su cédula" />
+      <Hyperlink layoutX="31.0" layoutY="117.0" text="+Descripción" />
+      <TextArea layoutX="154.0" layoutY="117.0" prefHeight="83.0" prefWidth="171.0" />
+   </children>
+</AnchorPane>
