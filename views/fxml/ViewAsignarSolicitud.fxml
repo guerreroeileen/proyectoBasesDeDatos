@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="117.0" prefWidth="312.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="vista.ViewAsignarSolicitud">
+   <children>
+      <Label fx:id="labCodSolicitud" layoutX="14.0" layoutY="14.0" text="Código de la solicitud:" />
+      <Label fx:id="labCedulaFuncionario" layoutX="14.0" layoutY="42.0" text="Cédula del funcionario:" />
+      <TextField fx:id="txtCodSolicitud" layoutX="156.0" layoutY="10.0" />
+      <TextField fx:id="txtCedulaFuncionario" layoutX="156.0" layoutY="38.0" />
+      <Button fx:id="butAsignarSolicitud" layoutX="242.0" layoutY="78.0" mnemonicParsing="false" text="Asignar" />
+   </children>
+</AnchorPane>
