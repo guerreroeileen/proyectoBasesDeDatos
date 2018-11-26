@@ -387,7 +387,9 @@ public class Controladora extends Application {
 
 	private void inicializarEstadosEnConsultas() {
 		// TODO setear el combo box del view consultas para mostrar los estados que
-		// existen.
+		// existen
+		
+		
 
 	}
 
@@ -697,6 +699,8 @@ public class Controladora extends Application {
 			String cedula = (String) info[0];
 			String producto = (String) info[1];
 			String observaciones = (String) info[2];
+			
+			sg.registrarSolicitud(cedula, producto, observaciones, null, null, null);
 			// TODO Conectar al modelo y usar datos para registrar solicitud de creacion
 		} catch (Exception e) {
 			mostrarMensajeAUsuario(AlertType.ERROR, "Error registrando", e.getMessage());
@@ -719,6 +723,8 @@ public class Controladora extends Application {
 			String observaciones = (String) info[2];
 			String nuevoProducto = chbNuevoProducto.getItems().get(indexNuevoProducto);
 			// TODO Conectar al modelo
+			
+			sg.registrarSolicitudModificacion(cedula, producto, observaciones);
 		} catch (Exception e) {
 			mostrarMensajeAUsuario(AlertType.ERROR, "Error registrando", e.getMessage());
 
@@ -738,6 +744,8 @@ public class Controladora extends Application {
 			String observaciones = (String) info[2];
 			String anomalia = chbAnomalia.getItems().get(indexAnomalia);
 
+			sg.registrarSolicitud(cedula, producto, observaciones, "Daño", null, anomalia);
+
 			// TODO Conectar al modelo
 		} catch (Exception e) {
 			mostrarMensajeAUsuario(AlertType.ERROR, "Error registrando", e.getMessage());
@@ -755,6 +763,8 @@ public class Controladora extends Application {
 			String observaciones = (String) info[2];
 			String causa = ((TextArea) viewRegistrarSolicitud.obtenerNodoPorId("taCausa")).getText();
 			// TODO Conectar al modelo
+			
+			sg.registrarSolicitud(cedula, producto, observaciones, "Cancelacion", causa,null);
 		} catch (Exception e) {
 			mostrarMensajeAUsuario(AlertType.ERROR, "Error registrando", e.getMessage());
 
@@ -770,6 +780,8 @@ public class Controladora extends Application {
 			String producto = (String) info[1];
 			String observaciones = (String) info[2];
 			// TODO Conectar al modelo
+			
+			sg.registrarSolicitudReclamo(cedula, producto, observaciones);
 		} catch (Exception e) {
 			mostrarMensajeAUsuario(AlertType.ERROR, "Error registrando", e.getMessage());
 		}
@@ -877,6 +889,10 @@ public class Controladora extends Application {
 
 	private void cargarProductosSolicitud(ChoiceBox<String> productos) {
 		List<String> productosBD = new ArrayList<>();
+		
+		productosBD.add("Voz");
+		productosBD.add("Servicio integrado");
+		productosBD.add("Servicio de datos");
 		// TODO Cargar productos desde BD y asignarlos a productosBD
 		updateGUI(new Runnable() {
 
@@ -906,6 +922,9 @@ public class Controladora extends Application {
 		List<String> anomaliasBD = new ArrayList<>();
 		// TODO cargar anomalias en el choiceBox, conectar al modelo para pedir las
 		// anomalias y asignarlas a anomaliasBD
+
+		anomaliasBD.add("Baja velocidad");
+		anomaliasBD.add("Mala calidad");
 
 		updateGUI(new Runnable() {
 

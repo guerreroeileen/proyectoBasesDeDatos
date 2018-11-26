@@ -3,6 +3,7 @@ package vista;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -44,10 +45,10 @@ public class ViewConsultas {
     private Label labCsltaProdXCliente;
 
     @FXML
-    private ChoiceBox<String> cmbBoxEstadoSol;
+    private ComboBox<String> cmbBoxEstadoSol;
 
     @FXML
-    private ChoiceBox<String> cmbBoxTipoSol;
+    private ComboBox<String> cmbBoxTipoSol;
     
     @FXML
     private TextArea txtResultConsulta;
@@ -76,19 +77,19 @@ public class ViewConsultas {
 		this.txtCedulaCliente = txtCedulaCliente;
 	}
 
-	public ChoiceBox<String> getCmbBoxEstadoSol() {
+	public ComboBox<String> getCmbBoxEstadoSol() {
 		return cmbBoxEstadoSol;
 	}
 
-	public void setCmbBoxEstadoSol(ChoiceBox<String> cmbBoxEstadoSol) {
+	public void setCmbBoxEstadoSol(ComboBox<String> cmbBoxEstadoSol) {
 		this.cmbBoxEstadoSol = cmbBoxEstadoSol;
 	}
 
-	public ChoiceBox<String> getCmbBoxTipoSol() {
+	public ComboBox<String> getCmbBoxTipoSol() {
 		return cmbBoxTipoSol;
 	}
 
-	public void setCmbBoxTipoSol(ChoiceBox<String> cmbBoxTipoSol) {
+	public void setCmbBoxTipoSol(ComboBox<String> cmbBoxTipoSol) {
 		this.cmbBoxTipoSol = cmbBoxTipoSol;
 	}
 
