@@ -438,39 +438,68 @@ public class Controladora extends Application {
 		switch (str) {
 		case "Creacion": {
 
-			// TODO Registrar solicitud de Creacion
+			registrarSolicituDeCreacion();
 			break;
 		}
 
 		case "Modificacion": {
-			// TODO Registrar solicitud de Modificacion
+			registrarSolicituDeModificacion();
+
 
 			break;
 		}
 
 		case "Dano": {
+			registrarSolicituDeDano();
+
 			// TODO Registrar solicitud de Danio
 
 			break;
 		}
 
 		case "Cancelacion": {
-			// TODO Registrar solicitud de Cancelacion
+			registrarSolicituDeCancelacion();
+
 
 			break;
 		}
 
 		case "Reclamo": {
-			// TODO Registrar solicitud de Reclamo
+			registrarSolicituDeReclamo();
+
 
 			break;
 		}
 		default: {
-			// TODO No se selecciono ningun tipo de solicitud
 
 			System.out.println("No registrar");
 		}
 		}
+	}
+
+	private void registrarSolicituDeCreacion() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void registrarSolicituDeModificacion() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void registrarSolicituDeDano() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void registrarSolicituDeCancelacion() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void registrarSolicituDeReclamo() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public void mostrarTextAreaObservaciones() {
