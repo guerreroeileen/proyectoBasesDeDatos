@@ -234,13 +234,18 @@ public class Controladora extends Application {
 	}
 
 	public void atenderSolicitud() {
-		// TODO Para atender una solicitud... Recoger datos y enviarselas a modelo.
-		// Conectarse a viewAtenderSolicitud si es necesario, para obtener datos
+		String cedula = viewAtenderSolicitudes.getTextFieldCedula().getText();
+		String codigo = viewAtenderSolicitudes.geTextFieldCodigo().getText();
+		String observaciones = viewAtenderSolicitudes.getTextAreaObservaciones().getText();
+		// TODO conectarse a modelo.
 	}
 
 	public void rechazarSolicitud() {
-		// TODO Para rechazar una solicitud... Recoger datos y enviarselas a modelo.
-		// Conectarse a viewAtenderSolicitud si es necesario, para obtener datos
+		String cedula = viewAtenderSolicitudes.getTextFieldCedula().getText();
+		String codigo = viewAtenderSolicitudes.geTextFieldCodigo().getText();
+		String observaciones = viewAtenderSolicitudes.getTextAreaObservaciones().getText();
+		// TODO conectarse a modelo.
+
 
 	}
 
@@ -255,6 +260,9 @@ public class Controladora extends Application {
 		// existen.
 
 	}
+
+	
+	
 
 	@SuppressWarnings({ "rawtypes", "unused" })
 	private EventHandler controlarEventosGestionarClientes() {
@@ -484,15 +492,13 @@ public class Controladora extends Application {
 			String cedula = (String) info[0];
 			String producto = (String) info[1];
 			String observaciones = (String) info[2];
-			//TODO Conectar al modelo
+			// TODO Conectar al modelo
 		} catch (Exception e) {
 			// TODO No se ha seleccionado ningun producto
 			e.printStackTrace();
 		}
 
 	}
-
-	
 
 	private void registrarSolicituDeModificacion() {
 		try {
@@ -501,10 +507,11 @@ public class Controladora extends Application {
 			String producto = (String) info[1];
 			String observaciones = (String) info[2];
 			@SuppressWarnings("unchecked")
-			ChoiceBox<String> chbNuevoProducto =(ChoiceBox<String>) viewRegistrarSolicitud.obtenerNodoPorId("chbNuevoProducto");
-			int indexNuevoProducto=chbNuevoProducto.getSelectionModel().getSelectedIndex();
+			ChoiceBox<String> chbNuevoProducto = (ChoiceBox<String>) viewRegistrarSolicitud
+					.obtenerNodoPorId("chbNuevoProducto");
+			int indexNuevoProducto = chbNuevoProducto.getSelectionModel().getSelectedIndex();
 			String nuevoProducto = chbNuevoProducto.getItems().get(indexNuevoProducto);
-			//TODO Conectar al modelo
+			// TODO Conectar al modelo
 		} catch (Exception e) {
 			// TODO No se ha seleccionado ningun producto, nuevo producto u otro error
 			e.printStackTrace();
@@ -517,13 +524,13 @@ public class Controladora extends Application {
 			String cedula = (String) info[0];
 			String producto = (String) info[1];
 			String observaciones = (String) info[2];
-			
+
 			@SuppressWarnings("unchecked")
-			ChoiceBox<String> chbAnomalia =(ChoiceBox<String>) viewRegistrarSolicitud.obtenerNodoPorId("chbAnomalia");
-			int indexAnomalia=chbAnomalia.getSelectionModel().getSelectedIndex();
+			ChoiceBox<String> chbAnomalia = (ChoiceBox<String>) viewRegistrarSolicitud.obtenerNodoPorId("chbAnomalia");
+			int indexAnomalia = chbAnomalia.getSelectionModel().getSelectedIndex();
 			String anomalia = chbAnomalia.getItems().get(indexAnomalia);
-			
-			//TODO Conectar al modelo
+
+			// TODO Conectar al modelo
 		} catch (Exception e) {
 			// TODO No se ha seleccionado ningun producto u otro error.
 			e.printStackTrace();
@@ -537,7 +544,7 @@ public class Controladora extends Application {
 			String producto = (String) info[1];
 			String observaciones = (String) info[2];
 			String causa = ((TextArea) viewRegistrarSolicitud.obtenerNodoPorId("taCausa")).getText();
-			//TODO Conectar al modelo
+			// TODO Conectar al modelo
 		} catch (Exception e) {
 			// TODO No se ha seleccionado ningun producto u otro error
 			e.printStackTrace();
@@ -550,7 +557,7 @@ public class Controladora extends Application {
 			String cedula = (String) info[0];
 			String producto = (String) info[1];
 			String observaciones = (String) info[2];
-			//TODO Conectar al modelo
+			// TODO Conectar al modelo
 		} catch (Exception e) {
 			// TODO No se ha seleccionado ningun producto
 			e.printStackTrace();
@@ -567,10 +574,11 @@ public class Controladora extends Application {
 			((TextArea) nodo).setText("");
 		}
 	}
-	
+
 	/**
 	 * Este metodo obtiene los datos generales para registrar una solicitud: cedula,
 	 * producto seleccionado y observaciones.
+	 * 
 	 * @return info en cada indice posee: 0: cedula, 1:producto, 2:observaciones
 	 * @throws Exception No se ha seleccionado ningun producto
 	 */
@@ -698,12 +706,12 @@ public class Controladora extends Application {
 		});
 
 	}
-	
+
 	public void mostrarMensajeAUsuario(AlertType type, String title, String contentText) {
 		Alert alert = new Alert(type, contentText, ButtonType.APPLY, ButtonType.CANCEL);
 		alert.setTitle(title);
 		alert.show();
-		
+
 	}
 
 	/**

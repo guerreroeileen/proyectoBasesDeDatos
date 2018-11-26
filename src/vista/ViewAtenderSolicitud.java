@@ -4,7 +4,6 @@ package vista;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBase;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -66,5 +65,9 @@ public class ViewAtenderSolicitud {
 
 	public Button getAtender() {
 		return bAtender;
+	}
+
+	public TextArea getTextAreaObservaciones() {
+		return taObservaciones;
 	}
 }
