@@ -2,8 +2,10 @@ package controladora;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -14,16 +16,17 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import modelo.SistemaGestion;
 import vista.ViewAsignarSolicitud;
 import vista.ViewAtenderSolicitud;
 import vista.ViewConsultas;
@@ -35,6 +38,8 @@ import vista.ViewRegistrarSolicitud.Eleccion;
 
 public class Controladora extends Application {
 
+	private SistemaGestion sg;
+	
 	private ViewGestionarDatos viewGestionarDatos;
 	private ViewPrincipal viewPrincipal;
 	private ViewOpcionesFuncionario viewOpcionesFuncionario;
@@ -111,19 +116,50 @@ public class Controladora extends Application {
 	}
 	
 	public void consultarXFuncionario(String cedulaFunc) {
+		
+		
+		try {
+			sg.consultarSolicitudFuncionario(cedulaFunc);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//TODO - completar con modelo.
+		
+		
 	}
 	
 	public void consultarXEstado(String estado) {
 		//TODO - completar con modelo.
+		
+		try {
+			sg.consultarSolicitudEstado(estado);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void consultarXTipo(String tipo) {
 		//TODO - completar con modelo.
+		try {
+			sg.consultarSolicitudTipo(tipo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 	}
 	
 	public void consultarXCliente(String cedulaCliente) {
 		//TODO - completar con modelo.
+
+		try {
+			sg.consultarProductoCliente(cedulaCliente);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked"})
@@ -313,6 +349,7 @@ public class Controladora extends Application {
 		String cedula = viewAtenderSolicitudes.getTextFieldCedula().getText();
 		String codigo = viewAtenderSolicitudes.geTextFieldCodigo().getText();
 		String observaciones = viewAtenderSolicitudes.getTextAreaObservaciones().getText();
+		
 		// TODO conectarse a modelo.
 	}
 
@@ -623,7 +660,7 @@ public class Controladora extends Application {
 			// TODO Conectar al modelo y usar datos para registrar solicitud de creacion
 		} catch (Exception e) {
 			mostrarMensajeAUsuario(AlertType.ERROR, "Error registrando", e.getMessage());
-
+			
 		}
 
 	}
