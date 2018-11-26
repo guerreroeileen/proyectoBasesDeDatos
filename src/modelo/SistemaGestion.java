@@ -1,17 +1,144 @@
 
 package modelo;
 
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+import java.util.ArrayList;
 
 public class SistemaGestion {
 	private Connection connection;
+	private ArrayList<Solicitud> solicitudes;
+	private ArrayList<ClienteXProducto> cxp;
 
 	public SistemaGestion() throws Exception {
+		
+		solicitudes= new ArrayList<Solicitud>();
+		cxp = new ArrayList<ClienteXProducto>();
 		try {
 			connection = ConectionBD.getConection();
 		} catch (Exception e) {
 			throw new Exception("Error al conectarse a la base de datos");
 		}
+		
+		inicializarSolicitudes();
+		inicializarCientexProducto();
+	}
+	
+	public void inicializarCientexProducto() throws SQLException{
+		
+		
+		Statement st= connection.createStatement();
+		ResultSet rs= st.executeQuery("SELECT s.* FROM ClienteXProducto s");
+		
+		while(rs.next()) {
+			
+			 String cliente_cc= rs.getString("cliente_cedula");     
+		     String producto = rs.getString("producto_id");       
+		     Date fecha_inicio = rs.getDate("fechainicio");   
+		     Date fecha_fin = rs.getDate("fechafin");
+			
+			ClienteXProducto c= new ClienteXProducto(cliente_cc, producto, fecha_inicio, fecha_fin);
+		     
+			cxp.add(c);
+		}
+	}
+
+	public void inicializarSolicitudes() throws SQLException {
+		
+		Statement st= connection.createStatement();
+		ResultSet rs= st.executeQuery("SELECT s.* FROM SOLICITUD s");
+		
+		while(rs.next()) {
+		   	String n_solicitud = rs.getString("n_solicitud") ;           
+	        String observaciones = rs.getString("observaciones");       
+	        Date fechaasignacion = rs.getDate("fechaasignacion");     
+	        Date fechaatencion   = rs.getDate("fechaatencion");       
+	        String causa = rs.getString("causa");                
+	        String comentariofuncionario = rs.getString("comentariofuncionario");   
+	        String cliente_cedula =rs.getString("cliente_cedula");           
+	        String estado_codigo = rs.getString("estado_codigo");        
+	        String funcionario_cedula = rs.getString("funcionario_cedula");     
+	        String anomalia_id = rs.getString("anomalia_id");             
+	        String tiposolicitud_id = rs.getString("tiposolicitud_id");        
+	        String producto_id = rs.getString("producto_id");
+	        
+	      
+	        Solicitud s= new Solicitud(n_solicitud, observaciones, fechaasignacion, fechaatencion, causa, comentariofuncionario, cliente_cedula, estado_codigo, funcionario_cedula, anomalia_id, tiposolicitud_id, producto_id);
+	        
+	        solicitudes.add(s);
+		}
+		
+		
+	}
+	public ArrayList<Solicitud> consultarSolicitudFuncionario(String funcionario_cedula) throws SQLException {
+		
+		ArrayList<Solicitud> filtro= new ArrayList<Solicitud>();
+		
+		for (int i = 0; i < solicitudes.size(); i++) {
+			
+			if(solicitudes.get(i).getFuncionariocedula().equals(funcionario_cedula)) {
+			
+				filtro.add(solicitudes.get(i));
+				
+			}
+		}
+		
+		return filtro;
+		}
+	
+		
+	public ArrayList<Solicitud> consultarSolicitudEstado(String estado) throws SQLException {
+		
+		ArrayList<Solicitud> filtro= new ArrayList<Solicitud>();
+		
+		for (int i = 0; i < solicitudes.size(); i++) {
+			
+			if(solicitudes.get(i).getEstado_codigo().equals(estado)) {
+			
+				filtro.add(solicitudes.get(i));
+				
+			}
+		}
+		
+		return filtro;
+		}
+	
+	public ArrayList<Solicitud> consultarSolicitudTipo(String tipo) throws SQLException {
+		
+		ArrayList<Solicitud> filtro= new ArrayList<Solicitud>();
+		
+		for (int i = 0; i < solicitudes.size(); i++) {
+			
+			if(solicitudes.get(i).getTiposolicitud_id().equals(tipo)) {
+			
+				filtro.add(solicitudes.get(i));
+				
+			}
+		}
+		
+		return filtro;
+		}
+	
+	
+	public ArrayList<ClienteXProducto> consultarProductoCliente(String cliente) throws SQLException {
+
+		ArrayList<ClienteXProducto> filtro= new ArrayList<ClienteXProducto>();
+
+		for (int i = 0; i < cxp.size(); i++) {
+
+			if(cxp.get(i).getCliente_cc().equals(cliente)) {
+
+				filtro.add(cxp.get(i));
+
+			}
+		}
+
+		return filtro;
 	}
 
 	public boolean atenderSolicitud(String cedFun, String codSol, String comentario, String estado) throws Exception {
