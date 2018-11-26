@@ -277,7 +277,7 @@ public class Controladora extends Application {
 						registrarEventosAtenderSolicitudes();
 						viewAtenderSolicitudes.getStage().show();
 					} catch (Exception e) {
-						e.printStackTrace();
+						mostrarMensajeAUsuario(AlertType.ERROR, "Error", e.getMessage());
 					}
 					break;
 				case "Asignar solicitudes":
@@ -289,7 +289,7 @@ public class Controladora extends Application {
 						viewAsignarSolicitud = (ViewAsignarSolicitud) f.getController();
 						registrarEventoAsignacion();
 					} catch (Exception e) {
-						e.printStackTrace();
+						mostrarMensajeAUsuario(AlertType.ERROR, "Error", e.getMessage());
 					}
 					stage.show();
 					break;
@@ -418,8 +418,8 @@ public class Controladora extends Application {
 					try {
 						sg.registrarCliente(nombre, cedula, direccion, telefono);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						mostrarMensajeAUsuario(AlertType.ERROR, "Error", e.getMessage());
+
 					}
 					// TODO conectarse a modelo para agregar el cliente.
 					break;
@@ -448,10 +448,12 @@ public class Controladora extends Application {
 					// TODO conectarse a modelo para eliminar el cliente.
 					break;
 				}
+
 				}
 			}
 
 		};
+
 	}
 
 	@SuppressWarnings({ "rawtypes", "unused" })
@@ -487,13 +489,20 @@ public class Controladora extends Application {
 				}
 				case "Borrar": {
 					String codigo = viewGestionarDatos.getTxtCodTiProductoBorrar().getText();
-					// TODO conectarse a modelo para eliminar el tipo de producto.
+					try {
+						sg.eliminarProducto(codigo);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						mostrarMensajeAUsuario(AlertType.ERROR, "Error", e.getMessage());
+					}
 					break;
 				}
+
 				}
 			}
 
 		};
+
 	}
 
 	@SuppressWarnings({ "rawtypes", "unused" })
@@ -537,12 +546,19 @@ public class Controladora extends Application {
 				case "Borrar": {
 					String cedula = viewGestionarDatos.getTxtCedulaFuncBorrar().getText();
 					// TODO conectarse a modelo para eliminar el funcionario.
+					try {
+						sg.eliminarFuncionario(cedula);
+					} catch (Exception e) {
+						mostrarMensajeAUsuario(AlertType.ERROR, "Error", e.getMessage());
+					}
 					break;
 				}
+
 				}
 			}
 
 		};
+
 	}
 
 	@SuppressWarnings({ "rawtypes", "unused" })
@@ -578,12 +594,14 @@ public class Controladora extends Application {
 				case "Borrar": {
 					String codigo = viewGestionarDatos.getTxtCodTiSolicitudBorrar().getText();
 					// TODO conectarse a modelo para eliminar el tipo de solicitud.
+
 					break;
 				}
 				}
 			}
 
 		};
+
 	}
 
 	public void verificarUsuario() {
@@ -616,7 +634,7 @@ public class Controladora extends Application {
 					viewOpcionesFuncionario = (ViewOpcionesFuncionario) f.getController();
 					registrarEventosViewOpcionesFuncionario();
 				} catch (Exception e) {
-					e.printStackTrace();
+					mostrarMensajeAUsuario(AlertType.ERROR, "Error", e.getMessage());
 				}
 				stage.show();
 			}
