@@ -375,11 +375,13 @@ public class SistemaGestion {
 		}
 		return id;
 	}
+	
+	
 		
 	public static void main(String[] args) {
 		try {
 			SistemaGestion s = new SistemaGestion();
-//			s.registrarSolicitud( Davila","1111111111","El escondite","222",new Date(1981,12,23));
+			s.registrarSolicitud("TP_1","1111111111","Me gustaria este producto","TS_1","","");
 			System.out.println("Exito");
 
 		} catch (Exception e) {
