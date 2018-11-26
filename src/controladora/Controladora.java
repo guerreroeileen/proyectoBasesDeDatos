@@ -15,10 +15,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -208,8 +212,8 @@ public class Controladora extends Application {
 				}
 
 				case "rbAtendiendo": {
-					boolean isSelected =viewAtenderSolicitudes.getRadioButtonAtendiendo().isSelected();
-					cambiarModoAtenderSolicitud(isSelected);					
+					boolean isSelected = viewAtenderSolicitudes.getRadioButtonAtendiendo().isSelected();
+					cambiarModoAtenderSolicitud(isSelected);
 					break;
 				}
 
@@ -222,21 +226,21 @@ public class Controladora extends Application {
 		};
 		return handler;
 	}
-	
+
 	public void cambiarModoAtenderSolicitud(boolean danoOReclamo) {
 		Button bRechazar = viewAtenderSolicitudes.getRechazar();
 		bRechazar.setVisible(danoOReclamo);
 		bRechazar.setDisable(!danoOReclamo);
 	}
-	
+
 	public void atenderSolicitud() {
-		//TODO Para atender una solicitud... Recoger datos y enviarselas a modelo.
-		//Conectarse a viewAtenderSolicitud si es necesario, para obtener datos
+		// TODO Para atender una solicitud... Recoger datos y enviarselas a modelo.
+		// Conectarse a viewAtenderSolicitud si es necesario, para obtener datos
 	}
-	
+
 	public void rechazarSolicitud() {
-		//TODO Para rechazar una solicitud... Recoger datos y enviarselas a modelo.
-		//Conectarse a viewAtenderSolicitud si es necesario, para obtener datos
+		// TODO Para rechazar una solicitud... Recoger datos y enviarselas a modelo.
+		// Conectarse a viewAtenderSolicitud si es necesario, para obtener datos
 
 	}
 
@@ -445,7 +449,6 @@ public class Controladora extends Application {
 		case "Modificacion": {
 			registrarSolicituDeModificacion();
 
-
 			break;
 		}
 
@@ -460,13 +463,11 @@ public class Controladora extends Application {
 		case "Cancelacion": {
 			registrarSolicituDeCancelacion();
 
-
 			break;
 		}
 
 		case "Reclamo": {
 			registrarSolicituDeReclamo();
-
 
 			break;
 		}
@@ -478,32 +479,86 @@ public class Controladora extends Application {
 	}
 
 	private void registrarSolicituDeCreacion() {
-		// TODO Auto-generated method stub
-		
+		try {
+			Object[] info = obtenerDatosGeneralesRegistrarSolicitud();
+			String cedula = (String) info[0];
+			String producto = (String) info[1];
+			String observaciones = (String) info[2];
+			//TODO Conectar al modelo
+		} catch (Exception e) {
+			// TODO No se ha seleccionado ningun producto
+			e.printStackTrace();
+		}
+
 	}
 
+	
+
 	private void registrarSolicituDeModificacion() {
-		// TODO Auto-generated method stub
-		
+		try {
+			Object[] info = obtenerDatosGeneralesRegistrarSolicitud();
+			String cedula = (String) info[0];
+			String producto = (String) info[1];
+			String observaciones = (String) info[2];
+			@SuppressWarnings("unchecked")
+			ChoiceBox<String> chbNuevoProducto =(ChoiceBox<String>) viewRegistrarSolicitud.obtenerNodoPorId("chbNuevoProducto");
+			int indexNuevoProducto=chbNuevoProducto.getSelectionModel().getSelectedIndex();
+			String nuevoProducto = chbNuevoProducto.getItems().get(indexNuevoProducto);
+			//TODO Conectar al modelo
+		} catch (Exception e) {
+			// TODO No se ha seleccionado ningun producto, nuevo producto u otro error
+			e.printStackTrace();
+		}
 	}
 
 	private void registrarSolicituDeDano() {
-		// TODO Auto-generated method stub
-		
+		try {
+			Object[] info = obtenerDatosGeneralesRegistrarSolicitud();
+			String cedula = (String) info[0];
+			String producto = (String) info[1];
+			String observaciones = (String) info[2];
+			
+			@SuppressWarnings("unchecked")
+			ChoiceBox<String> chbAnomalia =(ChoiceBox<String>) viewRegistrarSolicitud.obtenerNodoPorId("chbAnomalia");
+			int indexAnomalia=chbAnomalia.getSelectionModel().getSelectedIndex();
+			String anomalia = chbAnomalia.getItems().get(indexAnomalia);
+			
+			//TODO Conectar al modelo
+		} catch (Exception e) {
+			// TODO No se ha seleccionado ningun producto u otro error.
+			e.printStackTrace();
+		}
 	}
 
 	private void registrarSolicituDeCancelacion() {
-		// TODO Auto-generated method stub
-		
+		try {
+			Object[] info = obtenerDatosGeneralesRegistrarSolicitud();
+			String cedula = (String) info[0];
+			String producto = (String) info[1];
+			String observaciones = (String) info[2];
+			String causa = ((TextArea) viewRegistrarSolicitud.obtenerNodoPorId("taCausa")).getText();
+			//TODO Conectar al modelo
+		} catch (Exception e) {
+			// TODO No se ha seleccionado ningun producto u otro error
+			e.printStackTrace();
+		}
 	}
 
 	private void registrarSolicituDeReclamo() {
-		// TODO Auto-generated method stub
-		
+		try {
+			Object[] info = obtenerDatosGeneralesRegistrarSolicitud();
+			String cedula = (String) info[0];
+			String producto = (String) info[1];
+			String observaciones = (String) info[2];
+			//TODO Conectar al modelo
+		} catch (Exception e) {
+			// TODO No se ha seleccionado ningun producto
+			e.printStackTrace();
+		}
 	}
 
 	public void mostrarTextAreaObservaciones() {
-		Node nodo = viewRegistrarSolicitud.obtenerNodo("taObservaciones");
+		Node nodo = viewRegistrarSolicitud.obtenerNodoPorId("taObservaciones");
 		if (nodo != null) {
 			nodo.setVisible(!nodo.isVisible());
 
@@ -511,6 +566,38 @@ public class Controladora extends Application {
 
 			((TextArea) nodo).setText("");
 		}
+	}
+	
+	/**
+	 * Este metodo obtiene los datos generales para registrar una solicitud: cedula,
+	 * producto seleccionado y observaciones.
+	 * @return info en cada indice posee: 0: cedula, 1:producto, 2:observaciones
+	 * @throws Exception No se ha seleccionado ningun producto
+	 */
+	private Object[] obtenerDatosGeneralesRegistrarSolicitud() throws Exception {
+		Object[] info = new Object[3];
+
+		TextField tfCedula = (TextField) viewRegistrarSolicitud.obtenerNodoPorId("tfCedula");
+		@SuppressWarnings("unchecked")
+		ChoiceBox<String> chbProductos = (ChoiceBox<String>) viewRegistrarSolicitud.obtenerNodoPorId("chbProducto");
+		TextArea taObservaciones = (TextArea) viewRegistrarSolicitud.obtenerNodoPorId("taObservaciones");
+
+		String cedula = tfCedula.getText();
+		info[0] = cedula;
+
+		int indexProducto = chbProductos.getSelectionModel().getSelectedIndex();
+
+		if (indexProducto >= 0) {
+			String producto = chbProductos.getItems().get(indexProducto);
+			String observaciones = taObservaciones.getText();
+			info[1] = producto;
+			info[2] = producto;
+		} else {
+			throw new Exception("No se ha seleccionado ningun producto");
+		}
+
+		return info;
+
 	}
 
 	public void cargarVistaSolicitud() throws Exception {
@@ -548,17 +635,17 @@ public class Controladora extends Application {
 
 		pane = loader.load(is);
 		viewRegistrarSolicitud.agregarEnVBox(pane);
-		((Hyperlink) viewRegistrarSolicitud.obtenerNodo("hlObservaciones"))
+		((Hyperlink) viewRegistrarSolicitud.obtenerNodoPorId("hlObservaciones"))
 				.setOnAction(getActionHandlerRegistrarSolicitud());
 
 		@SuppressWarnings("unchecked")
-		ChoiceBox<String> anomalias = (ChoiceBox<String>) viewRegistrarSolicitud.obtenerNodo("chbAnomalia");
+		ChoiceBox<String> anomalias = (ChoiceBox<String>) viewRegistrarSolicitud.obtenerNodoPorId("chbAnomalia");
 		if (anomalias != null) {
 			cargarAnomaliasSolicitud(anomalias);
 		}
 
 		@SuppressWarnings("unchecked")
-		ChoiceBox<String> productos = (ChoiceBox<String>) viewRegistrarSolicitud.obtenerNodo("chbProducto");
+		ChoiceBox<String> productos = (ChoiceBox<String>) viewRegistrarSolicitud.obtenerNodoPorId("chbProducto");
 
 		if (productos != null) {
 			cargarProductosSolicitud(productos);
@@ -610,6 +697,13 @@ public class Controladora extends Application {
 			}
 		});
 
+	}
+	
+	public void mostrarMensajeAUsuario(AlertType type, String title, String contentText) {
+		Alert alert = new Alert(type, contentText, ButtonType.APPLY, ButtonType.CANCEL);
+		alert.setTitle(title);
+		alert.show();
+		
 	}
 
 	/**
