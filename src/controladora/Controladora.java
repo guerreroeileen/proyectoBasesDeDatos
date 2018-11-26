@@ -238,7 +238,7 @@ public class Controladora extends Application {
 
 		try {
 			sg.asignarSolicitud(codigo, cedula);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			mostrarMensajeAUsuario(AlertType.ERROR, "Error", e.getMessage());
 
 		}
@@ -935,9 +935,9 @@ public class Controladora extends Application {
 	private void cargarProductosSolicitud(ChoiceBox<String> productos) {
 		List<String> productosBD = new ArrayList<>();
 
-		productosBD.add("Voz");
-		productosBD.add("Servicio integrado");
-		productosBD.add("Servicio de datos");
+		productosBD.add("1");
+		productosBD.add("2");
+		productosBD.add("3");
 		// TODO Cargar productos desde BD y asignarlos a productosBD
 		updateGUI(new Runnable() {
 
@@ -968,8 +968,8 @@ public class Controladora extends Application {
 		// TODO cargar anomalias en el choiceBox, conectar al modelo para pedir las
 		// anomalias y asignarlas a anomaliasBD
 
-		anomaliasBD.add("Baja velocidad");
-		anomaliasBD.add("Mala calidad");
+		anomaliasBD.add("1");
+		anomaliasBD.add("2");
 
 		updateGUI(new Runnable() {
 

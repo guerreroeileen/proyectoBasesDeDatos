@@ -230,16 +230,18 @@ public class SistemaGestion {
 		return filtro;
 	}
 	
-	public void asignarSolicitud(String cods, String cedfuncionario) throws SQLException {
-		
-		String proceso = "{? = call pkatencionn3.fasignacionindividual(?,?)}";			
-		CallableStatement c = connection.prepareCall(proceso);
-		c.registerOutParameter(1, Types.VARCHAR);
-		c.setString(2, cedfuncionario);
-		c.setString(3, cods);
-	
-		c.execute();
-		
+	public void asignarSolicitud(String idSolicitud, String cedCliente) {
+		try {
+			String proceso = "{? = call pkasignacionnivel3.fasignacionindividual(?,?)}";
+			CallableStatement c = connection.prepareCall(proceso);
+			c.registerOutParameter(1, Types.VARCHAR);
+			c.setString(2, idSolicitud);
+			c.setString(3, cedCliente);
+			c.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	
@@ -417,9 +419,9 @@ public class SistemaGestion {
 			c.setString(3, cedCliente);
 			c.setString(4, observ);
 			c.setString(5, "1");
-			c.setString(6, putidProducto(tipoProduct));
-			c.setString(7, "");
-			c.setString(8, "");
+			c.setString(6, "1");
+			c.setString(7, null);
+			c.setString(8, null);
 			c.execute();
 
 	}
@@ -449,7 +451,7 @@ public class SistemaGestion {
 		c.setString(3, cedCliente);
 		c.setString(4, observ);
 		c.setString(5, "3");
-		c.setString(6, putidProducto(tipoProduct));
+		c.setString(6, "1");
 		c.setString(7, "");
 		c.setString(8, anom);
 		c.execute();
@@ -556,7 +558,8 @@ public class SistemaGestion {
 		
 			//s.atenderSolicitud("1061816906", "1", "Uis", "2");
 //			s.registrarSolicitud( Davila","1111111111","El escondite","222",new Date(1981,12,23));
-			s.registrarSolicitud("1234", "voz", "epa", "1", "", "");
+			//s.registrarSolicitud("1111111111", "1", "epa", "1", "", "");
+			s.asignarSolicitud("34", "1234");
 			System.out.println("Exito");
 
 		} catch (Exception e) {
