@@ -152,7 +152,7 @@ public class SistemaGestion {
 
 		
 		
-		throw new Exception("No está registrado en nuestra base de datos");
+		throw new Exception("No estï¿½ registrado en nuestra base de datos");
 		
 		
 	}
@@ -299,7 +299,7 @@ public class SistemaGestion {
 			c.execute();
 		}catch (SQLException e) {
 			
-			throw new Exception("Error al efectuar la operación");
+			throw new Exception("Error al efectuar la operaciï¿½n");
 		}catch (Exception a) {
 			
 			a.printStackTrace();
@@ -400,6 +400,7 @@ public class SistemaGestion {
 				break;
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new Exception("Error al efectuar la operacion");
 
 		} catch (Exception a) {

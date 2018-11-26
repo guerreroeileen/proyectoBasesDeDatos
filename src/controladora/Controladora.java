@@ -745,7 +745,7 @@ public class Controladora extends Application {
 			String producto = (String) info[1];
 			String observaciones = (String) info[2];
 
-			sg.registrarSolicitud(cedula, producto, observaciones, null, null, null);
+			sg.registrarSolicitud(cedula, producto, observaciones, "1", null, null);
 			// TODO Conectar al modelo y usar datos para registrar solicitud de creacion
 		} catch (Exception e) {
 			mostrarMensajeAUsuario(AlertType.ERROR, "Error registrando", e.getMessage());
@@ -867,7 +867,7 @@ public class Controladora extends Application {
 			String producto = chbProductos.getItems().get(indexProducto);
 			String observaciones = taObservaciones.getText();
 			info[1] = producto;
-			info[2] = producto;
+			info[2] = observaciones;
 		} else {
 			throw new Exception("No se ha seleccionado ningun producto");
 		}
