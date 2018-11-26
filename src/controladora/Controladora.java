@@ -38,7 +38,7 @@ import vista.ViewRegistrarSolicitud.Eleccion;
 
 public class Controladora extends Application {
 
-	private SistemaGestion sg;
+	private SistemaGestion sg = new SistemaGestion();
 	
 	private ViewGestionarDatos viewGestionarDatos;
 	private ViewPrincipal viewPrincipal;
@@ -898,7 +898,8 @@ public class Controladora extends Application {
 	 */
 	private boolean verificarUsuario(String cedula) throws Exception {
 		// TODO conectarse al mundo y retornar valor o excepcion
-		return false;
+		
+		return sg.verificarUsuario(cedula);
 
 	}
 

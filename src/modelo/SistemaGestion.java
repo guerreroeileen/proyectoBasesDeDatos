@@ -15,19 +15,22 @@ public class SistemaGestion {
 	private Connection connection;
 	private ArrayList<Solicitud> solicitudes;
 	private ArrayList<ClienteXProducto> cxp;
+	private ArrayList<Cliente> clientes;
+	private ArrayList<Funcionario> funcionarios;
 
-	public SistemaGestion() throws Exception {
+	public SistemaGestion()  {
 		
 		solicitudes= new ArrayList<Solicitud>();
 		cxp = new ArrayList<ClienteXProducto>();
+		clientes= new ArrayList<Cliente>();
+
 		try {
 			connection = ConectionBD.getConection();
 		} catch (Exception e) {
-			throw new Exception("Error al conectarse a la base de datos");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		actualizarSolicitudes();
-		actualizarClienteXProducto();
+	
 	}
 	
 	
@@ -48,6 +51,47 @@ public class SistemaGestion {
 		     
 			cxp.add(c);
 		}
+	}
+	
+	public void actualizarFuncionario()throws SQLException {
+		
+		Statement st= connection.createStatement();
+		ResultSet rs= st.executeQuery("SELECT s.* FROM FUNCIONARIO s");
+		
+		while(rs.next()) {
+			
+
+			String cedula= rs.getString("cedula");           
+		    String nombre= rs.getString("nombre");            
+		    Date fechanacimiento= rs.getDate("fechanacimiento");  
+		    String direccion= rs.getString("direccion");         
+		    int telefono= rs.getInt("telefono");
+			
+		    Funcionario f= new Funcionario(cedula, nombre, direccion, telefono, fechanacimiento);
+		    funcionarios.add(f);
+		}
+		
+		
+	}
+	
+	public void actualizarClientes()throws SQLException{
+		
+		Statement st= connection.createStatement();
+		ResultSet rs= st.executeQuery("SELECT s.* FROM CLIENTE s");
+		
+		while(rs.next()) {
+			
+
+			String cedula= rs.getString("cedula");           
+		    String nombre= rs.getString("nombre");            
+		    Date fechanacimiento= rs.getDate("fechanac");  
+		    String direccion= rs.getString("direccion");         
+		    int telefono= rs.getInt("telefono");
+			
+		    Cliente c= new Cliente(cedula, nombre, fechanacimiento, direccion, telefono);
+		    clientes.add(c);
+		}
+		
 	}
 
 	public void actualizarSolicitudes() throws SQLException {
@@ -74,6 +118,34 @@ public class SistemaGestion {
 	        
 	        solicitudes.add(s);
 		}
+		
+		
+	}
+	
+	public boolean verificarUsuario(String cedulaCliente)throws Exception {
+		
+		actualizarFuncionario();
+		actualizarClientes();
+		
+		for (int i = 0; i < clientes.size(); i++) {
+		
+			
+			if(cedulaCliente.equals(clientes.get(i).getCedula())) {
+				
+				return true;
+			}
+		}
+		
+		for(int i=0; i<funcionarios.size();i++) {
+			
+			if(cedulaCliente.equals(funcionarios.get(i).getIvcedula())) {
+				
+				return false;
+			}
+		}
+		
+		
+			throw new Exception("No está registrado en nuestra base de datos");
 		
 		
 	}
