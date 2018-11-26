@@ -24,6 +24,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import vista.ViewAsignarSolicitud;
 import vista.ViewAtenderSolicitud;
 import vista.ViewConsultas;
 import vista.ViewGestionarDatos;
@@ -40,6 +41,7 @@ public class Controladora extends Application {
 	private ViewConsultas viewConsultas;
 	private ViewRegistrarSolicitud viewRegistrarSolicitud;
 	private ViewAtenderSolicitud viewAtenderSolicitudes;
+	private ViewAsignarSolicitud viewAsignarSolicitud;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -58,7 +60,12 @@ public class Controladora extends Application {
 	private void registrarEventosViewPrincipal() {
 		viewPrincipal.getButIngresar().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventoPrincipal());
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	private void registrarEventoAsignacion() {
+		viewAsignarSolicitud.getButAsignarSolicitud().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventoAsignacion());
+	}
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void registrarEventosViewOpcionesFuncionario() {
 		EventHandler handler = controlarEventosOpcionesFuncionario();
@@ -85,27 +92,70 @@ public class Controladora extends Application {
 			public void handle(Event evento) {
 				String comando = ((Button) evento.getSource()).getText();
 				switch (comando) {
-				case "Consultar x funcionario":
-					System.out.println("algo");
-					break;
-				case "Consultar x estado":
-					System.out.println("algo");
-					break;
-				case "Consultar x tipo":
-					System.out.println("algo");
-					break;
-				case "Consultar x cliente":
-					System.out.println("algo");
-					break;
+				case "Consultar x funcionario":{
+					consultarXFuncionario(viewConsultas.getTxtCedulaFuncionario().getText());
+					break;}
+				case "Consultar x estado":{
+					consultarXEstado(viewConsultas.getCmbBoxEstadoSol().getValue());
+					break;}
+				case "Consultar x tipo":{
+					consultarXTipo(viewConsultas.getCmbBoxTipoSol().getValue());
+					break;}
+				case "Consultar x cliente}":{
+					consultarXCliente(viewConsultas.getTxtCedulaCliente().getText());
+					break;}
 				}
 			}
 
 		};
 	}
-
-	@SuppressWarnings("unchecked")
+	
+	public void consultarXFuncionario(String cedulaFunc) {
+		//TODO - completar con modelo.
+	}
+	
+	public void consultarXEstado(String estado) {
+		//TODO - completar con modelo.
+	}
+	
+	public void consultarXTipo(String tipo) {
+		//TODO - completar con modelo.
+	}
+	
+	public void consultarXCliente(String cedulaCliente) {
+		//TODO - completar con modelo.
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked"})
 	private void registrarEventosGestionarDatos() {
-
+		EventHandler handlerClientes = controlarEventosGestionarClientes();
+		EventHandler handlerTipoProductos = controlarEventosGestionarTipoProductos();
+		EventHandler handlerTipoSolicitudes = controlarEventosGestionarTipoSolicitudes();
+		EventHandler handlerFuncionarios = controlarEventosGestionarFuncionarios();
+		
+		viewGestionarDatos.getButAgregarClient().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerClientes);
+		viewGestionarDatos.getButBorrarClient().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerClientes);
+		viewGestionarDatos.getButBuscarClientAct().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerClientes);
+		viewGestionarDatos.getButBuscarClientElim().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerClientes);
+		viewGestionarDatos.getButModClient().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerClientes);
+		
+		viewGestionarDatos.getButAgregarFunc().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerFuncionarios);
+		viewGestionarDatos.getButBorrarFunc().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerFuncionarios);
+		viewGestionarDatos.getButBuscarFuncAct().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerFuncionarios);
+		viewGestionarDatos.getButBuscarFuncElim().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerFuncionarios);
+		viewGestionarDatos.getButModFunc().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerFuncionarios);
+		
+		viewGestionarDatos.getButAgregarTiProducto().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerTipoProductos);
+		viewGestionarDatos.getButBorrarTiProducto().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerTipoProductos);
+		viewGestionarDatos.getButBuscarTiProductAct().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerTipoProductos);
+		viewGestionarDatos.getButBuscarTiProductElim().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerTipoProductos);
+		viewGestionarDatos.getButModTiProducto().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerTipoProductos);
+		
+		viewGestionarDatos.getButAgregarTiSolicitud().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerTipoSolicitudes);
+		viewGestionarDatos.getButBorrarTiSolicitud().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerTipoSolicitudes);
+		viewGestionarDatos.getButBuscarTiSolicAct().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerTipoSolicitudes);
+		viewGestionarDatos.getButBuscarTiSolicElim().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerTipoSolicitudes);
+		viewGestionarDatos.getButModTiSolicitud().addEventHandler(MouseEvent.MOUSE_CLICKED, handlerTipoSolicitudes);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -123,11 +173,30 @@ public class Controladora extends Application {
 
 		};
 	}
+	
+	@SuppressWarnings("rawtypes")
+	private EventHandler controlarEventoAsignacion() {
+		return new EventHandler() {
+			@Override
+			public void handle(Event evento) {
+				String comando = ((Button) evento.getSource()).getText();
+				switch (comando) {
+				case "Asignar":
+					asignarSolicitudAFuncionario(viewAsignarSolicitud.getTxtCodSolicitud().getText(), viewAsignarSolicitud.getTxtCedulaFuncionario().getText());
+					break;
+				}
+			}
+
+		};
+	}
+	
+	public void asignarSolicitudAFuncionario(String codigo, String cedula) {
+		//TODO realizar en el modelo la asignación. En caso de algúno de los fallos se puede desplegar un Alert (es como JOptionPane).
+	}
 
 	@SuppressWarnings("rawtypes")
 	private EventHandler controlarEventosOpcionesFuncionario() {
 		return new EventHandler() {
-
 			@Override
 			public void handle(Event evento) {
 				String comando = ((Button) evento.getSource()).getText();
@@ -150,7 +219,6 @@ public class Controladora extends Application {
 					stage.show();
 					break;
 				case "Atender solicitudes":
-
 					try {
 						FileInputStream file = new FileInputStream(new File("views/fxml/ViewAtenderSolicitud.fxml"));
 						Pane pane = f.load(file);
@@ -163,7 +231,17 @@ public class Controladora extends Application {
 					}
 					break;
 				case "Asignar solicitudes":
-
+					try {
+						FileInputStream file = new FileInputStream(new File("views/fxml/ViewAsignarSolicitud.fxml"));
+						Parent pane = f.load(file);
+						Scene scene = new Scene(pane, 312, 117);
+						stage.setScene(scene);
+						viewAsignarSolicitud = (ViewAsignarSolicitud) f.getController();
+						registrarEventoAsignacion();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					stage.show();
 					break;
 				case "Gestor de datos":
 					try {
@@ -265,15 +343,34 @@ public class Controladora extends Application {
 			public void handle(Event evento) {
 				String comando = ((Button) evento.getSource()).getText();
 				switch (comando) {
-				case "Agregar":
-
-					break;
-				case "Modificar":
-
-					break;
-				case "Borrar":
-
-					break;
+				case "Agregar":{
+					String nombre = viewGestionarDatos.getTxtNombClientCrear().getText();
+					String cedula = viewGestionarDatos.getTxtCedulaClientCrear().getText();
+//					String fechaNacimiento = viewGestionarDatos.getTxtCedulaClientCrear().getText();
+					String direccion = viewGestionarDatos.getTxtDirClientCrear().getText();
+					String telefono = viewGestionarDatos.getTxtTelClientCrear().getText();
+					// TODO conectarse a modelo para agregar el cliente.
+					break;}
+				case "Modificar":{
+					String nombre = viewGestionarDatos.getTxtNombClientMod().getText();
+					String cedula = viewGestionarDatos.getTxtCedulaClientMod().getText();
+//					String fechaNacimiento = viewGestionarDatos.getTxtCedulaClientCrear().getText();
+					String direccion = viewGestionarDatos.getTxtDirClientMod().getText();
+					String telefono = viewGestionarDatos.getTxtTelClientMod().getText();
+					// TODO conectarse a modelo para modificar el cliente.
+					break;}
+				case "Buscar":{
+					String cedula = viewGestionarDatos.getTxtCedulaClientMod().getText();
+					// TODO conectarse a modelo para buscar el cliente que se quiere modificar.
+					break;}
+				case "Encontrar":{
+					String cedula = viewGestionarDatos.getTxtCedulaClientBorrar().getText();
+					// TODO conectarse a modelo para buscar el cliente que se quiere eliminar.
+					break;}
+				case "Borrar":{
+					String cedula = viewGestionarDatos.getTxtCedulaClientBorrar().getText();
+					// TODO conectarse a modelo para eliminar el cliente.
+					break;}
 				}
 			}
 
@@ -287,15 +384,27 @@ public class Controladora extends Application {
 			public void handle(Event evento) {
 				String comando = ((Button) evento.getSource()).getText();
 				switch (comando) {
-				case "Agregar":
-
-					break;
-				case "Modificar":
-
-					break;
-				case "Borrar":
-
-					break;
+				case "Agregar":{
+					String codigo = viewGestionarDatos.getTxtCodTiProductoCrear().getText();
+					String descripcion = viewGestionarDatos.getTxtDescTiProductoCrear().getText();
+					// TODO conectarse a modelo para agregar el tipo de producto.
+					break;}
+				case "Modificar":{
+					String codigo = viewGestionarDatos.getTxtCodTiProductoMod().getText();
+					// TODO conectarse a modelo para modificar el tipo de producto.
+					break;}
+				case "Buscar":{
+					String codigo = viewGestionarDatos.getTxtCodTiProductoMod().getText();
+					// TODO conectarse a modelo para buscar el tipo de producto que se quiere modificar.
+					break;}
+				case "Encontrar":{
+					String codigo = viewGestionarDatos.getTxtCodTiProductoBorrar().getText();
+					// TODO conectarse a modelo para buscar el tipo de producto que se quiere eliminar.
+					break;}
+				case "Borrar":{
+					String codigo = viewGestionarDatos.getTxtCodTiProductoBorrar().getText();
+					// TODO conectarse a modelo para eliminar el tipo de producto.
+					break;}
 				}
 			}
 
@@ -309,15 +418,30 @@ public class Controladora extends Application {
 			public void handle(Event evento) {
 				String comando = ((Button) evento.getSource()).getText();
 				switch (comando) {
-				case "Agregar":
-
-					break;
-				case "Modificar":
-
-					break;
-				case "Borrar":
-
-					break;
+				case "Agregar":{
+					String nombre = viewGestionarDatos.getTxtNombFuncCrear().getText();
+					String cedula = viewGestionarDatos.getTxtCedulaFuncCrear().getText();
+//					String fechaNacimiento = viewGestionarDatos.getTxtCedulaClientCrear().getText();
+					String direccion = viewGestionarDatos.getTxtDirFuncCrear().getText();
+					String telefono = viewGestionarDatos.getTxtTelFuncCrear().getText();
+					// TODO conectarse a modelo para agregar el funcionario.
+					break;}
+				case "Modificar":{
+					String cedula = viewGestionarDatos.getTxtCedulaFuncMod().getText();
+					// TODO conectarse a modelo para modificar el funcionario.
+					break;}
+				case "Buscar":{
+					String cedula = viewGestionarDatos.getTxtCedulaFuncMod().getText();
+					// TODO conectarse a modelo para buscar el funcionario que se quiere modificar.
+					break;}
+				case "Encontrar":{
+					String cedula = viewGestionarDatos.getTxtCedulaFuncBorrar().getText();
+					// TODO conectarse a modelo para buscar el funcionario que se quiere eliminar.
+					break;}
+				case "Borrar":{
+					String cedula = viewGestionarDatos.getTxtCedulaFuncBorrar().getText();
+					// TODO conectarse a modelo para eliminar el funcionario.
+					break;}
 				}
 			}
 
@@ -331,15 +455,27 @@ public class Controladora extends Application {
 			public void handle(Event evento) {
 				String comando = ((Button) evento.getSource()).getText();
 				switch (comando) {
-				case "Agregar":
-
-					break;
-				case "Modificar":
-
-					break;
-				case "Borrar":
-
-					break;
+				case "Agregar":{
+					String codigo = viewGestionarDatos.getTxtCodTiSolicitudCrear().getText();
+					String descripcion = viewGestionarDatos.getTxtDecTiSolicitudCrear().getText();
+					// TODO conectarse a modelo para agregar el tipo de solicitud.
+					break;}
+				case "Modificar":{
+					String codigo = viewGestionarDatos.getTxtCodTiSolicitudMod().getText();
+					// TODO conectarse a modelo para modificar el tipo de solicitud.
+					break;}
+				case "Buscar":{
+					String codigo = viewGestionarDatos.getTxtCodTiSolicitudMod().getText();
+					// TODO conectarse a modelo para buscar el tipo de solicitud que se quiere modificar.
+					break;}
+				case "Encontrar":{
+					String codigo = viewGestionarDatos.getTxtCodTiSolicitudBorrar().getText();
+					// TODO conectarse a modelo para buscar el tipo de solicitud que se quiere eliminar.
+					break;}
+				case "Borrar":{
+					String codigo = viewGestionarDatos.getTxtCodTiSolicitudBorrar().getText();
+					// TODO conectarse a modelo para eliminar el tipo de solicitud.
+					break;}
 				}
 			}
 
@@ -410,7 +546,6 @@ public class Controladora extends Application {
 					try {
 						cargarVistaSolicitud();
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					break;

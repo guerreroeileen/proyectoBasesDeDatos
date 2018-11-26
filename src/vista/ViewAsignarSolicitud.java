@@ -26,16 +26,6 @@ public class ViewAsignarSolicitud {
 
     @FXML
     private Button butAsignarSolicitud;
-    
-    private Stage stage;
-    
-    public void inicializar(String name, Pane paneContenido) {
-		stage = new Stage();
-		stage.setScene(new Scene(paneContenido));
-		stage.setTitle(name);
-		stage.setResizable(false);
-		
-	}
 
 	public TextField getTxtCodSolicitud() {
 		return txtCodSolicitud;
