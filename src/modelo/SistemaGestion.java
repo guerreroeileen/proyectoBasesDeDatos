@@ -389,12 +389,9 @@ public class SistemaGestion {
 	public static void main(String[] args) {
 		try {
 			SistemaGestion s = new SistemaGestion();
-<<<<<<< HEAD
 	
 			//s.atenderSolicitud("1061816906", "1", "Uis", "2");
-=======
 //			s.registrarSolicitud( Davila","1111111111","El escondite","222",new Date(1981,12,23));
->>>>>>> abe0637352b1bc5d08d5f57c731e7c97bb1233ad
 			System.out.println("Exito");
 
 		} catch (Exception e) {
