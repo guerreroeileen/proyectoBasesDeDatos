@@ -383,19 +383,19 @@ public class SistemaGestion {
 	public void registrarSolicitud(String cedCliente, String tipoProd, String observ, String tipoSolic, String ivcaus, String nomAnoma) throws Exception {
 		try {
 			switch(tipoSolic) {
-			case "TS_1":
+			case "1":
 				registrarSolicitudNuevoProducto(cedCliente, tipoProd, observ);
 				break;
-			case "TS_2":
+			case "2":
 				registrarSolicitudRetiro(cedCliente, tipoProd, ivcaus);
 				break;
-			case "TS_3":
+			case "3":
 				registrarSolicitudDano(cedCliente, tipoProd, observ, nomAnoma);
 				break;
-			case "TS_4":
+			case "4":
 				registrarSolicitudModificacion(cedCliente, tipoProd, observ);
 				break;
-			case "TS_5":
+			case "5":
 				registrarSolicitudReclamo(cedCliente, tipoProd, observ);
 				break;
 			}
@@ -416,7 +416,7 @@ public class SistemaGestion {
 			c.setString(2, tipoProduct);
 			c.setString(3, cedCliente);
 			c.setString(4, observ);
-			c.setString(5, "TS_1");
+			c.setString(5, "1");
 			c.setString(6, putidProducto(tipoProduct));
 			c.setString(7, "");
 			c.setString(8, "");
@@ -432,7 +432,7 @@ public class SistemaGestion {
 		c.setString(2, tipoProduct);
 		c.setString(3, cedCliente);
 		c.setString(4, observ);
-		c.setString(5, "TS_4");
+		c.setString(5, "4");
 		c.setString(6, putidProducto(tipoProduct));
 		c.setString(7, "");
 		c.setString(8, "");
@@ -448,7 +448,7 @@ public class SistemaGestion {
 		c.setString(2, tipoProduct);
 		c.setString(3, cedCliente);
 		c.setString(4, observ);
-		c.setString(5, "TS_3");
+		c.setString(5, "3");
 		c.setString(6, putidProducto(tipoProduct));
 		c.setString(7, "");
 		c.setString(8, anom);
@@ -464,7 +464,7 @@ public class SistemaGestion {
 		c.setString(2, tipoProduct);
 		c.setString(3, cedCliente);
 		c.setString(4, observ);
-		c.setString(5, "TS_5");
+		c.setString(5, "5");
 		c.setString(6, putidProducto(tipoProduct));
 		c.setString(7, "");
 		c.setString(8, "");
@@ -480,7 +480,7 @@ public class SistemaGestion {
 		c.setString(2, tipoProduct);
 		c.setString(3, cedCliente);
 		c.setString(4, "");
-		c.setString(5, "TS_2");
+		c.setString(5, "2");
 		c.setString(6, putidProducto(tipoProduct));
 		c.setString(7, causa);
 		c.setString(8, "");
@@ -491,12 +491,12 @@ public class SistemaGestion {
 	private String putidProducto(String tipo) {
 		String id = "";
 		if(tipo.equals("voz")) {
-			id = "P_1";
+			id = "1";
 		}
 		else if(tipo.equals("datos")) {
-			id = "P_2";
+			id = "2";
 		} else {
-			id = "P_3";
+			id = "3";
 		}
 		return id;
 	}
@@ -556,7 +556,7 @@ public class SistemaGestion {
 		
 			//s.atenderSolicitud("1061816906", "1", "Uis", "2");
 //			s.registrarSolicitud( Davila","1111111111","El escondite","222",new Date(1981,12,23));
-
+			s.registrarSolicitud("1234", "voz", "epa", "1", "", "");
 			System.out.println("Exito");
 
 		} catch (Exception e) {
