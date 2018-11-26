@@ -246,7 +246,6 @@ public class Controladora extends Application {
 		String observaciones = viewAtenderSolicitudes.getTextAreaObservaciones().getText();
 		// TODO conectarse a modelo.
 
-
 	}
 
 	private void inicializarEstadosEnConsultas() {
@@ -260,9 +259,6 @@ public class Controladora extends Application {
 		// existen.
 
 	}
-
-	
-	
 
 	@SuppressWarnings({ "rawtypes", "unused" })
 	private EventHandler controlarEventosGestionarClientes() {
@@ -354,37 +350,39 @@ public class Controladora extends Application {
 
 	public void verificarUsuario() {
 		// Metodo para verificar usuario, TODO
-		if (verificarUsuario(viewPrincipal.geTextFieldCedula().getText())) {
-			// TODO - completar
-			FXMLLoader loader = new FXMLLoader();
-			try {
-				FileInputStream xmlStream = new FileInputStream("./views/fxml/ViewRegistrarSolicitud.fxml");
-				Pane pane = (Pane) loader.load(xmlStream);
-				viewRegistrarSolicitud = loader.getController();
-				viewRegistrarSolicitud.inicializar("Panel cliente", pane);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			iniciarEventosRegistrarSolicitud();
+		try {
+			if (verificarUsuario(viewPrincipal.geTextFieldCedula().getText())) {
+				// TODO - completar
+				FXMLLoader loader = new FXMLLoader();
+				try {
+					FileInputStream xmlStream = new FileInputStream("./views/fxml/ViewRegistrarSolicitud.fxml");
+					Pane pane = (Pane) loader.load(xmlStream);
+					viewRegistrarSolicitud = loader.getController();
+					viewRegistrarSolicitud.inicializar("Panel cliente", pane);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				iniciarEventosRegistrarSolicitud();
 
-			viewRegistrarSolicitud.getStage().show();
+				viewRegistrarSolicitud.getStage().show();
 
-		} else if (true/* usuario es cliente */) {
-			Stage stage = new Stage();
-			FXMLLoader f = new FXMLLoader();
-			try {
-				FileInputStream file = new FileInputStream(new File("views/fxml/ViewOpcionesFuncionario.fxml"));
-				Pane pane = f.load(file);
-				Scene scene = new Scene(pane, 200, 150);
-				stage.setScene(scene);
-				viewOpcionesFuncionario = (ViewOpcionesFuncionario) f.getController();
-				registrarEventosViewOpcionesFuncionario();
-			} catch (Exception e) {
-				e.printStackTrace();
+			} else {
+				Stage stage = new Stage();
+				FXMLLoader f = new FXMLLoader();
+				try {
+					FileInputStream file = new FileInputStream(new File("views/fxml/ViewOpcionesFuncionario.fxml"));
+					Pane pane = f.load(file);
+					Scene scene = new Scene(pane, 200, 150);
+					stage.setScene(scene);
+					viewOpcionesFuncionario = (ViewOpcionesFuncionario) f.getController();
+					registrarEventosViewOpcionesFuncionario();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				stage.show();
 			}
-			stage.show();
-		} else {
-			// TODO - usuario no existe
+		} catch (Exception e) {
+			mostrarMensajeAUsuario(AlertType.ERROR, "Error", e.getMessage());
 		}
 	}
 
@@ -463,8 +461,6 @@ public class Controladora extends Application {
 		case "Dano": {
 			registrarSolicituDeDano();
 
-			// TODO Registrar solicitud de Danio
-
 			break;
 		}
 
@@ -480,8 +476,7 @@ public class Controladora extends Application {
 			break;
 		}
 		default: {
-
-			System.out.println("No registrar");
+			mostrarMensajeAUsuario(AlertType.CONFIRMATION, "Solicitud", "Seleccione un tipo de solicitud");
 		}
 		}
 	}
@@ -492,53 +487,58 @@ public class Controladora extends Application {
 			String cedula = (String) info[0];
 			String producto = (String) info[1];
 			String observaciones = (String) info[2];
-			// TODO Conectar al modelo
+			// TODO Conectar al modelo y usar datos para registrar solicitud de creacion
 		} catch (Exception e) {
-			// TODO No se ha seleccionado ningun producto
-			e.printStackTrace();
+			mostrarMensajeAUsuario(AlertType.ERROR, "Error registrando", e.getMessage());
+
 		}
 
 	}
 
 	private void registrarSolicituDeModificacion() {
 		try {
+			// TODO QUITAR SYSO
+			System.out.println("mod");
 			Object[] info = obtenerDatosGeneralesRegistrarSolicitud();
-			String cedula = (String) info[0];
-			String producto = (String) info[1];
-			String observaciones = (String) info[2];
 			@SuppressWarnings("unchecked")
 			ChoiceBox<String> chbNuevoProducto = (ChoiceBox<String>) viewRegistrarSolicitud
 					.obtenerNodoPorId("chbNuevoProducto");
 			int indexNuevoProducto = chbNuevoProducto.getSelectionModel().getSelectedIndex();
+			String cedula = (String) info[0];
+			String producto = (String) info[1];
+			String observaciones = (String) info[2];
 			String nuevoProducto = chbNuevoProducto.getItems().get(indexNuevoProducto);
 			// TODO Conectar al modelo
 		} catch (Exception e) {
-			// TODO No se ha seleccionado ningun producto, nuevo producto u otro error
-			e.printStackTrace();
+			mostrarMensajeAUsuario(AlertType.ERROR, "Error registrando", e.getMessage());
+
 		}
 	}
 
 	private void registrarSolicituDeDano() {
 		try {
+			// TODO QUITAR SYSO
+			System.out.println("dano");
 			Object[] info = obtenerDatosGeneralesRegistrarSolicitud();
-			String cedula = (String) info[0];
-			String producto = (String) info[1];
-			String observaciones = (String) info[2];
-
 			@SuppressWarnings("unchecked")
 			ChoiceBox<String> chbAnomalia = (ChoiceBox<String>) viewRegistrarSolicitud.obtenerNodoPorId("chbAnomalia");
 			int indexAnomalia = chbAnomalia.getSelectionModel().getSelectedIndex();
+			String cedula = (String) info[0];
+			String producto = (String) info[1];
+			String observaciones = (String) info[2];
 			String anomalia = chbAnomalia.getItems().get(indexAnomalia);
 
 			// TODO Conectar al modelo
 		} catch (Exception e) {
-			// TODO No se ha seleccionado ningun producto u otro error.
-			e.printStackTrace();
+			mostrarMensajeAUsuario(AlertType.ERROR, "Error registrando", e.getMessage());
+
 		}
 	}
 
 	private void registrarSolicituDeCancelacion() {
 		try {
+			// TODO QUITAR SYSO
+			System.out.println("can");
 			Object[] info = obtenerDatosGeneralesRegistrarSolicitud();
 			String cedula = (String) info[0];
 			String producto = (String) info[1];
@@ -546,21 +546,22 @@ public class Controladora extends Application {
 			String causa = ((TextArea) viewRegistrarSolicitud.obtenerNodoPorId("taCausa")).getText();
 			// TODO Conectar al modelo
 		} catch (Exception e) {
-			// TODO No se ha seleccionado ningun producto u otro error
-			e.printStackTrace();
+			mostrarMensajeAUsuario(AlertType.ERROR, "Error registrando", e.getMessage());
+
 		}
 	}
 
 	private void registrarSolicituDeReclamo() {
 		try {
+			// TODO QUITAR SYSO
+			System.out.println("rec");
 			Object[] info = obtenerDatosGeneralesRegistrarSolicitud();
 			String cedula = (String) info[0];
 			String producto = (String) info[1];
 			String observaciones = (String) info[2];
 			// TODO Conectar al modelo
 		} catch (Exception e) {
-			// TODO No se ha seleccionado ningun producto
-			e.printStackTrace();
+			mostrarMensajeAUsuario(AlertType.ERROR, "Error registrando", e.getMessage());
 		}
 	}
 
@@ -642,7 +643,10 @@ public class Controladora extends Application {
 		}
 
 		pane = loader.load(is);
-		viewRegistrarSolicitud.agregarEnVBox(pane);
+		if (pane != null) {
+			viewRegistrarSolicitud.agregarEnVBox(pane);
+		}
+		
 		((Hyperlink) viewRegistrarSolicitud.obtenerNodoPorId("hlObservaciones"))
 				.setOnAction(getActionHandlerRegistrarSolicitud());
 
@@ -718,12 +722,14 @@ public class Controladora extends Application {
 	 * Retorna un valor booleano que verifica si la cédula de entrada pertenece a un
 	 * cliente.
 	 * 
-	 * @param cedula Cedula del usuario
-	 * @return
+	 * @param cedula
+	 * @return value, TRUE Si es cliente, FALSE si es funcionario
+	 * @throws Exception si el cliente no existe debe retornar una excepcion.
 	 */
-	private boolean verificarUsuario(String cedula) {
-		// TODO conectarse al mundo y retornar valor
+	private boolean verificarUsuario(String cedula) throws Exception {
+		// TODO conectarse al mundo y retornar valor o excepcion
 		return false;
+
 	}
 
 	public static void main(String[] args) {
