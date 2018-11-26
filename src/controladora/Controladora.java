@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JComboBox;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -119,7 +121,7 @@ public class Controladora extends Application {
 		
 		
 		try {
-			sg.consultarSolicitudFuncionario(cedulaFunc);
+			viewConsultas.getTxtResultConsulta().setText(sg.consultarSolicitudFuncionario(cedulaFunc));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -160,6 +162,8 @@ public class Controladora extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked"})
@@ -228,6 +232,13 @@ public class Controladora extends Application {
 	
 	public void asignarSolicitudAFuncionario(String codigo, String cedula) {
 		//TODO realizar en el modelo la asignación. En caso de algúno de los fallos se puede desplegar un Alert (es como JOptionPane).
+		
+		try {
+			sg.asignarSolicitud(codigo, cedula);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -350,6 +361,12 @@ public class Controladora extends Application {
 		String codigo = viewAtenderSolicitudes.geTextFieldCodigo().getText();
 		String observaciones = viewAtenderSolicitudes.getTextAreaObservaciones().getText();
 		
+		try {
+			sg.atenderSolicitud(cedula, codigo, observaciones, "1");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// TODO conectarse a modelo.
 	}
 
@@ -357,6 +374,13 @@ public class Controladora extends Application {
 		String cedula = viewAtenderSolicitudes.getTextFieldCedula().getText();
 		String codigo = viewAtenderSolicitudes.geTextFieldCodigo().getText();
 		String observaciones = viewAtenderSolicitudes.getTextAreaObservaciones().getText();
+		
+			try {
+				sg.atenderSolicitud(cedula, codigo, observaciones, "Rechazada");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		// TODO conectarse a modelo.
 
 	}
@@ -370,6 +394,7 @@ public class Controladora extends Application {
 	private void inicializarTipoSolicitudesEnConsultas() {
 		// TODO setear el combo box del view consultas para mostrar los tipos que
 		// existen.
+	
 
 	}
 
@@ -383,9 +408,16 @@ public class Controladora extends Application {
 				case "Agregar":{
 					String nombre = viewGestionarDatos.getTxtNombClientCrear().getText();
 					String cedula = viewGestionarDatos.getTxtCedulaClientCrear().getText();
-//					String fechaNacimiento = viewGestionarDatos.getTxtCedulaClientCrear().getText();
+					//String fechaNacimiento = viewGestionarDatos.getTxtCedulaClientCrear().getText();
 					String direccion = viewGestionarDatos.getTxtDirClientCrear().getText();
 					String telefono = viewGestionarDatos.getTxtTelClientCrear().getText();
+					
+					try {
+						sg.registrarCliente(nombre, cedula, direccion, telefono);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					// TODO conectarse a modelo para agregar el cliente.
 					break;}
 				case "Modificar":{
@@ -425,6 +457,7 @@ public class Controladora extends Application {
 					String codigo = viewGestionarDatos.getTxtCodTiProductoCrear().getText();
 					String descripcion = viewGestionarDatos.getTxtDescTiProductoCrear().getText();
 					// TODO conectarse a modelo para agregar el tipo de producto.
+					
 					break;}
 				case "Modificar":{
 					String codigo = viewGestionarDatos.getTxtCodTiProductoMod().getText();
@@ -462,6 +495,13 @@ public class Controladora extends Application {
 					String direccion = viewGestionarDatos.getTxtDirFuncCrear().getText();
 					String telefono = viewGestionarDatos.getTxtTelFuncCrear().getText();
 					// TODO conectarse a modelo para agregar el funcionario.
+					
+					try {
+						sg.registrarFuncionario(nombre, cedula, direccion, telefono);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					break;}
 				case "Modificar":{
 					String cedula = viewGestionarDatos.getTxtCedulaFuncMod().getText();

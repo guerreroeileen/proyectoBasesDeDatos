@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class SistemaGestion {
@@ -23,6 +24,7 @@ public class SistemaGestion {
 		solicitudes= new ArrayList<Solicitud>();
 		cxp = new ArrayList<ClienteXProducto>();
 		clientes= new ArrayList<Cliente>();
+		funcionarios= new ArrayList<Funcionario>();
 
 		try {
 			connection = ConectionBD.getConection();
@@ -65,7 +67,7 @@ public class SistemaGestion {
 		    String nombre= rs.getString("nombre");            
 		    Date fechanacimiento= rs.getDate("fechanacimiento");  
 		    String direccion= rs.getString("direccion");         
-		    int telefono= rs.getInt("telefono");
+		    String telefono= rs.getString("telefono");
 			
 		    Funcionario f= new Funcionario(cedula, nombre, direccion, telefono, fechanacimiento);
 		    funcionarios.add(f);
@@ -88,7 +90,7 @@ public class SistemaGestion {
 		    String direccion= rs.getString("direccion");         
 		    int telefono= rs.getInt("telefono");
 			
-		    Cliente c= new Cliente(cedula, nombre, fechanacimiento, direccion, telefono);
+		    Cliente c= new Cliente(cedula, nombre, direccion, fechanacimiento, telefono);
 		    clientes.add(c);
 		}
 		
@@ -122,43 +124,48 @@ public class SistemaGestion {
 		
 	}
 	
-	public boolean verificarUsuario(String cedulaCliente)throws Exception {
+	public boolean verificarUsuario(String cedulaCliente) throws Exception{
 		
 		actualizarFuncionario();
 		actualizarClientes();
 		
+		System.out.println(clientes.get(0).getCedula());
 		for (int i = 0; i < clientes.size(); i++) {
 		
-			
-			if(cedulaCliente.equals(clientes.get(i).getCedula())) {
+			if(clientes.get(i).getCedula().equals(cedulaCliente)) {
 				
 				return true;
 			}
-		}
-		
-		for(int i=0; i<funcionarios.size();i++) {
 			
-			if(cedulaCliente.equals(funcionarios.get(i).getIvcedula())) {
+			
+		}
+		for (int i = 0; i < funcionarios.size(); i++) {
+			
+			if(funcionarios.get(i).getIvcedula().equals(cedulaCliente)) {
+				
 				
 				return false;
 			}
+			
+			
 		}
+
 		
 		
-			throw new Exception("No está registrado en nuestra base de datos");
+		throw new Exception("No está registrado en nuestra base de datos");
 		
 		
 	}
-	public ArrayList<Solicitud> consultarSolicitudFuncionario(String funcionario_cedula) throws SQLException {
+	public String consultarSolicitudFuncionario(String funcionario_cedula) throws SQLException {
 		
 		actualizarSolicitudes();
-		ArrayList<Solicitud> filtro= new ArrayList<Solicitud>();
+		String filtro= "";
 		
 		for (int i = 0; i < solicitudes.size(); i++) {
 			
 			if(solicitudes.get(i).getFuncionariocedula().equals(funcionario_cedula)) {
 			
-				filtro.add(solicitudes.get(i));
+				filtro+= "Solicitud #: "+solicitudes.get(i).getN_solicitud()+" Estado: "+solicitudes.get(i).getEstado_codigo() + " Causa: "+ solicitudes.get(i).getCausa()+"\n";
 				
 			}
 		}
@@ -167,17 +174,17 @@ public class SistemaGestion {
 		}
 	
 		
-	public ArrayList<Solicitud> consultarSolicitudEstado(String estado) throws SQLException {
+	public String consultarSolicitudEstado(String estado) throws SQLException {
 		
 		actualizarSolicitudes();
 
-		ArrayList<Solicitud> filtro= new ArrayList<Solicitud>();
+		String filtro= "";
 		
 		for (int i = 0; i < solicitudes.size(); i++) {
 			
 			if(solicitudes.get(i).getEstado_codigo().equals(estado)) {
 			
-				filtro.add(solicitudes.get(i));
+				filtro+= "Solicitud #: "+solicitudes.get(i).getN_solicitud()+" Estado: "+solicitudes.get(i).getEstado_codigo() + " Causa: "+ solicitudes.get(i).getCausa()+"\n";
 				
 			}
 		}
@@ -185,17 +192,17 @@ public class SistemaGestion {
 		return filtro;
 		}
 	
-	public ArrayList<Solicitud> consultarSolicitudTipo(String tipo) throws SQLException {
+	public String consultarSolicitudTipo(String tipo) throws SQLException {
 		
 		actualizarSolicitudes();
 
-		ArrayList<Solicitud> filtro= new ArrayList<Solicitud>();
+		String filtro= " " ;
 		
 		for (int i = 0; i < solicitudes.size(); i++) {
 			
 			if(solicitudes.get(i).getTiposolicitud_id().equals(tipo)) {
 			
-				filtro.add(solicitudes.get(i));
+				filtro+= "Solicitud #: "+solicitudes.get(i).getN_solicitud()+" Estado: "+solicitudes.get(i).getEstado_codigo() + " Causa: "+ solicitudes.get(i).getCausa()+"\n";
 				
 			}
 		}
@@ -204,18 +211,18 @@ public class SistemaGestion {
 		}
 	
 	
-	public ArrayList<ClienteXProducto> consultarProductoCliente(String cliente) throws SQLException {
+	public String consultarProductoCliente(String cliente) throws SQLException {
 
 
 		actualizarClienteXProducto();
 		
-		ArrayList<ClienteXProducto> filtro= new ArrayList<ClienteXProducto>();
+		String filtro= "";
 
 		for (int i = 0; i < cxp.size(); i++) {
 
 			if(cxp.get(i).getCliente_cc().equals(cliente)) {
 
-				filtro.add(cxp.get(i));
+				filtro+= "Producto: "+ cxp.get(i).getProducto()+ "Fecha inicio: "+ cxp.get(i).getFecha_inicio()+ "Fecha fin: "+ cxp.get(i).getFecha_fin()+ "\n";
 
 			}
 		}
@@ -278,6 +285,48 @@ public class SistemaGestion {
 		}
 	}
 	
+	public void registrarTipoProducto(String id, String nombre, String descripcion) throws Exception {
+		
+		String proceso= "{? = call pktipoproducto.pinsertar(?,?,?)}";
+		
+		try {
+			CallableStatement c = connection.prepareCall(proceso);
+		
+			c.setString(0,id);
+			c.setString(1, nombre);
+			c.setString(2, descripcion);
+			
+			c.execute();
+		}catch (SQLException e) {
+			
+			throw new Exception("Error al efectuar la operación");
+		}catch (Exception a) {
+			
+			a.printStackTrace();
+		}
+		
+	}
+	
+	public void eliminarTipoProducto(String idTipo)throws Exception {
+		
+	String proceso= "{call pktipoproducto.peliminar(?)}";
+		
+		try {
+			CallableStatement c = connection.prepareCall(proceso);
+			c.setString(1, idTipo);
+	
+			c.execute();
+		}catch (SQLException e) {
+			
+			throw new Exception("Error al efectuar la operación");
+		}catch (Exception a) {
+			
+			a.printStackTrace();
+		}
+		
+		
+	}
+	
 	public void registrarProducto(String id, String nombre, String idTipoProducto) throws Exception {
 		String proceso = "{? = call pkregistronivel3.pregistrarproducto(?,?,?)}";			
 		try {
@@ -311,7 +360,7 @@ public class SistemaGestion {
 		}
 	}
 	
-	public void registrarFuncionario(String nombre, String cedula, String direccion, String telefono, Date fechaNacimiento) throws Exception {
+	public void registrarFuncionario(String nombre, String cedula, String direccion, String telefono) throws Exception {
 		String proceso = "{? = call pkregistronivel3.pregistrarfuncionario(?,?,?,?,?)}";			
 		try {
 			CallableStatement c = connection.prepareCall(proceso);
@@ -320,7 +369,7 @@ public class SistemaGestion {
 			c.setString(3, nombre);
 			c.setString(4, direccion);
 			c.setString(5, telefono);
-			c.setDate(6, fechaNacimiento);
+			c.setDate(6, Date.valueOf("2018-11-26"));
 			c.execute();
 			
 		} catch (SQLException e) {
@@ -331,7 +380,7 @@ public class SistemaGestion {
 		}
 	}
 	
-	public void registrarCliente(String nombre, String cedula, String direccion, String telefono, Date fechaNacimiento) throws Exception {
+	public void registrarCliente(String nombre, String cedula, String direccion, String telefono) throws Exception {
 		String proceso = "{? = call pkregistronivel3.pregistrarcliente(?,?,?,?,?)}";			
 		try {
 			CallableStatement c = connection.prepareCall(proceso);
@@ -340,7 +389,7 @@ public class SistemaGestion {
 			c.setString(3, nombre);
 			c.setString(4, direccion);
 			c.setString(5, telefono);
-			c.setDate(6, fechaNacimiento);
+			c.setDate(6, Date.valueOf("2018-11-26"));
 			c.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -476,8 +525,8 @@ public class SistemaGestion {
 	public static void main(String[] args) {
 		try {
 			SistemaGestion s = new SistemaGestion();
-
-			s.registrarSolicitud("TP_1","1111111111","Me gustaria este producto","TS_1","","");
+			
+		
 			//s.atenderSolicitud("1061816906", "1", "Uis", "2");
 //			s.registrarSolicitud( Davila","1111111111","El escondite","222",new Date(1981,12,23));
 

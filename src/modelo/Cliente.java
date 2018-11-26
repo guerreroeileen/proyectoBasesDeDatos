@@ -10,7 +10,7 @@ public class Cliente {
     private String direccion;         
     private int telefono;
 	
-    public Cliente(String cedula, String nombre, Date fechanacimiento, String direccion, int telefono) {
+    public Cliente(String cedula, String nombre, String direccion, Date fechanacimiento, int telefono) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;

@@ -7,10 +7,10 @@ public class Funcionario {
 	private String ivcedula;            
     private String ivnombre;            
     private String ivdireccion;         
-    private int ivtelefono;
+    private String ivtelefono;
     private Date ivfechanacimiento;
 	
-    public Funcionario(String ivcedula, String ivnombre, String ivdireccion, int ivtelefono, Date ivfechanacimiento) {
+    public Funcionario(String ivcedula, String ivnombre, String ivdireccion, String ivtelefono, Date ivfechanacimiento) {
 		super();
 		this.ivcedula = ivcedula;
 		this.ivnombre = ivnombre;
@@ -43,11 +43,11 @@ public class Funcionario {
 		this.ivdireccion = ivdireccion;
 	}
 
-	public int getIvtelefono() {
+	public String getIvtelefono() {
 		return ivtelefono;
 	}
 
-	public void setIvtelefono(int ivtelefono) {
+	public void setIvtelefono(String ivtelefono) {
 		this.ivtelefono = ivtelefono;
 	}
 
