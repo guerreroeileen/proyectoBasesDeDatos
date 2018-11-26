@@ -2,9 +2,9 @@ package controladora;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -22,6 +22,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import vista.ViewAtenderSolicitud;
 import vista.ViewConsultas;
 import vista.ViewGestionarDatos;
 import vista.ViewOpcionesFuncionario;
@@ -36,6 +37,7 @@ public class Controladora extends Application {
 	private ViewOpcionesFuncionario viewOpcionesFuncionario;
 	private ViewConsultas viewConsultas;
 	private ViewRegistrarSolicitud viewRegistrarSolicitud;
+	private ViewAtenderSolicitud viewAtenderSolicitudes;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -55,26 +57,26 @@ public class Controladora extends Application {
 		viewPrincipal.getButIngresar().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventoPrincipal());
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void registrarEventosViewOpcionesFuncionario() {
-		viewOpcionesFuncionario.getButConsultas().addEventHandler(MouseEvent.MOUSE_CLICKED,
-				controlarEventosOpcionesFuncionario());
-		viewOpcionesFuncionario.getButAsignarSolic().addEventHandler(MouseEvent.MOUSE_CLICKED,
-				controlarEventosOpcionesFuncionario());
-		viewOpcionesFuncionario.getButAtenderSolic().addEventHandler(MouseEvent.MOUSE_CLICKED,
-				controlarEventosOpcionesFuncionario());
-		viewOpcionesFuncionario.getButGestorDatos().addEventHandler(MouseEvent.MOUSE_CLICKED,
-				controlarEventosOpcionesFuncionario());
+		EventHandler handler = controlarEventosOpcionesFuncionario();
+		viewOpcionesFuncionario.getButConsultas().addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+		viewOpcionesFuncionario.getButAsignarSolic().addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+		viewOpcionesFuncionario.getButAtenderSolic().addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+		viewOpcionesFuncionario.getButGestorDatos().addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+
 	private void registrarEventosConsultas() {
-		viewConsultas.getButCsltaSolicXTipo().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventosConsultas());
-		viewConsultas.getButCsltaSolicXCliente().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventosConsultas());
-		viewConsultas.getButCsltaSolicXEstado().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventosConsultas());
-		viewConsultas.getButCsltaSolicXFunc().addEventHandler(MouseEvent.MOUSE_CLICKED, controlarEventosConsultas());
+		EventHandler handler = controlarEventosConsultas();
+		viewConsultas.getButCsltaSolicXTipo().addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+		viewConsultas.getButCsltaSolicXCliente().addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+		viewConsultas.getButCsltaSolicXEstado().addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+		viewConsultas.getButCsltaSolicXFunc().addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
 	}
 
+	@SuppressWarnings("rawtypes")
 	private EventHandler controlarEventosConsultas() {
 		return new EventHandler() {
 			@Override
@@ -123,6 +125,7 @@ public class Controladora extends Application {
 	@SuppressWarnings("rawtypes")
 	private EventHandler controlarEventosOpcionesFuncionario() {
 		return new EventHandler() {
+
 			@Override
 			public void handle(Event evento) {
 				String comando = ((Button) evento.getSource()).getText();
@@ -146,6 +149,16 @@ public class Controladora extends Application {
 					break;
 				case "Atender solicitudes":
 
+					try {
+						FileInputStream file = new FileInputStream(new File("views/fxml/ViewAtenderSolicitud.fxml"));
+						Pane pane = f.load(file);
+						viewAtenderSolicitudes = f.getController();
+						viewAtenderSolicitudes.inicializar("Atendiendo solicitudes", pane);
+						registrarEventosAtenderSolicitudes();
+						viewAtenderSolicitudes.getStage().show();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					break;
 				case "Asignar solicitudes":
 
@@ -169,6 +182,64 @@ public class Controladora extends Application {
 		};
 	}
 
+	public void registrarEventosAtenderSolicitudes() {
+		EventHandler<ActionEvent> handler = controlarEventosAtenderSolicitudes();
+		viewAtenderSolicitudes.getRechazar().setOnAction(handler);
+		viewAtenderSolicitudes.getRadioButtonAtendiendo().setOnAction(handler);
+		viewAtenderSolicitudes.getAtender().setOnAction(handler);
+
+	}
+
+	private EventHandler<ActionEvent> controlarEventosAtenderSolicitudes() {
+		EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Node nodo = (Node) event.getSource();
+				String idSrc = nodo.getId();
+				switch (idSrc) {
+				case "bAtender": {
+					atenderSolicitud();
+					break;
+				}
+				case "bRechazar": {
+					rechazarSolicitud();
+					break;
+				}
+
+				case "rbAtendiendo": {
+					boolean isSelected =viewAtenderSolicitudes.getRadioButtonAtendiendo().isSelected();
+					cambiarModoAtenderSolicitud(isSelected);					
+					break;
+				}
+
+				default: {
+					break;
+				}
+				}
+
+			}
+		};
+		return handler;
+	}
+	
+	public void cambiarModoAtenderSolicitud(boolean danoOReclamo) {
+		Button bRechazar = viewAtenderSolicitudes.getRechazar();
+		bRechazar.setVisible(danoOReclamo);
+		bRechazar.setDisable(!danoOReclamo);
+	}
+	
+	public void atenderSolicitud() {
+		//TODO Para atender una solicitud... Recoger datos y enviarselas a modelo.
+		//Conectarse a viewAtenderSolicitud si es necesario, para obtener datos
+	}
+	
+	public void rechazarSolicitud() {
+		//TODO Para rechazar una solicitud... Recoger datos y enviarselas a modelo.
+		//Conectarse a viewAtenderSolicitud si es necesario, para obtener datos
+
+	}
+
 	private void inicializarEstadosEnConsultas() {
 		// TODO setear el combo box del view consultas para mostrar los estados que
 		// existen.
@@ -181,7 +252,7 @@ public class Controladora extends Application {
 
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private EventHandler controlarEventosGestionarClientes() {
 		return new EventHandler() {
 			@Override
@@ -203,7 +274,7 @@ public class Controladora extends Application {
 		};
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private EventHandler controlarEventosGestionarTipoProductos() {
 		return new EventHandler() {
 			@Override
@@ -225,7 +296,7 @@ public class Controladora extends Application {
 		};
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private EventHandler controlarEventosGestionarFuncionarios() {
 		return new EventHandler() {
 			@Override
@@ -247,7 +318,7 @@ public class Controladora extends Application {
 		};
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private EventHandler controlarEventosGestionarTipoSolicitudes() {
 		return new EventHandler() {
 			@Override
@@ -484,8 +555,9 @@ public class Controladora extends Application {
 	}
 
 	/**
-	 * Metodo para actualizar GUI ya sea desde el hilo main o hilos fuera del hilo de 
-	 * la vista principal javaFx
+	 * Metodo para actualizar GUI ya sea desde el hilo main o hilos fuera del hilo
+	 * de la vista principal javaFx
+	 * 
 	 * @param runnable Runnable que modifica elementos de la vista
 	 */
 	private void updateGUI(Runnable runnable) {
