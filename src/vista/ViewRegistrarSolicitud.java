@@ -111,7 +111,7 @@ public class ViewRegistrarSolicitud {
 	 * @return nodo, Nodo de la vista, generalmente de tipo button, hyperlink o
 	 *         choicebox
 	 */
-	public Node obtenerNodo(String id) {
+	public Node obtenerNodoPorId(String id) {
 		return nodos.get(id);
 	}
 
