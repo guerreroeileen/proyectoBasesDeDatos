@@ -150,7 +150,20 @@ public class SistemaGestion {
 
 		return filtro;
 	}
+	
+	public void asignarSolicitud(String cods, String cedfuncionario) throws SQLException {
+		
+		String proceso = "{? = call pkatencionn3.fasignacionindividual(?,?)}";			
+		CallableStatement c = connection.prepareCall(proceso);
+		c.registerOutParameter(1, Types.VARCHAR);
+		c.setString(2, cedfuncionario);
+		c.setString(3, cods);
+	
+		c.execute();
+		
+	}
 
+	
 	public boolean atenderSolicitud(String cedFun, String codSol, String comentario, String estado) throws Exception {
 		try {
 			String proceso = "{? = call pkatencionn3.fatendersolicitud(?,?,?,?)}";			
@@ -389,7 +402,6 @@ public class SistemaGestion {
 	public static void main(String[] args) {
 		try {
 			SistemaGestion s = new SistemaGestion();
-	
 			//s.atenderSolicitud("1061816906", "1", "Uis", "2");
 //			s.registrarSolicitud( Davila","1111111111","El escondite","222",new Date(1981,12,23));
 			System.out.println("Exito");
