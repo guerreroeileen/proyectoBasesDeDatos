@@ -307,25 +307,6 @@ public class SistemaGestion {
 		
 	}
 	
-	public void eliminarTipoProducto(String idTipo)throws Exception {
-		
-	String proceso= "{call pktipoproducto.peliminar(?)}";
-		
-		try {
-			CallableStatement c = connection.prepareCall(proceso);
-			c.setString(1, idTipo);
-	
-			c.execute();
-		}catch (SQLException e) {
-			
-			throw new Exception("Error al efectuar la operación");
-		}catch (Exception a) {
-			
-			a.printStackTrace();
-		}
-		
-		
-	}
 	
 	public void registrarProducto(String id, String nombre, String idTipoProducto) throws Exception {
 		String proceso = "{? = call pkregistronivel3.pregistrarproducto(?,?,?)}";			
@@ -520,7 +501,53 @@ public class SistemaGestion {
 		return id;
 	}
 	
+	public void eliminarFuncionario(String id) throws Exception {
+		try {
+			String proceso = "{call pkFuncionarioNivel1.pEliminar(?)}";
+			CallableStatement c = connection.prepareCall(proceso);
+			c.setString(1, id);
+			
+			c.execute();
+		} catch (SQLException e) {
+			throw new Exception("Error al efectuar la operacion");
+
+		} catch (Exception a) {
+			throw new Exception(a.getMessage());
+
+		}	
+	}
 	
+	public void eliminarEstado(String id) throws Exception {
+		try {
+			String proceso = "{call pkEstadoNivel1.pEliminar(?)}";
+			CallableStatement c = connection.prepareCall(proceso);
+			c.setString(1, id);
+			
+			c.execute();
+		} catch (SQLException e) {
+			throw new Exception("Error al efectuar la operacion");
+
+		} catch (Exception a) {
+			throw new Exception(a.getMessage());
+
+		}	
+	}
+	
+	public void eliminarProducto(String id) throws Exception {
+		try {
+			String proceso = "{call pkproductonivel1.peliminar(?)}";
+			CallableStatement c = connection.prepareCall(proceso);
+			c.setString(1, id);
+			
+			c.execute();
+		} catch (SQLException e) {
+			throw new Exception("Error al efectuar la operacion");
+
+		} catch (Exception a) {
+			throw new Exception(a.getMessage());
+
+		}	
+	}
 		
 	public static void main(String[] args) {
 		try {

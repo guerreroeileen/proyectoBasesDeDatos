@@ -441,6 +441,8 @@ public class Controladora extends Application {
 				case "Borrar":{
 					String cedula = viewGestionarDatos.getTxtCedulaClientBorrar().getText();
 					// TODO conectarse a modelo para eliminar el cliente.
+					
+					
 					break;}
 				}
 			}
@@ -476,6 +478,13 @@ public class Controladora extends Application {
 				case "Borrar":{
 					String codigo = viewGestionarDatos.getTxtCodTiProductoBorrar().getText();
 					// TODO conectarse a modelo para eliminar el tipo de producto.
+					
+						try {
+							sg.eliminarProducto(codigo);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					break;}
 				}
 			}
@@ -520,6 +529,13 @@ public class Controladora extends Application {
 				case "Borrar":{
 					String cedula = viewGestionarDatos.getTxtCedulaFuncBorrar().getText();
 					// TODO conectarse a modelo para eliminar el funcionario.
+					
+					try {
+						sg.eliminarFuncionario(cedula);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					break;}
 				}
 			}
@@ -554,6 +570,8 @@ public class Controladora extends Application {
 				case "Borrar":{
 					String codigo = viewGestionarDatos.getTxtCodTiSolicitudBorrar().getText();
 					// TODO conectarse a modelo para eliminar el tipo de solicitud.
+					
+					
 					break;}
 				}
 			}
