@@ -398,12 +398,17 @@ public class SistemaGestion {
 		}
 		return id;
 	}
+	
+	
 		
 	public static void main(String[] args) {
 		try {
 			SistemaGestion s = new SistemaGestion();
+
+			s.registrarSolicitud("TP_1","1111111111","Me gustaria este producto","TS_1","","");
 			//s.atenderSolicitud("1061816906", "1", "Uis", "2");
 //			s.registrarSolicitud( Davila","1111111111","El escondite","222",new Date(1981,12,23));
+
 			System.out.println("Exito");
 
 		} catch (Exception e) {
