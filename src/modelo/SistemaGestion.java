@@ -11,6 +11,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 
 public class SistemaGestion {
+	
 	private Connection connection;
 	private ArrayList<Solicitud> solicitudes;
 	private ArrayList<ClienteXProducto> cxp;
@@ -25,11 +26,12 @@ public class SistemaGestion {
 			throw new Exception("Error al conectarse a la base de datos");
 		}
 		
-		inicializarSolicitudes();
-		inicializarCientexProducto();
+		actualizarSolicitudes();
+		actualizarClienteXProducto();
 	}
 	
-	public void inicializarCientexProducto() throws SQLException{
+	
+	public void actualizarClienteXProducto() throws SQLException{
 		
 		
 		Statement st= connection.createStatement();
@@ -48,7 +50,7 @@ public class SistemaGestion {
 		}
 	}
 
-	public void inicializarSolicitudes() throws SQLException {
+	public void actualizarSolicitudes() throws SQLException {
 		
 		Statement st= connection.createStatement();
 		ResultSet rs= st.executeQuery("SELECT s.* FROM SOLICITUD s");
@@ -77,6 +79,7 @@ public class SistemaGestion {
 	}
 	public ArrayList<Solicitud> consultarSolicitudFuncionario(String funcionario_cedula) throws SQLException {
 		
+		actualizarSolicitudes();
 		ArrayList<Solicitud> filtro= new ArrayList<Solicitud>();
 		
 		for (int i = 0; i < solicitudes.size(); i++) {
@@ -94,6 +97,8 @@ public class SistemaGestion {
 		
 	public ArrayList<Solicitud> consultarSolicitudEstado(String estado) throws SQLException {
 		
+		actualizarSolicitudes();
+
 		ArrayList<Solicitud> filtro= new ArrayList<Solicitud>();
 		
 		for (int i = 0; i < solicitudes.size(); i++) {
@@ -110,6 +115,8 @@ public class SistemaGestion {
 	
 	public ArrayList<Solicitud> consultarSolicitudTipo(String tipo) throws SQLException {
 		
+		actualizarSolicitudes();
+
 		ArrayList<Solicitud> filtro= new ArrayList<Solicitud>();
 		
 		for (int i = 0; i < solicitudes.size(); i++) {
@@ -127,6 +134,9 @@ public class SistemaGestion {
 	
 	public ArrayList<ClienteXProducto> consultarProductoCliente(String cliente) throws SQLException {
 
+
+		actualizarClienteXProducto();
+		
 		ArrayList<ClienteXProducto> filtro= new ArrayList<ClienteXProducto>();
 
 		for (int i = 0; i < cxp.size(); i++) {
@@ -382,6 +392,9 @@ public class SistemaGestion {
 		try {
 			SistemaGestion s = new SistemaGestion();
 			s.registrarSolicitud("TP_1","1111111111","Me gustaria este producto","TS_1","","");
+			//s.atenderSolicitud("1061816906", "1", "Uis", "2");
+//			s.registrarSolicitud( Davila","1111111111","El escondite","222",new Date(1981,12,23));
+
 			System.out.println("Exito");
 
 		} catch (Exception e) {
